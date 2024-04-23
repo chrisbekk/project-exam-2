@@ -10,7 +10,7 @@ export const useFetchVenues = () => {
       try {
         setPending(true);
         const response = await fetch(
-          'https://v2.api.noroff.dev/holidaze/venues',
+          'https://v2.api.noroff.dev/holidaze/venues?_owner=true&_bookings=true',
         );
         if (!response.ok) {
           throw new Error(

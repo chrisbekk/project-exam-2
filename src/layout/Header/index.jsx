@@ -1,13 +1,23 @@
 import { HiPaperAirplane } from 'react-icons/hi';
 import NavigationButton from './NavigationButton';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import { FilterVenues } from '../../components/FilterVenues';
+
 export default function Header() {
+  const location = useLocation();
+  const currentURL = location.pathname;
+
   return (
-    <header className="h-24 w-full shadow-lg px-4 sm:px-0 fixed top-0 z-50 bg-neutral-50">
-      <div className="container mx-auto h-full flex items-center justify-between">
+    <header
+      className={`fixed top-0 z-50 h-24 w-full bg-neutral-50 px-4 shadow-lg  sm:px-0`}
+      id="header"
+    >
+      <div
+        className={`container mx-auto flex h-full items-center justify-between`}
+      >
         <Link to={'/'} className="flex items-center gap-2">
           <HiPaperAirplane className="text-xl text-brand" />
-          <h1 className="text-xl font-semibold text-brand hidden sm:block">
+          <h1 className="hidden text-xl font-semibold text-brand sm:block">
             holidaze
           </h1>
         </Link>
