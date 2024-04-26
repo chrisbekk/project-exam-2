@@ -4,9 +4,12 @@ import { useFetchVenues } from '../context/useFetchVenues';
 import { Button } from '../components/Button';
 import { VenuesContainer } from '../components/VenuesContainer';
 import { useSearchParams } from 'react-router-dom';
+import { useSiteContext } from '../context/venueContext';
 import React from 'react';
 
 export const Venues = () => {
+  const context = useSiteContext();
+  console.log(context);
   const { venues, error, pending } = useFetchVenues();
   const [searchParams] = useSearchParams();
   const destination = searchParams.get('destination');

@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { HiOutlineSearch } from 'react-icons/hi';
 import { Modal } from '../modal';
+import { Calendar } from '../Calendar';
+import { AddGuests } from '../AddGuests';
 
 export const FilterVenues = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -59,41 +61,43 @@ export const FilterVenues = () => {
             className={`${isActive === 'destination' ? 'rounded-full bg-white drop-shadow-xl' : 'bg-neutral-100'}  absolute inset-0 h-full w-full rounded-l-full pl-6 pt-2 text-sm font-light focus:outline-none`}
           />
         </button>
-        <button
+        <div
+          type="text"
+          id="fromDate"
           onClick={handleActive}
-          className="relative hidden h-full w-full rounded-l-full transition-colors xs:block"
+          className={`${isActive === 'fromDate' ? ' rounded-full bg-white drop-shadow-xl' : 'bg-neutral-100'} text-color-black relative hidden h-full w-full rounded-l-full transition-colors xs:block `}
         >
-          <label
-            htmlFor="fromDate"
-            className="absolute left-6 top-4 z-10 text-xs font-bold"
+          <p className="pointer-events-none absolute left-6 top-4 text-xs font-bold">
+            Check In
+          </p>
+          <p className="pointer-events-none absolute left-6 top-9 text-xs font-thin">
+            Add date
+          </p>
+          <div
+            className={`absolute ${isActive === 'fromDate' ? 'block' : 'hidden'} -bottom-[535%] -left-[100%]`}
           >
-            From
-          </label>
-          <input
-            id="fromDate"
-            placeholder="Add date"
-            type="date"
-            className={`${isActive === 'fromDate' ? 'rounded-full bg-white drop-shadow-xl' : 'bg-neutral-100'}  absolute inset-0 h-full w-full rounded-l-full pl-6 pt-2 text-sm font-light focus:outline-none`}
-          />
-        </button>
-        <button
+            <Calendar />
+          </div>
+        </div>
+        <div
+          type="text"
+          id="toDate"
           onClick={handleActive}
-          className="relative hidden h-full w-full rounded-l-full transition-colors xs:block"
+          className={`${isActive === 'toDate' ? ' rounded-full bg-white drop-shadow-xl' : 'bg-neutral-100'} text-color-black relative hidden h-full w-full rounded-l-full transition-colors xs:block `}
         >
-          <label
-            htmlFor="toDate"
-            className="absolute left-6 top-4 z-10 text-xs font-bold"
+          <p className="pointer-events-none absolute left-6 top-4 text-xs font-bold">
+            Check Out
+          </p>
+          <p className="pointer-events-none absolute left-6 top-9 text-xs font-thin">
+            Add date
+          </p>
+          <div
+            className={`absolute ${isActive === 'toDate' ? 'block' : 'hidden'} -bottom-[535%] -left-[100%]`}
           >
-            To
-          </label>
-          <input
-            id="toDate"
-            placeholder="Add date"
-            type="date"
-            className={`${isActive === 'toDate' ? 'rounded-full bg-white drop-shadow-xl' : 'bg-neutral-100'}  absolute inset-0 h-full w-full rounded-l-full pl-6 pt-2 text-sm font-light focus:outline-none`}
-          />
-        </button>
-        <button
+            <Calendar />
+          </div>
+        </div>
+        <div
           id="guests"
           onClick={handleActive}
           className={`${isActive === 'guests' ? 'rounded-full bg-white drop-shadow-xl' : 'bg-neutral-100'} relative hidden h-full w-full rounded-r-full transition-colors xs:block `}
@@ -104,7 +108,13 @@ export const FilterVenues = () => {
           <p className="pointer-events-none absolute left-6 top-9 text-xs font-thin">
             Add guests
           </p>
-        </button>
+          <div
+            className={`absolute ${isActive === 'guests' ? 'block' : 'hidden'} -bottom-[602%] right-0`}
+          >
+            <AddGuests />
+          </div>
+        </div>
+
         <button className="absolute right-3 top-10 flex size-14 translate-y-[-50%] transform items-center justify-center rounded-full bg-brand">
           <HiOutlineSearch className="text-white" />
         </button>

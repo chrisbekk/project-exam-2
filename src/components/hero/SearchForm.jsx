@@ -17,6 +17,7 @@ export const SearchForm = () => {
     const params = {};
     formData.forEach((value, key) => {
       params[key] = value;
+      console.log(typeof value);
     });
 
     setSearchParams(params);
