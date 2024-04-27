@@ -3,19 +3,42 @@ import { HiOutlineSearch } from 'react-icons/hi';
 import { Modal } from '../modal';
 import { Calendar } from '../Calendar';
 import { AddGuests } from '../AddGuests';
+import { useSiteContext } from '../../context/venueContext';
 
 export const FilterVenues = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isActive, setIsActive] = useState('');
 
+  const {
+    filter: { venues: state, filterDispatch },
+  } = useSiteContext();
+
+  const [destination, setDestination] = useState(state.destination);
+  const [fromDate, setFromDate] = useState(state.fromDate);
+  const [toDate, setToDate] = useState(state.toDate);
+  const [guests, setGuests] = useState(state.guests);
   const containerRef = useRef(null);
 
   const handleActive = e => {
+    console.log(e.target);
     setIsActive(e.target.id);
   };
 
   const handleToggleModal = () => {
     setIsOpen(true);
+  };
+
+  const handleFilterVenues = () => {
+    filterDispatch({
+      type: 'FILTER_VENUES',
+      payload: {
+        destination: destination,
+        fromDate: fromDate,
+        toDate: toDate,
+        guests: guests,
+      },
+    });
+    setIsActive('');
   };
 
   useEffect(() => {
@@ -31,6 +54,7 @@ export const FilterVenues = () => {
       window.removeEventListener('click', handleClickOutside);
     };
   }, []);
+  console.log(isActive);
 
   return (
     <>
@@ -56,6 +80,8 @@ export const FilterVenues = () => {
           </label>
           <input
             id="destination"
+            value={destination}
+            onChange={e => setDestination(e.target.value)}
             placeholder="Search for destinations"
             type="text"
             className={`${isActive === 'destination' ? 'rounded-full bg-white drop-shadow-xl' : 'bg-neutral-100'}  absolute inset-0 h-full w-full rounded-l-full pl-6 pt-2 text-sm font-light focus:outline-none`}
@@ -71,12 +97,12 @@ export const FilterVenues = () => {
             Check In
           </p>
           <p className="pointer-events-none absolute left-6 top-9 text-xs font-thin">
-            Add date
+            {fromDate === '' ? 'Add date' : fromDate.substring(0, 10)}
           </p>
           <div
             className={`absolute ${isActive === 'fromDate' ? 'block' : 'hidden'} -bottom-[535%] -left-[100%]`}
           >
-            <Calendar />
+            <Calendar value={fromDate} handleChange={setFromDate} />
           </div>
         </div>
         <div
@@ -89,12 +115,12 @@ export const FilterVenues = () => {
             Check Out
           </p>
           <p className="pointer-events-none absolute left-6 top-9 text-xs font-thin">
-            Add date
+            {toDate === '' ? 'Add date' : toDate.substring(0, 10)}
           </p>
           <div
             className={`absolute ${isActive === 'toDate' ? 'block' : 'hidden'} -bottom-[535%] -left-[100%]`}
           >
-            <Calendar />
+            <Calendar value={fromDate} handleChange={setToDate} />
           </div>
         </div>
         <div
@@ -106,16 +132,23 @@ export const FilterVenues = () => {
             Guests
           </p>
           <p className="pointer-events-none absolute left-6 top-9 text-xs font-thin">
-            Add guests
+            {guests === 0
+              ? 'Add guests'
+              : guests === 1
+                ? guests + ' guest'
+                : guests + ' guests'}
           </p>
           <div
-            className={`absolute ${isActive === 'guests' ? 'block' : 'hidden'} -bottom-[602%] right-0`}
+            className={`absolute ${isActive === 'guests' ? 'block' : 'hidden'} -bottom-[705%] right-0`}
           >
-            <AddGuests />
+            <AddGuests setGuests={setGuests} />
           </div>
         </div>
 
-        <button className="absolute right-3 top-10 flex size-14 translate-y-[-50%] transform items-center justify-center rounded-full bg-brand">
+        <button
+          onClick={handleFilterVenues}
+          className="absolute right-3 top-10 flex size-14 translate-y-[-50%] transform items-center justify-center rounded-full bg-brand"
+        >
           <HiOutlineSearch className="text-white" />
         </button>
       </div>

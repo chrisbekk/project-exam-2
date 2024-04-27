@@ -3,28 +3,46 @@ import { useState } from 'react';
 import { Button } from '../Button';
 import { useNavigate } from 'react-router-dom';
 import { useSearchParams } from 'react-router-dom';
+import { useSiteContext } from '../../context/venueContext';
 export const SearchForm = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [destination, setDestination] = useState('');
   const [fromDate, setFromDate] = useState('');
   const [toDate, setToDate] = useState('');
   const navigate = useNavigate();
+  const {
+    filter: { venues, filterDispatch },
+  } = useSiteContext();
   const handleSubmit = e => {
     e.preventDefault();
 
+    console.log(venues);
+    console.log(filterDispatch);
     const formData = new FormData(e.target);
 
-    const params = {};
+    const filterValues = {};
     formData.forEach((value, key) => {
-      params[key] = value;
-      console.log(typeof value);
+      filterValues[key] = value;
     });
+    console.log(filterValues.fromDate);
+    filterValues.fromDate =
+      filterValues.fromDate === ''
+        ? ''
+        : new Date(filterValues.fromDate).toISOString();
+    filterValues.toDate =
+      filterValues.toDate === ''
+        ? ''
+        : new Date(filterValues.toDate).toISOString();
+    filterValues.guests = 0;
+    filterDispatch({
+      type: 'FILTER_VENUES',
+      payload: filterValues,
+    });
+    // setSearchParams(params);
+    // const queryString = new URLSearchParams(params).toString();
 
-    setSearchParams(params);
-    const queryString = new URLSearchParams(params).toString();
-
-    // Navigate to the new location
-    navigate(`/venues?${queryString}`);
+    // // Navigate to the new location
+    navigate(`/venues`);
   };
   return (
     <div className="bg-neutral-50 p-2 shadow-md md:absolute md:bottom-1/2 md:left-0 md:w-[570px] md:-translate-x-0 md:translate-y-1/2 md:transform md:rounded-lg md:p-14">
