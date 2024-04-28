@@ -3,24 +3,28 @@ import { HiOutlineSearch } from 'react-icons/hi';
 import { Modal } from '../modal';
 import { Calendar } from '../Calendar';
 import { AddGuests } from '../AddGuests';
-import { useSiteContext } from '../../context/venueContext';
 
-export const FilterVenues = () => {
+//TODO: Change the input elements so that they are not controlled by state.
+//TODO: User inputs should not trigger rerendering, only user clicking search button.
+//TODO: Input value not default set to states from search form
+
+export const FilterVenues = ({
+  setDestination,
+  setFromDate,
+  setToDate,
+  setGuests,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isActive, setIsActive] = useState('');
-
-  const {
-    filter: { venues: state, filterDispatch },
-  } = useSiteContext();
-
-  const [destination, setDestination] = useState(state.destination);
-  const [fromDate, setFromDate] = useState(state.fromDate);
-  const [toDate, setToDate] = useState(state.toDate);
-  const [guests, setGuests] = useState(state.guests);
   const containerRef = useRef(null);
 
+  // Declare states for rendering component value
+  const [destinationInput, setDestinationInput] = useState('');
+  const [fromDateInput, setFromDateInput] = useState('');
+  const [toDateInput, setToDateInput] = useState('');
+  const [guestsInput, setGuestsInput] = useState('');
+
   const handleActive = e => {
-    console.log(e.target);
     setIsActive(e.target.id);
   };
 
@@ -29,15 +33,10 @@ export const FilterVenues = () => {
   };
 
   const handleFilterVenues = () => {
-    filterDispatch({
-      type: 'FILTER_VENUES',
-      payload: {
-        destination: destination,
-        fromDate: fromDate,
-        toDate: toDate,
-        guests: guests,
-      },
-    });
+    setDestination(destinationInput);
+    setFromDate(fromDateInput);
+    setToDate(toDateInput);
+    setGuests(guestsInput);
     setIsActive('');
   };
 
@@ -54,7 +53,6 @@ export const FilterVenues = () => {
       window.removeEventListener('click', handleClickOutside);
     };
   }, []);
-  console.log(isActive);
 
   return (
     <>
@@ -80,8 +78,8 @@ export const FilterVenues = () => {
           </label>
           <input
             id="destination"
-            value={destination}
-            onChange={e => setDestination(e.target.value)}
+            value={destinationInput}
+            onChange={e => setDestinationInput(e.target.value)}
             placeholder="Search for destinations"
             type="text"
             className={`${isActive === 'destination' ? 'rounded-full bg-white drop-shadow-xl' : 'bg-neutral-100'}  absolute inset-0 h-full w-full rounded-l-full pl-6 pt-2 text-sm font-light focus:outline-none`}
@@ -97,12 +95,12 @@ export const FilterVenues = () => {
             Check In
           </p>
           <p className="pointer-events-none absolute left-6 top-9 text-xs font-thin">
-            {fromDate === '' ? 'Add date' : fromDate.substring(0, 10)}
+            {fromDateInput === '' ? 'Add date' : fromDateInput.substring(0, 10)}
           </p>
           <div
             className={`absolute ${isActive === 'fromDate' ? 'block' : 'hidden'} -bottom-[535%] -left-[100%]`}
           >
-            <Calendar value={fromDate} handleChange={setFromDate} />
+            <Calendar handleChange={setFromDateInput} />
           </div>
         </div>
         <div
@@ -115,12 +113,12 @@ export const FilterVenues = () => {
             Check Out
           </p>
           <p className="pointer-events-none absolute left-6 top-9 text-xs font-thin">
-            {toDate === '' ? 'Add date' : toDate.substring(0, 10)}
+            {toDateInput === '' ? 'Add date' : toDateInput.substring(0, 10)}
           </p>
           <div
             className={`absolute ${isActive === 'toDate' ? 'block' : 'hidden'} -bottom-[535%] -left-[100%]`}
           >
-            <Calendar value={fromDate} handleChange={setToDate} />
+            <Calendar handleChange={setToDateInput} />
           </div>
         </div>
         <div
@@ -132,16 +130,16 @@ export const FilterVenues = () => {
             Guests
           </p>
           <p className="pointer-events-none absolute left-6 top-9 text-xs font-thin">
-            {guests === 0
+            {guestsInput == 0
               ? 'Add guests'
-              : guests === 1
-                ? guests + ' guest'
-                : guests + ' guests'}
+              : guestsInput === 1
+                ? guestsInput + ' guest'
+                : guestsInput + ' guests'}
           </p>
           <div
             className={`absolute ${isActive === 'guests' ? 'block' : 'hidden'} -bottom-[705%] right-0`}
           >
-            <AddGuests setGuests={setGuests} />
+            <AddGuests setGuests={setGuestsInput} />
           </div>
         </div>
 

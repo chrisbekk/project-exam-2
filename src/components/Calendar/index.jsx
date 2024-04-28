@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import dayjs from 'dayjs';
 
 export const Calendar = ({ handleChange }) => {
   const [value, setValue] = useState(dayjs());
-
   const handleDateChange = newValue => {
     setValue(newValue);
-    console.log(value.$d.toISOString());
     handleChange(newValue.$d.toISOString()); // Call the onChange function with the new date value
   };
 

@@ -2,9 +2,9 @@ import React from 'react';
 import { ProductCard } from '../productCard';
 export const VenuesContainer = ({ venues, error, pending }) => {
   return (
-    <div>
+    <div className="grid place-items-center gap-12 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {venues?.map((venue, index) => (
-        <p key={index}>{venue.location.city}</p>
+        <ProductCard venue={venue} key={index} />
       ))}
     </div>
   );

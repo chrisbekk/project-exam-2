@@ -2,29 +2,24 @@ import React from 'react';
 import { useState } from 'react';
 import { Button } from '../Button';
 import { useNavigate } from 'react-router-dom';
-import { useSearchParams } from 'react-router-dom';
-import { useSiteContext } from '../../context/venueContext';
+
 export const SearchForm = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [destination, setDestination] = useState('');
-  const [fromDate, setFromDate] = useState('');
-  const [toDate, setToDate] = useState('');
-  const navigate = useNavigate();
-  const {
-    filter: { venues, filterDispatch },
-  } = useSiteContext();
+  const [destination, setDestination] = useState(''); // Declare state for form value: destination
+  const [fromDate, setFromDate] = useState(''); // Declare state for form value: fromDate
+  const [toDate, setToDate] = useState(''); // Declare state for form value: toDate
+  const navigate = useNavigate(); // React Router Dom hook for router navigation
+
+  // Search Form handler for form submission event
   const handleSubmit = e => {
     e.preventDefault();
-
-    console.log(venues);
-    console.log(filterDispatch);
-    const formData = new FormData(e.target);
-
+    // Get form data from search form & convert into regular JS object
+    const formData = new FormData(e.target); //
     const filterValues = {};
     formData.forEach((value, key) => {
       filterValues[key] = value;
     });
-    console.log(filterValues.fromDate);
+
+    // Format date values; if no date provided by user, set to empty string
     filterValues.fromDate =
       filterValues.fromDate === ''
         ? ''
@@ -33,16 +28,14 @@ export const SearchForm = () => {
       filterValues.toDate === ''
         ? ''
         : new Date(filterValues.toDate).toISOString();
-    filterValues.guests = 0;
-    filterDispatch({
-      type: 'FILTER_VENUES',
-      payload: filterValues,
-    });
-    // setSearchParams(params);
-    // const queryString = new URLSearchParams(params).toString();
 
-    // // Navigate to the new location
-    navigate(`/venues`);
+    // Set guests to default value
+    filterValues.guests = 0;
+    // Construct URL search param string from form data
+    const queryString = new URLSearchParams(filterValues).toString();
+
+    // Navigate to the new location
+    navigate(`/venues?${queryString}`);
   };
   return (
     <div className="bg-neutral-50 p-2 shadow-md md:absolute md:bottom-1/2 md:left-0 md:w-[570px] md:-translate-x-0 md:translate-y-1/2 md:transform md:rounded-lg md:p-14">
