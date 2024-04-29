@@ -1,11 +1,19 @@
 import React from 'react';
 import { HiStar } from 'react-icons/hi';
 import { ProductGallery } from './ProductGallery';
+import { useNavigate } from 'react-router-dom';
 export const ProductCard = ({ venue }) => {
-  const { description, id, media, name, price, rating } = venue;
+  const { description, id, media, name, price, rating } = venue; // Destructuring venue object
+  const navigate = useNavigate(); // Declare navigate
 
+  const handleClick = () => {
+    navigate(`/venue/${id}`);
+  };
   return (
-    <div className="h-[500px] w-full max-w-[304px]  flex-shrink-0 hover:cursor-pointer">
+    <div
+      onClick={handleClick}
+      className="h-[500px] w-full max-w-[304px]  flex-shrink-0 hover:cursor-pointer"
+    >
       <ProductGallery media={media} />
       <div className="h-[200px]  pt-4">
         <div className="flex h-[25px] justify-between">

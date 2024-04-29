@@ -8,7 +8,7 @@ export const SearchForm = () => {
   const [fromDate, setFromDate] = useState(''); // Declare state for form value: fromDate
   const [toDate, setToDate] = useState(''); // Declare state for form value: toDate
   const navigate = useNavigate(); // React Router Dom hook for router navigation
-
+  const [isActive, setIsActive] = useState(''); // Define which Calendar component that should be shown
   // Search Form handler for form submission event
   const handleSubmit = e => {
     e.preventDefault();

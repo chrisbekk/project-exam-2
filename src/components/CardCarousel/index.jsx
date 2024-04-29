@@ -1,82 +1,15 @@
-// import React from 'react';
-// import { useState } from 'react';
-// import { GoChevronLeft } from 'react-icons/go';
-// import { GoChevronRight } from 'react-icons/go';
-// import { ProductCard } from '../productCard';
-// export const CardCarousel = ({ venues, error, pending }) => {
-//   const [currentPage, setCurrentPage] = useState(0);
-//   // Deal with error and pending states
-//   if (error) return <p>Nope</p>;
-//   if (pending) return <p>Pending......</p>;
-//   // The carousel displays the 12 highest rated venues
-//   let filteredVenues = venues?.data
-//     .sort((a, b) => b.rating - a.rating)
-//     .slice(0, 12);
-
-//   console.log(filteredVenues);
-//   console.log(venues);
-
-//   const handleNextPage = () => {
-//     setCurrentPage(prevPage => prevPage + 1);
-//   };
-//   const handlePrevPage = () => {
-//     setCurrentPage(prevPage => prevPage - 1);
-//   };
-
-//   return (
-//     <>
-//       <div className="pb-8">
-//         <div className="flex justify-between">
-//           <div>
-//             <h1 className="pb-1 text-xl font-semibold xs:text-2xl sm:text-3xl">
-//               Top Rated Holiday Homes
-//             </h1>
-//             <p className="pb-10 text-xs text-neutral-500 xs:text-sm sm:text-base">
-//               The guests approve: These holiday homes are highly rated.
-//             </p>
-//           </div>
-//           <div className="flex items-center gap-6">
-//             <p className="text-xl font-thin">
-//               {currentPage + 1}
-//               <span className="px-3">/</span>4
-//             </p>
-//             <div className="flex size-12 items-center justify-center rounded-full border-[0.5px] border-neutral-500 bg-neutral-50">
-//               <GoChevronLeft className="text-3xl" onClick={handlePrevPage} />
-//             </div>
-//             <div className="flex size-12 items-center justify-center rounded-full border-[0.5px] border-neutral-500 bg-neutral-50">
-//               <GoChevronRight className="text-3xl" onClick={handleNextPage} />
-//             </div>
-//           </div>
-//         </div>
-//         <div
-//           className="w-full border border-red-500 transition-all"
-//           style={{
-//             transform: `translateX(-${currentPage * 100}%)`,
-//           }}
-//         >
-//           <div className="grid place-items-center gap-12 sm:grid-cols-2 lg:grid-cols-3 xl:flex xl:gap-4">
-//             {venues &&
-//               filteredVenues.map((venue, index) => (
-//                 <ProductCard venue={venue} key={index} />
-//               ))}
-//           </div>
-//         </div>
-//       </div>
-//     </>
-//   );
-// };
-
 import React from 'react';
 import { useState } from 'react';
 import { GoChevronLeft, GoChevronRight } from 'react-icons/go';
 import { ProductCard } from '../productCard';
+import { Pending } from '../Pending';
 
 export const CardCarousel = ({ venues, error, pending }) => {
   const [currentPage, setCurrentPage] = useState(0);
 
   // Deal with error and pending states
   if (error) return <p>Nope</p>;
-  if (pending) return <p>Pending...</p>;
+  if (pending) return <Pending text={'Fetching venues...'} />;
 
   // The carousel displays the 12 highest rated venues
   let filteredVenues = venues?.data
