@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Gallery } from './Gallery';
 import { HiOutlineViewGrid } from 'react-icons/hi';
 
@@ -8,6 +8,22 @@ export const Media = ({ mediaArray }) => {
   const [primaryImage, ...gallery] = mediaArray; // Destructure media array
   const mediaArrayLength = gallery.length; // Define array length for gallery behaviour
   const renderedGallery = gallery.slice(0, 4); // Get the first four elements of the gallery array for rendering image grid
+
+  useEffect(() => {
+    if (isVisible) {
+      // Disable body scrolling when modal is open
+      document.body.style.overflow = 'hidden';
+    } else {
+      // Enable body scrolling when modal is closed
+      document.body.style.overflow = 'auto';
+    }
+
+    // Cleanup function
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isVisible]);
+
   return (
     <div
       className={`relative h-[430px] ${mediaArrayLength > 3 ? 'grid-cols-2 gap-2 md:grid' : 'block md:h-[460px]'} `}
