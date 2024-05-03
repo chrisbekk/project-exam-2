@@ -1,8 +1,12 @@
 import React from 'react';
 import { VenueInformation } from './VenueInformation';
 import { Host } from './Host';
+import { Description } from './Description';
+import { MetaDetails } from './MetaDetails';
+import { Calendar } from '../Calendar';
+import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 
-export const VenueDetails = ({ data }) => {
+export const VenueDetails = ({ data, fromDate, setFromDate }) => {
   console.log(data);
   const {
     description,
@@ -26,6 +30,12 @@ export const VenueDetails = ({ data }) => {
       </p>
       <VenueInformation price={price} rating={rating} maxGuests={maxGuests} />
       <Host owner={owner} />
+      <Description description={description} />
+      <MetaDetails meta={meta} />
+      <DateCalendar
+        value={fromDate}
+        onChange={newValue => setFromDate(newValue)}
+      />
     </div>
   );
 };

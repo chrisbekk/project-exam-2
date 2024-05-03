@@ -12,6 +12,12 @@ export const Venue = () => {
   console.log(venueId);
   const { venue, error, pending } = useFetchVenue(venueId);
   const [isVisible, setIsVisible] = useState(false); // Toggle Booking Form Modal
+
+  // State for controlling calendar
+  const [fromDate, setFromDate] = useState(null);
+  const [toDate, setToDate] = useState(null);
+  console.log(fromDate);
+
   // States for booking information
   const [nights, setNights] = useState(0); // Total nights booked
   const [guests, setGuests] = useState(0); // Total guests booked
@@ -31,7 +37,11 @@ export const Venue = () => {
       <Section>
         <div className="relative min-h-[100vh] md:grid md:grid-cols-[0.60fr_0.40fr] md:gap-2">
           <div className="">
-            <VenueDetails data={venue?.data} />
+            <VenueDetails
+              data={venue?.data}
+              fromDate={fromDate}
+              setFromDate={setFromDate}
+            />
           </div>
           <div className="fixed bottom-0 left-0 w-full md:sticky md:bottom-auto md:top-32 md:h-[45vh]">
             <BookingForm price={venue?.data.price} nights={nights} />
