@@ -3,13 +3,13 @@ import venueReducer, { VENUE_DEFAULT_VALUE } from '../reducers/venueReducer';
 const context = createContext();
 
 export default function ContextProvider({ children }) {
-  const [venueFilter, filterDispatch] = useReducer(
+  const [venues, filterDispatch] = useReducer(
     venueReducer,
     VENUE_DEFAULT_VALUE,
   );
 
   const contextValue = {
-    venueFilter: { venueFilter, filterDispatch },
+    filter: { venues, filterDispatch },
   };
 
   return <context.Provider value={contextValue}>{children}</context.Provider>;

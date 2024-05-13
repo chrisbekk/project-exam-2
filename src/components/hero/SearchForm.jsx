@@ -2,26 +2,37 @@ import React from 'react';
 import { useState } from 'react';
 import { Button } from '../Button';
 import { useNavigate } from 'react-router-dom';
-import { useSearchParams } from 'react-router-dom';
+
 export const SearchForm = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [destination, setDestination] = useState('');
-  const [fromDate, setFromDate] = useState('');
-  const [toDate, setToDate] = useState('');
-  const navigate = useNavigate();
+  const [destination, setDestination] = useState(''); // Declare state for form value: destination
+  const [fromDate, setFromDate] = useState(''); // Declare state for form value: fromDate
+  const [toDate, setToDate] = useState(''); // Declare state for form value: toDate
+  const navigate = useNavigate(); // React Router Dom hook for router navigation
+  const [isActive, setIsActive] = useState(''); // Define which Calendar component that should be shown
+  // Search Form handler for form submission event
   const handleSubmit = e => {
     e.preventDefault();
-
-    const formData = new FormData(e.target);
-
-    const params = {};
+    // Get form data from search form & convert into regular JS object
+    const formData = new FormData(e.target); //
+    const filterValues = {};
     formData.forEach((value, key) => {
-      params[key] = value;
-      console.log(typeof value);
+      filterValues[key] = value;
     });
 
-    setSearchParams(params);
-    const queryString = new URLSearchParams(params).toString();
+    // Format date values; if no date provided by user, set to empty string
+    filterValues.fromDate =
+      filterValues.fromDate === ''
+        ? ''
+        : new Date(filterValues.fromDate).toISOString();
+    filterValues.toDate =
+      filterValues.toDate === ''
+        ? ''
+        : new Date(filterValues.toDate).toISOString();
+
+    // Set guests to default value
+    filterValues.guests = 0;
+    // Construct URL search param string from form data
+    const queryString = new URLSearchParams(filterValues).toString();
 
     // Navigate to the new location
     navigate(`/venues?${queryString}`);

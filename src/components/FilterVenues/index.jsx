@@ -4,11 +4,25 @@ import { Modal } from '../modal';
 import { Calendar } from '../Calendar';
 import { AddGuests } from '../AddGuests';
 
-export const FilterVenues = () => {
+//TODO: Change the input elements so that they are not controlled by state.
+//TODO: User inputs should not trigger rerendering, only user clicking search button.
+//TODO: Input value not default set to states from search form
+
+export const FilterVenues = ({
+  setDestination,
+  setFromDate,
+  setToDate,
+  setGuests,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isActive, setIsActive] = useState('');
-
   const containerRef = useRef(null);
+
+  // Declare states for rendering component value
+  const [destinationInput, setDestinationInput] = useState('');
+  const [fromDateInput, setFromDateInput] = useState('');
+  const [toDateInput, setToDateInput] = useState('');
+  const [guestsInput, setGuestsInput] = useState('');
 
   const handleActive = e => {
     setIsActive(e.target.id);
@@ -16,6 +30,14 @@ export const FilterVenues = () => {
 
   const handleToggleModal = () => {
     setIsOpen(true);
+  };
+
+  const handleFilterVenues = () => {
+    setDestination(destinationInput);
+    setFromDate(fromDateInput);
+    setToDate(toDateInput);
+    setGuests(guestsInput);
+    setIsActive('');
   };
 
   useEffect(() => {
@@ -56,6 +78,8 @@ export const FilterVenues = () => {
           </label>
           <input
             id="destination"
+            value={destinationInput}
+            onChange={e => setDestinationInput(e.target.value)}
             placeholder="Search for destinations"
             type="text"
             className={`${isActive === 'destination' ? 'rounded-full bg-white drop-shadow-xl' : 'bg-neutral-100'}  absolute inset-0 h-full w-full rounded-l-full pl-6 pt-2 text-sm font-light focus:outline-none`}
@@ -71,12 +95,12 @@ export const FilterVenues = () => {
             Check In
           </p>
           <p className="pointer-events-none absolute left-6 top-9 text-xs font-thin">
-            Add date
+            {fromDateInput === '' ? 'Add date' : fromDateInput.substring(0, 10)}
           </p>
           <div
             className={`absolute ${isActive === 'fromDate' ? 'block' : 'hidden'} -bottom-[535%] -left-[100%]`}
           >
-            <Calendar />
+            <Calendar handleChange={setFromDateInput} />
           </div>
         </div>
         <div
@@ -89,12 +113,12 @@ export const FilterVenues = () => {
             Check Out
           </p>
           <p className="pointer-events-none absolute left-6 top-9 text-xs font-thin">
-            Add date
+            {toDateInput === '' ? 'Add date' : toDateInput.substring(0, 10)}
           </p>
           <div
             className={`absolute ${isActive === 'toDate' ? 'block' : 'hidden'} -bottom-[535%] -left-[100%]`}
           >
-            <Calendar />
+            <Calendar handleChange={setToDateInput} />
           </div>
         </div>
         <div
@@ -106,16 +130,23 @@ export const FilterVenues = () => {
             Guests
           </p>
           <p className="pointer-events-none absolute left-6 top-9 text-xs font-thin">
-            Add guests
+            {guestsInput == 0
+              ? 'Add guests'
+              : guestsInput === 1
+                ? guestsInput + ' guest'
+                : guestsInput + ' guests'}
           </p>
           <div
-            className={`absolute ${isActive === 'guests' ? 'block' : 'hidden'} -bottom-[602%] right-0`}
+            className={`absolute ${isActive === 'guests' ? 'block' : 'hidden'} -bottom-[705%] right-0`}
           >
-            <AddGuests />
+            <AddGuests setGuests={setGuestsInput} />
           </div>
         </div>
 
-        <button className="absolute right-3 top-10 flex size-14 translate-y-[-50%] transform items-center justify-center rounded-full bg-brand">
+        <button
+          onClick={handleFilterVenues}
+          className="absolute right-3 top-10 flex size-14 translate-y-[-50%] transform items-center justify-center rounded-full bg-brand"
+        >
           <HiOutlineSearch className="text-white" />
         </button>
       </div>

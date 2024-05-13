@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       screens: {
-        xs: '540px',
+        xs: '430px',
       },
       fontFamily: {
         primary: ['Plus Jakarta Sans', 'sans-serif'],
