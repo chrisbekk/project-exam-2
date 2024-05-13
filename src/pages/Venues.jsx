@@ -44,14 +44,7 @@ export const Venues = () => {
 
   return (
     <>
-      <div className="px-2">
-        <FilterVenues
-          setDestination={setDestination}
-          setFromDate={setFromDate}
-          setToDate={setToDate}
-          setGuests={setGuests}
-        />
-      </div>
+      <div className="px-2"></div>
 
       <Section>
         <VenuesContainer
