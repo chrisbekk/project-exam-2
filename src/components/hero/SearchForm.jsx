@@ -38,7 +38,7 @@ export const SearchForm = () => {
     navigate(`/venues?${queryString}`);
   };
   return (
-    <div className="bg-neutral-50 p-2 shadow-md md:absolute md:bottom-1/2 md:left-0 md:w-[570px] md:-translate-x-0 md:translate-y-1/2 md:transform md:rounded-lg md:p-14">
+    <div className="bg-neutral-50 p-2 shadow-md md:absolute md:bottom-1/2 md:left-0 md:w-[594px] md:translate-x-0 md:translate-y-1/2 md:transform md:rounded-lg md:p-14">
       <h1 className="my-2 text-base font-semibold">
         Search for vacation destination
       </h1>

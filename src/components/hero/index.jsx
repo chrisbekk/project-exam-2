@@ -3,7 +3,7 @@ import { SearchForm } from './SearchForm';
 
 export const Hero = () => {
   return (
-    <div className="relative md:flex md:justify-end">
+    <div className="relative md:flex md:justify-end xl:mx-auto xl:max-w-[1280px]">
       <div className="w-full md:max-w-[720px]">
         <img
           src="hero.webp"

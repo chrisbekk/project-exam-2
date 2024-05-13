@@ -6,11 +6,13 @@ export const ProductGallery = ({ media }) => {
   const gallerySize = media.length;
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const swipeLeft = () => {
+  const swipeLeft = e => {
+    e.stopPropagation();
     if (currentIndex === 0) return;
     setCurrentIndex(prevIndex => prevIndex - 1);
   };
-  const swipeRight = () => {
+  const swipeRight = e => {
+    e.stopPropagation();
     if (currentIndex === gallerySize - 1) return;
     setCurrentIndex(prevIndex => prevIndex + 1);
   };
@@ -20,10 +22,13 @@ export const ProductGallery = ({ media }) => {
         {gallerySize > 1 && (
           <div className="absolute  inset-0 z-40 hidden items-center justify-between px-2 transition-all group-hover:flex">
             <div className="flex size-8 items-center justify-center rounded-full bg-neutral-100 shadow-lg">
-              <GoChevronLeft className="text-lg" onClick={swipeLeft} />
+              <GoChevronLeft className="text-lg" onClick={e => swipeLeft(e)} />
             </div>
             <div className="flex size-8 items-center justify-center rounded-full bg-neutral-100 shadow-lg">
-              <GoChevronRight className="text-lg" onClick={swipeRight} />
+              <GoChevronRight
+                className="text-lg"
+                onClick={e => swipeRight(e)}
+              />
             </div>
           </div>
         )}

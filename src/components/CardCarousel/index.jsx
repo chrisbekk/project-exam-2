@@ -27,7 +27,7 @@ export const CardCarousel = ({ venues, error, pending }) => {
   };
 
   return (
-    <div className="pb-8 xl:mx-auto xl:max-w-[1280px]">
+    <div className=" pb-8 xl:mx-auto xl:max-w-[1280px]">
       <div className="flex justify-between">
         <div>
           <h1 className="pb-1 text-xl font-semibold xs:text-2xl sm:text-3xl">
@@ -60,7 +60,7 @@ export const CardCarousel = ({ venues, error, pending }) => {
         <div
           className="grid place-items-center gap-12 sm:grid-cols-2 lg:grid-cols-3 xl:flex xl:gap-4"
           style={{
-            transform: `translateX(-${currentPage * 100}%)`,
+            transform: `translateX(-${currentPage * 101.3}%)`,
             transition: 'transform 0.3s ease-in-out',
           }}
         >

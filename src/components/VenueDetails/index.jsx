@@ -23,10 +23,18 @@ export const VenueDetails = ({ data, fromDate, setFromDate }) => {
     <div>
       <h1 className="text-3xl font-semibold md:hidden">{name}</h1>
       <p className="text-neutral-500">
-        {location.address !== 'string' && location.address + ', '}
-        {location.city !== 'string' && location.city + ', '}
-        {location.zip !== 'string' && location.zip + ', '}
-        {location.country !== 'string' && location.country}
+        {location.address !== 'string' &&
+          location.address !== null &&
+          location.address + ', '}
+        {location.city !== 'string' &&
+          location.city !== null &&
+          location.city + ', '}
+        {location.zip !== 'string' &&
+          location.zip !== null &&
+          location.zip + ', '}
+        {location.country !== 'string' &&
+          location.country !== null &&
+          location.country}
       </p>
       <VenueInformation price={price} rating={rating} maxGuests={maxGuests} />
       <Host owner={owner} />
