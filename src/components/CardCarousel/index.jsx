@@ -27,7 +27,7 @@ export const CardCarousel = ({ venues, error, pending }) => {
   };
 
   return (
-    <div className="pb-8">
+    <div className="pb-8 xl:border xl:border-red-600">
       <div className="flex justify-between">
         <div>
           <h1 className="pb-1 text-xl font-semibold xs:text-2xl sm:text-3xl">
