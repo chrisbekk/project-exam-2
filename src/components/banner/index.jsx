@@ -24,12 +24,12 @@ const images = [
 export const Banner = () => {
   return (
     <div className="z-50 overflow-hidden from-neutral-100 via-transparent to-neutral-100  py-14">
-      <div className="animate-bannerLeft mb-8 flex gap-2">
+      <div className="mb-8 flex -translate-x-56 gap-2">
         {images.map((image, index) => (
           <img src={image} key={index} className="h-[200px]" />
         ))}
       </div>
-      <div className="animate-bannerRight flex gap-2">
+      <div className="flex -translate-x-[620px] gap-2">
         {images.map((image, index) => (
           <img src={image} key={index} className="h-[200px]" />
         ))}
