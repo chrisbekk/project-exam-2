@@ -98,7 +98,7 @@ export const FilterVenues = ({
             {fromDateInput === '' ? 'Add date' : fromDateInput.substring(0, 10)}
           </p>
           <div
-            className={`absolute ${isActive === 'fromDate' ? 'block' : 'hidden'} -bottom-[535%] -left-[100%]`}
+            className={`absolute ${isActive === 'fromDate' ? 'block' : 'hidden'} -bottom-[535%] -left-[100%] z-50`}
           >
             <Calendar handleChange={setFromDateInput} />
           </div>
