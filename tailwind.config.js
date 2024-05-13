@@ -2,10 +2,13 @@
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
+    screens: {
+      xs: '430px',
+      md: '835px',
+      lg: '1280px',
+      xl: '1440px',
+    },
     extend: {
-      screens: {
-        xs: '540px',
-      },
       fontFamily: {
         primary: ['Plus Jakarta Sans', 'sans-serif'],
       },
