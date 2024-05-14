@@ -6,6 +6,7 @@ import { VenuesContainer } from '../components/VenuesContainer';
 import { useState, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import FilterResults from '../components/FilterResults';
+import filterVenuesByDestination from '../utils/filterVenues';
 export const Venues = () => {
   const { venues, error, pending } = useFetchVenues();
 
@@ -16,28 +17,9 @@ export const Venues = () => {
   );
   const [rating, setRating] = useState(null);
   const [price, setPrice] = useState(null);
-  const [guests, setGuests] = useState(null);
-
   const filteredVenues = useMemo(() => {
-    let filteredVenues = venues?.data;
-
-    // Filter venues by destination
-    if (destination !== '') {
-      filteredVenues = filteredVenues?.filter(
-        venue =>
-          venue.location.city?.toLowerCase() === destination.toLowerCase(),
-      );
-    }
-    //Sort filtered venues by price
-    if (price) {
-      filteredVenues = filteredVenues?.sort((low, high) => {
-        return low.price - high.price;
-      });
-    }
-
-    return filteredVenues;
-  }, [venues, destination, price]);
-  console.log(filteredVenues);
+    return filterVenuesByDestination(venues?.data, destination);
+  }, [venues, destination]);
   return (
     <>
       <div className="px-2">{destination}</div>
