@@ -9,7 +9,7 @@ import FilterResults from '../components/FilterResults';
 import filterVenuesByDestination from '../utils/filterVenues';
 export const Venues = () => {
   const { venues, error, pending } = useFetchVenues();
-
+  console.log(venues);
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const [destination, setDestination] = useState(
