@@ -14,7 +14,7 @@ export const Gallery = ({ isVisible, setIsVisible, gallery }) => {
             className="h-full w-full object-contain sm:rounded-md"
           />
         </div>
-        <div className=" mx-auto grid max-w-[420px] grid-cols-6  gap-1 border border-red-500 pt-10">
+        <div className=" mx-auto grid max-w-[420px] grid-cols-6  gap-1  pt-10">
           {gallery.map((image, index) => {
             return (
               <div

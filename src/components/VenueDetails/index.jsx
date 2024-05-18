@@ -3,11 +3,18 @@ import { VenueInformation } from './VenueInformation';
 import { Host } from './Host';
 import { Description } from './Description';
 import { MetaDetails } from './MetaDetails';
-import { Calendar } from '../Calendar';
-import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
+import Guests from './Guests';
+import BookingDates from './BookingDates';
 
-export const VenueDetails = ({ data, fromDate, setFromDate }) => {
-  console.log(data);
+export const VenueDetails = ({
+  data,
+  fromDate,
+  setFromDate,
+  toDate,
+  setToDate,
+  nights,
+  setNights,
+}) => {
   const {
     description,
     id,
@@ -40,10 +47,15 @@ export const VenueDetails = ({ data, fromDate, setFromDate }) => {
       <Host owner={owner} />
       <Description description={description} />
       <MetaDetails meta={meta} />
-      <DateCalendar
-        value={fromDate}
-        onChange={newValue => setFromDate(newValue)}
+      <BookingDates
+        fromDate={fromDate}
+        toDate={toDate}
+        setFromDate={setFromDate}
+        setToDate={setToDate}
+        nights={nights}
+        setNights={setNights}
       />
+      <Guests maxGuests={maxGuests} />
     </div>
   );
 };
