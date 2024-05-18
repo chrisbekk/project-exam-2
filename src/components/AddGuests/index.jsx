@@ -1,5 +1,3 @@
-import React from 'react';
-
 export const AddGuests = ({ setGuests }) => {
   return (
     <div className="h-max w-[320px] rounded-2xl bg-white px-2 py-10">

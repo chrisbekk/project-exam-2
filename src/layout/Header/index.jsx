@@ -1,7 +1,6 @@
 import { HiPaperAirplane } from 'react-icons/hi';
 import NavigationButton from './NavigationButton';
 import { Link, useLocation } from 'react-router-dom';
-import { FilterVenues } from '../../components/FilterVenues';
 
 export default function Header() {
   const location = useLocation();

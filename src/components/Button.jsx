@@ -1,5 +1,3 @@
-import React from 'react';
-
 export const Button = ({ children, small = false, handleClick }) => {
   return (
     <button

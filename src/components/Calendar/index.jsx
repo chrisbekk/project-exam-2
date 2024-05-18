@@ -1,25 +1,16 @@
-import React, { useState, useRef } from 'react';
-import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
-import dayjs from 'dayjs';
-
-export const Calendar = ({ handleChange }) => {
-  const [value, setValue] = useState(dayjs());
-  const handleDateChange = newValue => {
-    setValue(newValue);
-    handleChange(newValue.$d.toISOString()); // Call the onChange function with the new date value
-  };
-
-  // Stop propagation of the click event to prevent it from reaching the parent component
-  const handleContainerClick = e => {
-    e.stopPropagation();
-  };
-
+import { DatePicker, MobileDatePicker } from '@mui/x-date-pickers';
+export default function Calendar({ value, onChange }) {
   return (
-    <div
-      className="w-max rounded-2xl border bg-white xs:p-10"
-      onClick={handleContainerClick}
-    >
-      <DateCalendar value={value} onChange={handleDateChange} />
-    </div>
+    <>
+      <div className="hidden sm:block">
+        <DatePicker value={value} onChange={newValue => onChange(newValue)} />
+      </div>
+      <div className="block sm:hidden">
+        <MobileDatePicker
+          value={value}
+          onChange={newValue => onChange(newValue)}
+        />
+      </div>
+    </>
   );
-};
+}

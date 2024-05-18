@@ -15,7 +15,7 @@ export const Home = () => {
   const context = useAuthContext();
   console.log(context);
   const navigate = useNavigate();
-  const { venues, error, pending } = useFetchVenues();
+  const { venues, error, pending } = useFetchVenues(100, 1);
 
   const handleClick = () => {
     if (!context.data) return;

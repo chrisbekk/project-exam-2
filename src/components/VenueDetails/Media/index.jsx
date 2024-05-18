@@ -26,9 +26,9 @@ export const Media = ({ mediaArray }) => {
 
   return (
     <div
-      className={`relative h-[430px] ${mediaArrayLength > 3 ? 'grid-cols-2 gap-2 md:grid' : 'block md:h-[460px]'} `}
+      className={`relative h-[450px] xl:max-h-[768px] ${mediaArrayLength > 3 ? 'grid-cols-2 gap-2 md:grid' : 'block'} `}
     >
-      <div className={`h-full`}>
+      <div className="h-full w-full ">
         <img
           src={primaryImage?.url}
           className="h-full w-full object-cover sm:rounded-lg"
@@ -42,13 +42,13 @@ export const Media = ({ mediaArray }) => {
         </button>
       </div>
       {mediaArrayLength > 3 && (
-        <div className=" hidden md:grid md:grid-cols-2 md:grid-rows-2 md:gap-1">
+        <div className="hidden min-h-full w-full  md:grid md:grid-cols-2 md:grid-rows-2 md:gap-1">
           {renderedGallery.map((image, index) => {
             return (
               <img
                 src={image?.url}
                 key={index}
-                className="h-full w-full object-cover sm:rounded-lg"
+                className="aspect-square h-full w-full object-cover sm:rounded-lg"
               />
             );
           })}

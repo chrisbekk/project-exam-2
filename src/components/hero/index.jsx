@@ -1,5 +1,6 @@
 import React from 'react';
 import { SearchForm } from './SearchForm';
+import BrowseVenues from './BrowseVenues';
 
 export const Hero = () => {
   return (
@@ -12,7 +13,7 @@ export const Hero = () => {
         />
       </div>
 
-      <SearchForm />
+      <BrowseVenues />
     </div>
   );
 };

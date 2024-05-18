@@ -1,58 +1,87 @@
 import { Section } from '../components/Section';
-import { FilterVenues } from '../components/FilterVenues';
+import FilterVenues from '../components/FilterVenues';
 import { useFetchVenues } from '../context/useFetchVenues';
 import { Button } from '../components/Button';
 import { VenuesContainer } from '../components/VenuesContainer';
-import { useState } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-export const Venues = () => {
-  const { venues, error, pending } = useFetchVenues();
+import FilterResults from '../components/FilterResults';
+import filterVenuesByDestination from '../utils/filterVenues';
+import Pagination from '../components/Pagination';
 
+export const Venues = () => {
+  const [fetchPage, setFetchPage] = useState(1);
+  const { venues, error, pending } = useFetchVenues(50, fetchPage);
+  console.log(venues);
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const [destination, setDestination] = useState(
     queryParams.get('destination'),
   );
-  const [fromDate, setFromDate] = useState(queryParams.get('fromDate'));
-  const [toDate, setToDate] = useState(queryParams.get('toDate'));
-  const [guests, setGuests] = useState(queryParams.get('guests'));
+  const [filter, setFilter] = useState(null);
+  const [metaFilter, setMetaFilter] = useState({
+    wifi: null,
+    parking: null,
+    breakfast: null,
+    pets: null,
+  });
+  const [applyMetaFilter, setApplyMetaFilter] = useState(false); // Flag to apply metaFilter
 
-  let filteredVenues = venues?.data;
+  let filteredVenues = useMemo(() => {
+    return filterVenuesByDestination(venues?.data, destination);
+  }, [venues, destination, fetchPage]);
 
-  // Filter venues by destination
-  if (destination !== '') {
-    filteredVenues = filteredVenues?.filter(
-      venue => venue.location.city?.toLowerCase() === destination.toLowerCase(),
-    );
-  }
+  // Effect to apply metaFilter when it changes
+  useEffect(() => {
+    setApplyMetaFilter(true); // Set flag to apply metaFilter
+  }, [metaFilter]);
 
-  // Filter venues by availability between specified dates
-  if (fromDate && toDate) {
-    filteredVenues = filteredVenues?.filter(venue => {
-      // Check if venue has any bookings that overlap with the specified date range
-      const hasOverlappingBookings = venue.bookings.some(booking => {
-        return (
-          (booking.dateFrom <= fromDate && booking.dateTo >= fromDate) ||
-          (booking.dateFrom <= toDate && booking.dateTo >= toDate) ||
-          (booking.dateFrom >= fromDate && booking.dateTo <= toDate)
-        );
+  if (filter) {
+    if (filter === 'price') {
+      filteredVenues = filteredVenues.sort((low, high) => {
+        return low.price - high.price;
       });
-
-      return !hasOverlappingBookings; // Exclude venues with overlapping bookings
-    });
+    } else {
+      filteredVenues = filteredVenues.sort((low, high) => {
+        return high.rating - low.rating;
+      });
+    }
   }
+
+  // Filter Venues by user defined tags
+  filteredVenues = filteredVenues?.filter(venue => {
+    if (!applyMetaFilter) return true; // If flag is false, include all venues
+    for (const key in metaFilter) {
+      if (metaFilter[key] !== null && metaFilter[key] !== venue.meta[key]) {
+        return false; // If metaFilter is not null and venue's meta value doesn't match, exclude venue
+      }
+    }
+    return true; // Include venue if all metaFilter values are null or match venue's meta values
+  });
+
+  const fetchNextPage = () => {
+    setFetchPage(prev => prev + 1);
+  };
 
   return (
     <>
       <div className="px-2">
         <FilterVenues
+          filter={filter}
+          setFilter={setFilter}
+          metaFilter={metaFilter}
+          setMetaFilter={setMetaFilter}
           setDestination={setDestination}
-          setFromDate={setFromDate}
-          setToDate={setToDate}
-          setGuests={setGuests}
         />
       </div>
-
+      <Section>
+        {destination !== '' && (
+          <FilterResults
+            filteredVenues={filteredVenues}
+            destination={destination}
+          />
+        )}
+      </Section>
       <Section>
         <VenuesContainer
           venues={filteredVenues}
@@ -60,58 +89,7 @@ export const Venues = () => {
           pending={pending}
         />
       </Section>
-      <Button>View More</Button>
+      <Pagination meta={venues?.meta} setFetchPage={setFetchPage} />
     </>
   );
 };
-
-// import { Section } from '../components/Section';
-// import { FilterVenues } from '../components/FilterVenues';
-// import { useFetchVenues } from '../context/useFetchVenues';
-// import { Button } from '../components/Button';
-// import { VenuesContainer } from '../components/VenuesContainer';
-// import { useSearchParams } from 'react-router-dom';
-// import { useSiteContext } from '../context/venueContext';
-// import React from 'react';
-
-// export const Venues = () => {
-//   const { venues, error, pending } = useFetchVenues();
-//   // const [searchParams] = useSearchParams();
-//   // const destination = searchParams.get('destination');
-//   // const fromDate = searchParams.get('fromDate');
-//   // const toDate = searchParams.get('toDate');
-//   const {
-//     filter: { venues: state, filterDispatch },
-//   } = useSiteContext();
-//   console.log(state);
-//   console.log(venues);
-//   let filteredVenues;
-//   if (state.destination === '') {
-//     filteredVenues = venues?.data;
-//   } else {
-//     filteredVenues = venues?.data.filter(
-//       venue =>
-//         venue.location.city?.toLowerCase() === state.destination.toLowerCase(),
-//     );
-//   }
-//   //Filter venues
-
-//   //console.log(filteredVenues);
-
-//   return (
-//     <>
-//       <div className="px-2">
-//         <FilterVenues />
-//       </div>
-
-//       <Section>
-//         <VenuesContainer
-//           venues={filteredVenues}
-//           error={error}
-//           pending={pending}
-//         />
-//       </Section>
-//       <Button>View More</Button>
-//     </>
-//   );
-// };
