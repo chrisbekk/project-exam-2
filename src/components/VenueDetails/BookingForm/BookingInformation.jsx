@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import getFormattedTodayDate from '../../../utils/getTodayDate';
 import getNextDay from '../../../utils/getNextDay';
+import getOptionsArray from '../../../utils/getOptionsArray';
 export default function BookingInformation({
   fromDate,
   setFromDate,
@@ -13,11 +14,7 @@ export default function BookingInformation({
   const [isDisabled, setIsDisabled] = useState(true);
   const minFromDate = getFormattedTodayDate();
   const minToDate = getNextDay(fromDate);
-  const options = [];
-  for (let i = 0; i < maxGuests; i++) {
-    const option = i + 1;
-    options.push(option);
-  }
+  const options = getOptionsArray(maxGuests);
   const handleChange = e => {
     setFromDate(e.target.value);
     setIsDisabled(false);
@@ -52,6 +49,7 @@ export default function BookingInformation({
               type="date"
               disabled={isDisabled}
               min={minToDate}
+              value={toDate}
               onChange={e => setToDate(e.target.value)}
               className="h-14 w-full border-[0.5px] bg-neutral-50"
             />

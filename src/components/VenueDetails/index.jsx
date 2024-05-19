@@ -3,8 +3,6 @@ import { VenueInformation } from './VenueInformation';
 import { Host } from './Host';
 import { Description } from './Description';
 import { MetaDetails } from './MetaDetails';
-import Guests from './Guests';
-import BookingDates from './BookingDates';
 
 export const VenueDetails = ({
   data,
@@ -47,15 +45,6 @@ export const VenueDetails = ({
       <Host owner={owner} />
       <Description description={description} />
       <MetaDetails meta={meta} />
-      <BookingDates
-        fromDate={fromDate}
-        toDate={toDate}
-        setFromDate={setFromDate}
-        setToDate={setToDate}
-        nights={nights}
-        setNights={setNights}
-      />
-      <Guests maxGuests={maxGuests} />
     </div>
   );
 };
