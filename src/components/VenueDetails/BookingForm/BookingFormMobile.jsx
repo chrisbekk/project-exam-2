@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Button } from '../../Button';
-export const BookingForm = ({ price, nights }) => {
+export const BookingFormMobile = ({ price, nights }) => {
   return (
     <div className=" flex justify-between border-t-[0.5px] border-neutral-700 p-8 md:block md:rounded-lg md:border-none md:p-4 md:shadow-md">
       <div className="text-left ">

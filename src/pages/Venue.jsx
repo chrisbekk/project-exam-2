@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { useFetchVenue } from '../hooks/useFetchVenue';
 import { Section } from '../components/Section';
-import { BookingForm } from '../components/VenueDetails/BookingForm';
+import { BookingFormMobile } from '../components/VenueDetails/BookingForm/BookingFormMobile';
 import React from 'react';
 import { useState } from 'react';
 import { Media } from '../components/VenueDetails/Media';
@@ -46,8 +46,11 @@ export const Venue = () => {
               setNights={setNights}
             />
           </div>
-          <div className="fixed bottom-0 left-0 w-full md:sticky md:bottom-auto md:top-32 md:h-[45vh]">
-            <BookingForm price={venue?.data.price} nights={nights} />
+          <div className="hidden bg-red-300 md:sticky md:bottom-auto md:top-32 md:block md:h-[45vh]">
+            aside
+          </div>
+          <div className="fixed bottom-0 left-0 w-full md:hidden">
+            <BookingFormMobile price={venue?.data.price} nights={nights} />
           </div>
         </div>
       </Section>
