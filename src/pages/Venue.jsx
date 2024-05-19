@@ -1,12 +1,14 @@
 import { useParams } from 'react-router-dom';
 import { useFetchVenue } from '../hooks/useFetchVenue';
 import { Section } from '../components/Section';
-import { BookingFormMobile } from '../components/VenueDetails/BookingForm/BookingFormMobile';
-import React from 'react';
+import BookingFormMobile from '../components/VenueDetails/BookingForm/BookingFormMobile';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { Media } from '../components/VenueDetails/Media';
 import { Pending } from '../components/Pending';
 import { VenueDetails } from '../components/VenueDetails';
+import BookingForm from '../components/VenueDetails/BookingForm/BookingForm';
+import calculateNightsBooked from '../utils/calculateNightsBooked';
 export const Venue = () => {
   const { venueId } = useParams();
 
@@ -19,6 +21,11 @@ export const Venue = () => {
 
   // States for booking information
   const [nights, setNights] = useState(0); // Total nights booked
+  const [guests, setGuests] = useState(0);
+  // Calculate total nights booked
+  useEffect(() => {
+    setNights(calculateNightsBooked(fromDate, toDate));
+  }, [fromDate, toDate]);
 
   // Derived state for total price
   let totalPrice = nights * venue?.data.price; //
@@ -47,10 +54,21 @@ export const Venue = () => {
             />
           </div>
           <div className="hidden bg-red-300 md:sticky md:bottom-auto md:top-32 md:block md:h-[45vh]">
-            aside
+            <BookingForm />
           </div>
           <div className="fixed bottom-0 left-0 w-full md:hidden">
-            <BookingFormMobile price={venue?.data.price} nights={nights} />
+            <BookingFormMobile
+              price={venue?.data.price}
+              nights={nights}
+              fromDate={fromDate}
+              setFromDate={setFromDate}
+              toDate={toDate}
+              setToDate={setToDate}
+              maxGuests={venue?.data.maxGuests}
+              totalPrice={totalPrice}
+              guests={guests}
+              setGuests={setGuests}
+            />
           </div>
         </div>
       </Section>
