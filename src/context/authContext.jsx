@@ -1,48 +1,17 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect } from 'react';
+import useSignIn from './../hooks/useSignIn';
+import createApiKey from '../api/createApiKey';
 const authContext = createContext();
 
 export function AuthProvider({ children }) {
-  const [data, setData] = useState(null);
-  const [fetchError, setFetchError] = useState(null);
-  async function useSignIn(payload) {
-    const options = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(payload),
-    };
-    try {
-      const response = await fetch(
-        'https://v2.api.noroff.dev/auth/login',
-        options,
-      );
-      if (!response.ok) {
-        const { statusCode, errors } = await response.json();
-        const errorData = { errors, statusCode };
-        console.warn(
-          `Sign In failed with the following status code: ${statusCode}`,
-          errors,
-        );
-        const error = new Error('Failed to sign in.');
-        error.data = errorData;
-        throw error;
-      }
-      const userData = await response.json();
-      setData(userData);
-    } catch (error) {
-      console.log(error);
-      setFetchError(error.data);
-      return Promise.reject(error);
+  const { data, fetchError, signIn, signOut } = useSignIn();
+  console.log(data?.accessToken);
+  useEffect(() => {
+    if (data) {
+      createApiKey(data.accessToken).then(res => console.log(res));
     }
-  }
-
-  const signOut = () => {
-    setData(null);
-    setFetchError(null);
-  };
-
-  const userContext = { data, fetchError, useSignIn, signOut };
+  }, [data]);
+  const userContext = { data, fetchError, signIn, signOut };
 
   return (
     <authContext.Provider value={userContext}>{children}</authContext.Provider>

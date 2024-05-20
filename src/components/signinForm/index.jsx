@@ -5,21 +5,23 @@ import { FormError } from '../FormError';
 import { useState } from 'react';
 import { useAuthContext } from '../../context/authContext';
 import { useNavigate } from 'react-router-dom';
+
 export const SignInForm = () => {
-  // Setting up states for inputs
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState(false);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
-  const { fetchError, useSignIn } = useAuthContext();
+  const { fetchError, signIn } = useAuthContext();
 
-  // Handle user sign in
-  const handleSignIn = e => {
+  const handleSignIn = async e => {
     e.preventDefault();
     const userData = { email, password };
-    useSignIn(userData)
-      .then(() => navigate('/auth/profile'))
-      .catch(() => setError(true));
+    try {
+      await signIn(userData);
+      //navigate('/auth/profile');
+    } catch (err) {
+      setError(fetchError);
+    }
   };
 
   return (
@@ -27,26 +29,35 @@ export const SignInForm = () => {
       <div className="relative mb-7">
         <input
           type="email"
-          className="w-full bg-neutral-100 border-b-[0.5px] border-neutral-500 placeholder-neutral-950 py-[18px] text-xs pl-8"
+          className="w-full border-b-[0.5px] border-neutral-500 bg-neutral-100 py-[18px] pl-8 text-xs placeholder-neutral-950"
           placeholder="Email"
           value={email}
           onChange={e => setEmail(e.target.value)}
         />
-        <MdAlternateEmail className="absolute top-4 left-2 size-5" />
+        <MdAlternateEmail className="absolute left-2 top-4 size-5" />
       </div>
       <div className="relative mb-7">
         <input
           type="password"
-          className="w-full bg-neutral-100 border-b-[0.5px] border-neutral-500 placeholder-neutral-950 py-[18px] text-xs pl-8"
+          className="w-full border-b-[0.5px] border-neutral-500 bg-neutral-100 py-[18px] pl-8 text-xs placeholder-neutral-950"
           placeholder="Password"
           value={password}
           onChange={e => setPassword(e.target.value)}
         />
-        <HiOutlineLockClosed className="absolute top-4 left-2 size-5" />
+        <HiOutlineLockClosed className="absolute left-2 top-4 size-5" />
       </div>
 
-      {error &&
-        fetchError.errors.map(error => <FormError message={error.message} />)}
+      {error && (
+        <div>
+          {error.errors ? (
+            error.errors.map((err, index) => (
+              <FormError key={index} message={err.message} />
+            ))
+          ) : (
+            <FormError message={error.message} />
+          )}
+        </div>
+      )}
 
       <Button>Sign In</Button>
     </form>
