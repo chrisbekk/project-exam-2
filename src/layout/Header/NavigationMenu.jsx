@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { useAuthContext } from '../../context/authContext';
 
 export default function NavigationMenu() {
-  const { data, signOut } = useAuthContext();
+  const { user, signOut } = useAuthContext();
   const menuItems = [
     {
       name: 'Sign In',
@@ -15,27 +15,27 @@ export default function NavigationMenu() {
     { name: 'Home', path: '/', signedInRoute: false },
   ];
 
-  const renderedMenuItems = data
+  const renderedMenuItems = user
     ? menuItems.filter(
         item => item.name !== 'Register User' && item.name !== 'Sign In',
       )
     : menuItems.filter(item => item.signedInRoute === false);
 
   return (
-    <div className="absolute top-[115%] right-0 bg-neutral-100 w-36 border-[0.5px] border-neutral-500 rounded-lg p-2">
+    <div className="absolute right-0 top-[115%] w-36 rounded-lg border-[0.5px] border-neutral-500 bg-neutral-100 p-2">
       {renderedMenuItems.map((item, index) => (
         <Link
           key={index}
-          className={`text-sm text-left block my-2 ${item.name === 'Home' ? 'border-t-[0.5px] border-neutral-500' : ''}`}
+          className={`my-2 block text-left text-sm ${item.name === 'Home' ? 'border-t-[0.5px] border-neutral-500' : ''}`}
           to={item.path}
         >
           {item.name}
         </Link>
       ))}
-      {data && (
+      {user && (
         <p
           onClick={signOut}
-          className="text-sm text-center text-white block my-2 bg-brand p-1 rounded-xl"
+          className="my-2 block rounded-xl bg-brand p-1 text-center text-sm text-white"
         >
           Sign Out
         </p>

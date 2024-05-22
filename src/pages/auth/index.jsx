@@ -4,6 +4,6 @@ import { useAuthContext } from '../../context/authContext';
 import React from 'react';
 
 export const AuthRoot = () => {
-  const { data } = useAuthContext();
-  return data ? <Outlet /> : <Navigate to={'/'} />;
+  const { user, apiKey } = useAuthContext();
+  return user && apiKey ? <Outlet /> : <Navigate to={'/'} />;
 };

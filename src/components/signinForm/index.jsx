@@ -18,7 +18,7 @@ export const SignInForm = () => {
     const userData = { email, password };
     try {
       await signIn(userData);
-      //navigate('/auth/profile');
+      navigate('/auth/profile');
     } catch (err) {
       setError(fetchError);
     }

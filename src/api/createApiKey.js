@@ -1,28 +1,27 @@
 export default async function createApiKey(token) {
-  let apiKey;
   console.log(token);
+  const name = { name: 'API_KEY' };
+  const OPTIONS = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(name),
+  };
   try {
     const response = await fetch(
       'https://v2.api.noroff.dev/auth/create-api-key',
-      {
-        method: 'POST',
-        mode: 'cors', // no-cors, *cors, same-origin
-        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-        headers: {
-          'Content-Type': 'application/json',
-          Auhorization: `Bearer ${token}`,
-        },
-      },
+      OPTIONS,
     );
     if (!response.ok) {
       const errorData = await response.json();
-      //console.log(errorData);
+      console.log(errorData);
       throw new Error('Failed to create API KEY');
     }
-    const responseData = await response.json();
-    //console.log(responseData);
-    apiKey = responseData;
-    return apiKey;
+    const { data } = await response.json();
+
+    return data;
   } catch (error) {
     console.log(error);
   }

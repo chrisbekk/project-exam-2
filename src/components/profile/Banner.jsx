@@ -1,7 +1,12 @@
 import default_banner from '/default_banner.webp';
 import ProfileImage from './ProfileImage';
 import EditButton from './EditButton';
-export default function Banner({ banner, avatar, username }) {
+export default function Banner({
+  banner,
+  avatar,
+  username,
+  setToggleEditProfile,
+}) {
   let { url, alt } = banner || {};
   const FALLBACK_BANNER = default_banner;
   let profileUsername =
@@ -13,7 +18,7 @@ export default function Banner({ banner, avatar, username }) {
       'A banner in the pink colors of the Holidaze brand with Holidaze written on it.';
   }
   return (
-    <div className="relative w-full rounded-xl md:h-[250px]">
+    <div className="relative h-[175px] w-full rounded-xl">
       <img
         src={url}
         alt={alt}
@@ -24,7 +29,7 @@ export default function Banner({ banner, avatar, username }) {
         <p className="font-semibold">{profileUsername}</p>
       </div>
       <div className="absolute bottom-4 right-3">
-        <EditButton />
+        <EditButton setToggleEditProfile={setToggleEditProfile} />
       </div>
     </div>
   );

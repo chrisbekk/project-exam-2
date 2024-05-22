@@ -1,10 +1,16 @@
-import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { Section } from '../../components/Section';
+import ProfileEditor from './ProfileEditor';
+import { AnimatePresence } from 'framer-motion';
+import { useAuthContext } from '../../context/authContext';
 import Banner from './Banner';
-export default function ProfilePage({ data }) {
+import EditProfile from './EditProfile';
+export default function ProfilePage() {
   const [toggleEditProfile, setToggleEditProfile] = useState(false);
-  console.log(data);
+  const {
+    user: { data },
+  } = useAuthContext();
+  console.log(toggleEditProfile);
   return (
     <>
       <Section ySpace={false} limWidth={true}>
@@ -12,10 +18,23 @@ export default function ProfilePage({ data }) {
           banner={data?.banner}
           avatar={data?.avatar}
           username={data?.name}
+          setToggleEditProfile={setToggleEditProfile}
         />
       </Section>
       <Section ySpace={false} limWidth={true}>
-        userName
+        <AnimatePresence>
+          {toggleEditProfile && (
+            <EditProfile setToggleEditProfile={setToggleEditProfile}>
+              <ProfileEditor
+                bio={data?.bio}
+                banner={data?.banner}
+                avatar={data?.avatar}
+                name={data?.name}
+                setToggleEditProfile={setToggleEditProfile}
+              />
+            </EditProfile>
+          )}
+        </AnimatePresence>
       </Section>
     </>
   );
