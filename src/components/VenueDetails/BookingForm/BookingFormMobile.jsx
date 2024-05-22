@@ -16,6 +16,7 @@ export default function BookingFormMobile({
   nights,
   guests,
   setGuests,
+  venueId,
 }) {
   const [toggleForm, setToggleForm] = useState(false);
   const fromDateString = formatDateString(fromDate);
@@ -35,6 +36,15 @@ export default function BookingFormMobile({
       controls.start('exit');
       setToggleForm(false);
     }
+  };
+  const handleBooking = () => {
+    const bookingData = {
+      dateFrom: fromDate,
+      dateTo: toDate,
+      guests: guests,
+      venueId: venueId,
+    };
+    console.log(bookingData);
   };
   return (
     <AnimatePresence>
@@ -64,7 +74,11 @@ export default function BookingFormMobile({
                     : `${guests} guests`}
               </p>
             </button>
-            <Button small={true} disabled={!isSignedIn}>
+            <Button
+              small={true}
+              disabled={!isSignedIn}
+              handleClick={handleBooking}
+            >
               {isSignedIn ? 'Reserve' : 'Sign In to Reserve'}
             </Button>
           </div>

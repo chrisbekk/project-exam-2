@@ -12,13 +12,14 @@ import {
   isSameDay,
   isWithinInterval,
   parseISO,
+  isBefore,
 } from 'date-fns';
 import React, { useState } from 'react';
+import CalendarButton from './CalendarButton';
 
-const Calendar = ({ bookings }) => {
+const Calendar = ({ bookings, fromDate, toDate, setFromDate, setToDate }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
-  const dateFormat = 'yyyy-MM-dd';
-
+  console.log(bookings);
   let startDay = startOfMonth(currentMonth);
   const endDay = endOfMonth(currentMonth);
   const days = [];
@@ -35,7 +36,7 @@ const Calendar = ({ bookings }) => {
   const prevMonth = () => {
     setCurrentMonth(subMonths(currentMonth, 1));
   };
-
+  console.log(parseISO(bookings[0].dateFrom));
   const isDateInBooking = date => {
     return bookings.some(booking =>
       isWithinInterval(date, {
@@ -61,30 +62,17 @@ const Calendar = ({ bookings }) => {
       </div>
       <div className="grid grid-cols-7 grid-rows-5 gap-1 rounded-xl p-1">
         {days.map((day, index) => (
-          <div
+          <CalendarButton
+            day={day}
             key={index}
-            className={`${isSameDay(day, new Date()) ? 'border border-black bg-blue-100' : ''} ${isDateInBooking(day) ? 'bg-neutral-300' : ''} flex w-full flex-col justify-between rounded-xl border p-2 lg:size-20`}
-          >
-            <div>
-              <p
-                className={
-                  format(day, 'EEE') === 'Sun'
-                    ? 'text-sm text-red-500'
-                    : 'text-sm text-neutral-400'
-                }
-              >
-                {format(day, 'EEE')}
-              </p>
-            </div>
-            <div className="flex justify-center lg:justify-end lg:pr-3">
-              <p className="text-xs ">
-                <span className="hidden lg:inline">{format(day, 'MMM')}</span>
-                <span className="text-xs font-bold lg:text-sm">
-                  {format(day, 'dd')}
-                </span>
-              </p>
-            </div>
-          </div>
+            index={index}
+            isDateInBooking={isDateInBooking}
+            fromDate={fromDate}
+            toDate={toDate}
+            setFromDate={setFromDate}
+            setToDate={setToDate}
+            bookedDates={bookings}
+          />
         ))}
       </div>
     </div>

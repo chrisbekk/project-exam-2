@@ -10,6 +10,7 @@ import { VenueDetails } from '../components/VenueDetails';
 import BookingForm from '../components/VenueDetails/BookingForm/BookingForm';
 import calculateNightsBooked from '../utils/calculateNightsBooked';
 import Calendar from '../components/Calendar';
+import DateManager from '../components/VenueDetails/DateManager';
 export const Venue = () => {
   const { venueId } = useParams();
 
@@ -53,10 +54,17 @@ export const Venue = () => {
               nights={nights}
               setNights={setNights}
             />
-            <Calendar bookings={venue?.data.bookings} />
+
+            <DateManager
+              bookings={venue?.data.bookings}
+              fromDate={fromDate}
+              toDate={toDate}
+              setFromDate={setFromDate}
+              setToDate={setToDate}
+            />
           </div>
 
-          <BookingForm
+          {/* <BookingForm
             price={venue?.data.price}
             nights={nights}
             fromDate={fromDate}
@@ -67,9 +75,10 @@ export const Venue = () => {
             totalPrice={totalPrice}
             guests={guests}
             setGuests={setGuests}
-          />
+            venueId={venue?.data.id}
+          /> */}
 
-          <BookingFormMobile
+          {/* <BookingFormMobile
             price={venue?.data.price}
             nights={nights}
             fromDate={fromDate}
@@ -80,7 +89,8 @@ export const Venue = () => {
             totalPrice={totalPrice}
             guests={guests}
             setGuests={setGuests}
-          />
+            venueId={venue?.data.id}
+          /> */}
         </div>
       </Section>
     </div>
