@@ -9,6 +9,7 @@ import { Pending } from '../components/Pending';
 import { VenueDetails } from '../components/VenueDetails';
 import BookingForm from '../components/VenueDetails/BookingForm/BookingForm';
 import calculateNightsBooked from '../utils/calculateNightsBooked';
+import Calendar from '../components/Calendar';
 export const Venue = () => {
   const { venueId } = useParams();
 
@@ -29,11 +30,11 @@ export const Venue = () => {
 
   // Derived state for total price
   let totalPrice = nights * venue?.data.price; //
-
+  const bookedDates = ['2024-05-20', '2024-05-21', '2024-05-22'];
   if (error) return <p>Error in fetching venues</p>;
   if (pending || !venue) return <Pending text={'Fetching venues...'} />;
   return (
-    <div className="max-w-[1024px] border border-red-500 md:mx-auto">
+    <div className="max-w-[1024px] md:mx-auto">
       <h1 className="hidden md:my-4 md:block md:text-3xl md:font-semibold">
         {venue?.data.name}
       </h1>
@@ -42,7 +43,7 @@ export const Venue = () => {
       </Section>
       <Section>
         <div className="relative min-h-[100vh] md:flex md:gap-4">
-          <div className="border border-red-600 md:max-w-[60%]">
+          <div className=" md:w-[100%]">
             <VenueDetails
               data={venue?.data}
               fromDate={fromDate}
@@ -52,6 +53,7 @@ export const Venue = () => {
               nights={nights}
               setNights={setNights}
             />
+            <Calendar bookings={venue?.data.bookings} />
           </div>
 
           <BookingForm
@@ -67,20 +69,18 @@ export const Venue = () => {
             setGuests={setGuests}
           />
 
-          <div className="fixed bottom-0 left-0 w-full md:hidden">
-            <BookingFormMobile
-              price={venue?.data.price}
-              nights={nights}
-              fromDate={fromDate}
-              setFromDate={setFromDate}
-              toDate={toDate}
-              setToDate={setToDate}
-              maxGuests={venue?.data.maxGuests}
-              totalPrice={totalPrice}
-              guests={guests}
-              setGuests={setGuests}
-            />
-          </div>
+          <BookingFormMobile
+            price={venue?.data.price}
+            nights={nights}
+            fromDate={fromDate}
+            setFromDate={setFromDate}
+            toDate={toDate}
+            setToDate={setToDate}
+            maxGuests={venue?.data.maxGuests}
+            totalPrice={totalPrice}
+            guests={guests}
+            setGuests={setGuests}
+          />
         </div>
       </Section>
     </div>

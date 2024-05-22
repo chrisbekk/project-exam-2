@@ -3,6 +3,7 @@ import getOptionsArray from '../../../utils/getOptionsArray';
 import getFormattedTodayDate from '../../../utils/getTodayDate';
 import { Button } from '../../Button';
 import BookingPrices from './BookingPrices';
+import { useAuthContext } from '../../../context/authContext';
 import { useState } from 'react';
 export default function BookingForm({
   price,
@@ -13,14 +14,13 @@ export default function BookingForm({
   maxGuests,
   totalPrice,
   nights,
-  guests,
   setGuests,
 }) {
   const [isDisabled, setIsDisabled] = useState(true);
   const options = getOptionsArray(maxGuests);
   const minFromDate = getFormattedTodayDate();
   const minToDate = getNextDay(fromDate);
-
+  const { isSignedIn } = useAuthContext();
   const handleChange = e => {
     setFromDate(e.target.value);
     setIsDisabled(false);
@@ -29,7 +29,7 @@ export default function BookingForm({
     setGuests(e.target.value);
   };
   return (
-    <div className="hidden w-full rounded-2xl border-[0.5px] border-neutral-200 bg-neutral-50 px-6 py-16 shadow-[-1px_1px_2px_0px_#0A0A0A25,-1px_-2px_4px_0px_#0A0A0A25] md:sticky md:bottom-auto md:top-32 md:block md:h-[45vh]">
+    <div className="hidden w-full  rounded-2xl border-[0.5px] border-neutral-200 bg-neutral-50 px-6 py-16 shadow-[-1px_1px_2px_0px_#0A0A0A25,-1px_-2px_4px_0px_#0A0A0A25] md:sticky md:bottom-auto md:top-32 md:block md:h-[65vh] md:w-[45%]">
       <p className="font-thin">
         <span className="text-xl font-semibold">${price}</span> per night
       </p>
@@ -85,7 +85,9 @@ export default function BookingForm({
           </select>
         </div>
       </div>
-      <Button>Make Reservation</Button>
+      <Button disabled={!isSignedIn}>
+        {isSignedIn ? 'Make Reservation' : 'Sign In to Reserve'}
+      </Button>
       <div>
         <BookingPrices totalPrice={totalPrice} nights={nights} price={price} />
       </div>

@@ -8,7 +8,6 @@ export default function BookingInformation({
   toDate,
   setToDate,
   maxGuests,
-  guests,
   setGuests,
 }) {
   const [isDisabled, setIsDisabled] = useState(true);
@@ -20,7 +19,7 @@ export default function BookingInformation({
     setIsDisabled(false);
   };
   const selectGuests = e => {
-    console.log(e.target.value);
+    console.log(typeof e.target.value);
     setGuests(e.target.value);
   };
   return (

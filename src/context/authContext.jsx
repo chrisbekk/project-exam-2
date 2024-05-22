@@ -9,8 +9,16 @@ export function AuthProvider({ children }) {
     setUser(null);
     setApiKey(null);
   };
-
-  const userContext = { user, setUser, apiKey, fetchError, signIn, signOut };
+  const isSignedIn = user && apiKey;
+  const userContext = {
+    user,
+    setUser,
+    apiKey,
+    fetchError,
+    signIn,
+    signOut,
+    isSignedIn,
+  };
 
   return (
     <authContext.Provider value={userContext}>{children}</authContext.Provider>
