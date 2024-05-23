@@ -1,16 +1,19 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Section } from '../../components/Section';
 import ProfileEditor from './ProfileEditor';
 import { AnimatePresence } from 'framer-motion';
 import { useAuthContext } from '../../context/authContext';
+
 import Banner from './Banner';
 import EditProfile from './EditProfile';
+import { User } from './User';
 export default function ProfilePage() {
   const [toggleEditProfile, setToggleEditProfile] = useState(false);
   const {
     user: { data },
+    apiKey,
   } = useAuthContext();
-  console.log(toggleEditProfile);
+
   return (
     <>
       <Section ySpace={false} limWidth={true}>
@@ -36,6 +39,11 @@ export default function ProfilePage() {
           )}
         </AnimatePresence>
       </Section>
+      {!toggleEditProfile && (
+        <Section limWidth={true}>
+          <User userData={data} apiKey={apiKey?.key} />
+        </Section>
+      )}
     </>
   );
 }

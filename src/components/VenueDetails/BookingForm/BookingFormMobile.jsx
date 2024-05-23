@@ -2,9 +2,10 @@ import { motion, AnimatePresence, useAnimationControls } from 'framer-motion';
 import { useState } from 'react';
 import { Button } from '../../Button';
 import BookingInformation from './BookingInformation';
-import formatDateString from '../../../utils/formatDateString';
+
 import BookingPrices from './BookingPrices';
 import { useAuthContext } from '../../../context/authContext';
+
 import { format } from 'date-fns';
 export default function BookingFormMobile({
   price,
@@ -18,9 +19,11 @@ export default function BookingFormMobile({
   guests,
   setGuests,
   venueId,
+  setConfirmBooking,
 }) {
   const [toggleForm, setToggleForm] = useState(false);
   const { isSignedIn } = useAuthContext();
+
   const formVariants = {
     initial: { y: '85%' },
     show: { y: '15%', transition: { type: 'ease', delay: 0.15 } },
@@ -40,10 +43,17 @@ export default function BookingFormMobile({
     const bookingData = {
       dateFrom: fromDate,
       dateTo: toDate,
-      guests: guests,
+      guests: parseInt(guests),
       venueId: venueId,
     };
-    console.log(bookingData);
+    if (
+      bookingData.datefrom &&
+      bookingData.dateTo &&
+      bookingData.guests &&
+      bookingData.venueId
+    ) {
+      setConfirmBooking(true);
+    }
   };
   return (
     <AnimatePresence>
@@ -74,6 +84,7 @@ export default function BookingFormMobile({
               </p>
             </button>
             <Button
+              fill={true}
               small={true}
               disabled={!isSignedIn}
               handleClick={handleBooking}

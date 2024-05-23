@@ -10,33 +10,26 @@ import { format } from 'date-fns';
 export default function BookingForm({
   price,
   fromDate,
-  setFromDate,
   toDate,
-  setToDate,
   maxGuests,
   totalPrice,
   nights,
   setGuests,
   guests,
   venueId,
+  setConfirmBooking,
 }) {
   const [isDisabled, setIsDisabled] = useState(true);
   const options = getOptionsArray(maxGuests);
   const minFromDate = getFormattedTodayDate();
   const minToDate = getNextDay(fromDate);
-  const { isSignedIn, user, apiKey } = useAuthContext();
-  console.log(user);
-  console.log(apiKey);
-  const { postBooking } = usePostBooking();
-  const handleChange = e => {
-    setFromDate(e.target.value);
-    setIsDisabled(false);
-  };
+  const { isSignedIn } = useAuthContext();
+
   const selectGuests = e => {
     console.log(e.target.value);
     setGuests(e.target.value);
   };
-  console.log(guests);
+
   const handleBooking = () => {
     const bookingData = {
       dateFrom: fromDate,
@@ -45,7 +38,14 @@ export default function BookingForm({
       venueId: venueId,
     };
     console.log(bookingData);
-    postBooking(user.data.accessToken, apiKey.key, bookingData);
+    if (
+      bookingData.dateFrom &&
+      bookingData.dateTo &&
+      bookingData.guests &&
+      bookingData.venueId
+    ) {
+      setConfirmBooking(true);
+    }
   };
   return (
     <div className="hidden w-full  rounded-2xl border-[0.5px] border-neutral-200 bg-neutral-50 px-6 py-16 shadow-[-1px_1px_2px_0px_#0A0A0A25,-1px_-2px_4px_0px_#0A0A0A25] md:sticky md:bottom-auto md:top-32 md:block md:h-[65vh] md:w-[45%]">
@@ -86,7 +86,7 @@ export default function BookingForm({
           </select>
         </div>
       </div>
-      <Button disabled={!isSignedIn} handleClick={handleBooking}>
+      <Button fill={true} disabled={!isSignedIn} handleClick={handleBooking}>
         {isSignedIn ? 'Make Reservation' : 'Sign In to Reserve'}
       </Button>
       <div>

@@ -59,7 +59,7 @@ export const SignInForm = () => {
         </div>
       )}
 
-      <Button>Sign In</Button>
+      <Button fill={true}>Sign In</Button>
     </form>
   );
 };

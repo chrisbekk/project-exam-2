@@ -44,7 +44,9 @@ export const Home = () => {
               Start earning extra income and share the magic of your home with
               travelers worldwide!
             </p>
-            <Button handleClick={handleClick}>Get Started With Holidaze</Button>
+            <Button fill={true} handleClick={handleClick}>
+              Get Started With Holidaze
+            </Button>
           </div>
         </div>
       </Section>

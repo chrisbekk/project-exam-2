@@ -5,10 +5,8 @@ import { Layout } from '../layout/';
 import { Home } from '../pages/Home';
 import { Venues } from '../pages/Venues';
 import { Venue } from '../pages/Venue';
-import { ConfirmBooking } from '../pages/ConfirmBooking';
 import { SignIn } from '../pages/SignIn';
 import { Register } from '../pages/Register';
-import { BookingSuccess } from '../pages/BookingSuccess';
 import { Error } from '../pages/Error';
 
 // Protected Routes
@@ -42,14 +40,6 @@ export const router = createBrowserRouter([
       {
         path: '/venue/:venueId',
         element: <Venue />,
-      },
-      {
-        path: 'confirm',
-        element: <ConfirmBooking />,
-      },
-      {
-        path: 'success',
-        element: <BookingSuccess />,
       },
       {
         path: '/auth',

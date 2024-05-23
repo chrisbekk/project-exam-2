@@ -114,7 +114,7 @@ export default function ProfileEditor({
           />
         </div>
         <div className="flex w-full justify-center gap-4">
-          <Button small={true} submit={true}>
+          <Button small={true} submit={true} fill={true}>
             Confirm
           </Button>
           <button

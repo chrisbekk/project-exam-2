@@ -12,7 +12,7 @@ export default function EditProfile({ children, setToggleEditProfile }) {
       initial="initial"
       animate="show"
       exit="exit"
-      className="w-full rounded-2xl border border-neutral-950 bg-neutral-50 bg-opacity-80"
+      className="z-50 h-full w-full rounded-2xl border border-neutral-950 bg-neutral-50 bg-opacity-80"
     >
       {/* <button onClick={() => setToggleEditProfile(false)}>Close</button> */}
       {children}

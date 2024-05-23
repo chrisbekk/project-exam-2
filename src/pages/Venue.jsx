@@ -11,12 +11,12 @@ import BookingForm from '../components/VenueDetails/BookingForm/BookingForm';
 import calculateNightsBooked from '../utils/calculateNightsBooked';
 import Calendar from '../components/Calendar';
 import DateManager from '../components/VenueDetails/DateManager';
+import { BookingConfirmation } from '../components/VenueDetails/BookingConfirmation';
 export const Venue = () => {
   const { venueId } = useParams();
 
   const { venue, error, pending } = useFetchVenue(venueId);
-  const [isVisible, setIsVisible] = useState(false); // Toggle Booking Form Modal
-
+  const [confirmBooking, setConfirmBooking] = useState(false);
   // State for controlling calendar
   const [fromDate, setFromDate] = useState('');
   const [toDate, setToDate] = useState('');
@@ -24,6 +24,8 @@ export const Venue = () => {
   // States for booking information
   const [nights, setNights] = useState(0); // Total nights booked
   const [guests, setGuests] = useState(0);
+  console.log(confirmBooking);
+
   // Calculate total nights booked
   useEffect(() => {
     setNights(calculateNightsBooked(fromDate, toDate));
@@ -34,6 +36,18 @@ export const Venue = () => {
   const bookedDates = ['2024-05-20', '2024-05-21', '2024-05-22'];
   if (error) return <p>Error in fetching venues</p>;
   if (pending || !venue) return <Pending text={'Fetching venues...'} />;
+  if (confirmBooking)
+    return (
+      <BookingConfirmation
+        venue={venue}
+        fromDate={fromDate}
+        toDate={toDate}
+        guests={guests}
+        setConfirmBooking={setConfirmBooking}
+        nights={nights}
+      />
+    );
+
   return (
     <div className="max-w-[1024px] md:mx-auto">
       <h1 className="hidden md:my-4 md:block md:text-3xl md:font-semibold">
@@ -76,6 +90,7 @@ export const Venue = () => {
             guests={guests}
             setGuests={setGuests}
             venueId={venue?.data.id}
+            setConfirmBooking={setConfirmBooking}
           />
 
           <BookingFormMobile
@@ -90,6 +105,7 @@ export const Venue = () => {
             guests={guests}
             setGuests={setGuests}
             venueId={venue?.data.id}
+            setConfirmBooking={setConfirmBooking}
           />
         </div>
       </Section>

@@ -81,7 +81,7 @@ export const SearchForm = () => {
             />
           </div>
         </div>
-        <Button>Search</Button>
+        <Button fill={true}>Search</Button>
       </form>
     </div>
   );
