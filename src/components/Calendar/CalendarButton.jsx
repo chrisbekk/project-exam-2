@@ -1,10 +1,12 @@
 import React from 'react';
 import {
-  isBefore,
   isSameDay,
   format,
   addDays,
   eachDayOfInterval,
+  isWithinInterval,
+  parseISO,
+  isBefore,
 } from 'date-fns';
 
 const CalendarButton = ({
@@ -15,13 +17,9 @@ const CalendarButton = ({
   toDate,
   setFromDate,
   setToDate,
-  bookedDates,
 }) => {
   const today = new Date();
   const isToday = isSameDay(day, today);
-
-  // Check if the date is before today
-  const isBeforeToday = !isToday && isBefore(day, today);
 
   // Check if the date is booked
   const isBooked = isDateInBooking(day);
@@ -38,12 +36,12 @@ const CalendarButton = ({
   let buttonClassNames =
     'flex w-full flex-col justify-between rounded-xl border p-2 lg:size-20';
 
-  if (isSameDay(day, today)) {
-    buttonClassNames += ' border border-black bg-blue-100';
-  } else if (isBeforeToday) {
-    buttonClassNames += ' bg-neutral-200'; // Example color for past dates
-  } else if (isBooked) {
+  if (isBooked) {
     buttonClassNames += ' bg-rose-100'; // Example color for booked dates
+  } else if (isToday) {
+    buttonClassNames += ' border border-black bg-blue-100';
+  } else if (!isToday && isBefore(day, today)) {
+    buttonClassNames += ' bg-neutral-200'; // Example color for past dates
   } else if (isFromDate) {
     buttonClassNames += ' bg-green-400'; // Highlight fromDate with a darker shade of green
   } else if (isToDate) {
@@ -52,24 +50,19 @@ const CalendarButton = ({
     buttonClassNames += ' bg-green-100'; // Highlight dates between fromDate and toDate with the lightest shade of green
   }
 
-  const handleClick = day => {
-    // Deselect fromDate if it's already selected
-    if (isSameDay(day, fromDate)) {
+  const handleBooking = selectedDay => {
+    // Handle deselection of fromDate if it's already selected
+    if (isSameDay(selectedDay, fromDate)) {
       setFromDate(null);
       return;
     }
 
-    // Deselect toDate if it's already selected
-    if (isSameDay(day, toDate)) {
+    // Handle deselection of toDate if it's already selected
+    if (isSameDay(selectedDay, toDate)) {
       setToDate(null);
       return;
     }
 
-    // Handle booking
-    handleBooking(day);
-  };
-
-  const handleBooking = selectedDay => {
     // Handle the booking
     if (!fromDate) {
       setFromDate(selectedDay);
@@ -77,55 +70,28 @@ const CalendarButton = ({
     } else if (!toDate) {
       // Check if the selected day is after fromDate
       if (isBefore(selectedDay, fromDate)) {
-        alert('Please select a date after fromDate.');
+        alert('Please select a date after the check-in date.');
         return;
       }
-      setToDate(selectedDay);
 
-      // Check if any dates between fromDate and toDate are booked
-      const datesBetween = eachDayOfInterval({
+      // Create an array of dates between fromDate and the selected day
+      const selectedDates = eachDayOfInterval({
         start: fromDate,
         end: selectedDay,
       });
-      const isBooked = datesBetween.some(date => isDateInBooking(date));
-      if (isBooked) {
-        alert(
-          'There are booked dates between fromDate and toDate. Please select other dates.',
-        );
-        setToDate(null);
-        return;
-      }
-
-      // Check if the next day after toDate is booked
-      // const nextDay = addDays(selectedDay, 1);
-      // if (isDateInBooking(nextDay)) {
-      //   alert('The next day is already booked.');
-      //   setToDate(null);
-      // }
-    } else {
-      // Check if the selected day is the same as fromDate or toDate
-      if (isSameDay(selectedDay, fromDate)) {
-        setFromDate(null); // Deselect fromDate
-        return;
-      }
-      if (isSameDay(selectedDay, toDate)) {
-        setToDate(null); // Deselect toDate
-        return;
-      }
-
-      // Create an array of dates between fromDate and toDate
-      const selectedDates = eachDayOfInterval({ start: fromDate, end: toDate });
 
       // Check if any of the selected dates are already booked
-      const isBooked = selectedDates.some(date => isDateInBooking(date));
+      const isBookedBetween = selectedDates.some(date => isDateInBooking(date));
 
-      if (isBooked) {
+      if (isBookedBetween) {
         alert(
-          'There are booked dates between fromDate and toDate. Please select other dates.',
+          'There are booked dates between the selected dates. Please choose different dates.',
         );
         return;
       }
 
+      setToDate(selectedDay);
+    } else {
       setFromDate(selectedDay);
       setToDate(null);
     }
@@ -133,10 +99,11 @@ const CalendarButton = ({
 
   return (
     <button
-      onClick={() => handleClick(day)}
-      disabled={isBooked || isBeforeToday}
+      onClick={() => handleBooking(day)}
+      disabled={isBooked || (!isToday && isBefore(day, today))}
       className={buttonClassNames}
     >
+      {' '}
       <div>
         <p
           className={
@@ -149,8 +116,7 @@ const CalendarButton = ({
         </p>
       </div>
       <div className="flex justify-center lg:justify-end lg:pr-3">
-        <p>{isBeforeToday && 'true'}</p>
-        <p className="text-xs ">
+        <p className="text-xs">
           <span className="hidden lg:inline">{format(day, 'MMM')}</span>
           <span className="text-xs font-bold lg:text-sm">
             {format(day, 'dd')}

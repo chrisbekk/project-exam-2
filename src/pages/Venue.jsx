@@ -64,7 +64,7 @@ export const Venue = () => {
             />
           </div>
 
-          {/* <BookingForm
+          <BookingForm
             price={venue?.data.price}
             nights={nights}
             fromDate={fromDate}
@@ -76,9 +76,9 @@ export const Venue = () => {
             guests={guests}
             setGuests={setGuests}
             venueId={venue?.data.id}
-          /> */}
+          />
 
-          {/* <BookingFormMobile
+          <BookingFormMobile
             price={venue?.data.price}
             nights={nights}
             fromDate={fromDate}
@@ -90,7 +90,7 @@ export const Venue = () => {
             guests={guests}
             setGuests={setGuests}
             venueId={venue?.data.id}
-          /> */}
+          />
         </div>
       </Section>
     </div>

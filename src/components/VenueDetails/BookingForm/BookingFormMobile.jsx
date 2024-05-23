@@ -5,6 +5,7 @@ import BookingInformation from './BookingInformation';
 import formatDateString from '../../../utils/formatDateString';
 import BookingPrices from './BookingPrices';
 import { useAuthContext } from '../../../context/authContext';
+import { format } from 'date-fns';
 export default function BookingFormMobile({
   price,
   fromDate,
@@ -19,8 +20,8 @@ export default function BookingFormMobile({
   venueId,
 }) {
   const [toggleForm, setToggleForm] = useState(false);
-  const fromDateString = formatDateString(fromDate);
-  const toDateString = formatDateString(toDate);
+  // const fromDateString = formatDateString(fromDate);
+  // const toDateString = formatDateString(toDate);
   const { isSignedIn } = useAuthContext();
   const formVariants = {
     initial: { y: '85%' },
@@ -63,7 +64,7 @@ export default function BookingFormMobile({
               </p>
               <p className="text-sm text-neutral-500">
                 {fromDate && toDate
-                  ? `${fromDateString} - ${toDateString}`
+                  ? `${format(fromDate, 'MMM dd')} - ${format(toDate, 'MMM dd')}`
                   : 'Add Dates'}
               </p>
               <p className="text-sm text-neutral-500">

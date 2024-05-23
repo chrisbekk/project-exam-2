@@ -6,6 +6,7 @@ import BookingPrices from './BookingPrices';
 import { useAuthContext } from '../../../context/authContext';
 import usePostBooking from '../../../hooks/usePostBooking';
 import { useState } from 'react';
+import { format } from 'date-fns';
 export default function BookingForm({
   price,
   fromDate,
@@ -54,34 +55,16 @@ export default function BookingForm({
       <div className="my-8 w-full rounded-lg border-[0.5px] border-neutral-400">
         <div className="flex w-full">
           <div className="relative h-16 w-full rounded-tl-lg border p-1">
-            <label htmlFor="checkIn" className="absolute text-sm font-semibold">
-              Check In
-            </label>
-            <input
-              type="date"
-              id="checkIn"
-              min={minFromDate}
-              value={fromDate}
-              onChange={handleChange}
-              className="h-full bg-neutral-50 text-xs"
-            />
+            <p className="absolute text-sm font-semibold">Check In</p>
+            <p className="absolute bottom-1 text-sm font-semibold">
+              {fromDate && format(fromDate, 'MMM dd')}
+            </p>
           </div>
           <div className="relative h-16 w-full rounded-tr-lg border p-1">
-            <label
-              htmlFor="checkOut"
-              className="absolute text-sm font-semibold"
-            >
-              Check Out
-            </label>
-            <input
-              type="date"
-              id="checkOut"
-              disabled={isDisabled}
-              min={minToDate}
-              value={toDate}
-              onChange={e => setToDate(e.target.value)}
-              className="h-full bg-neutral-50 text-xs"
-            />
+            <p className="absolute text-sm font-semibold">Check Out</p>
+            <p className="absolute bottom-1 text-sm font-semibold">
+              {toDate && format(toDate, 'MMM dd')}
+            </p>
           </div>
         </div>
         <div className="relative h-16 w-full">
