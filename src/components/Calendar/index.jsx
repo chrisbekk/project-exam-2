@@ -36,7 +36,7 @@ const Calendar = ({ bookings, fromDate, toDate, setFromDate, setToDate }) => {
   const prevMonth = () => {
     setCurrentMonth(subMonths(currentMonth, 1));
   };
-  console.log(parseISO(bookings[0].dateFrom));
+
   const isDateInBooking = date => {
     return bookings.some(booking =>
       isWithinInterval(date, {

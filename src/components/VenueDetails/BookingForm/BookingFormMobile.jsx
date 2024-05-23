@@ -20,8 +20,6 @@ export default function BookingFormMobile({
   venueId,
 }) {
   const [toggleForm, setToggleForm] = useState(false);
-  // const fromDateString = formatDateString(fromDate);
-  // const toDateString = formatDateString(toDate);
   const { isSignedIn } = useAuthContext();
   const formVariants = {
     initial: { y: '85%' },
