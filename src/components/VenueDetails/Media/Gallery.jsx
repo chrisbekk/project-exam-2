@@ -6,9 +6,9 @@ export const Gallery = ({ isVisible, setIsVisible, gallery }) => {
   if (!isVisible) return;
   console.log(isVisible);
   return createPortal(
-    <div className="absolute inset-0 flex items-center justify-center bg-neutral-50">
-      <div className="w-full pt-24">
-        <div className=" w-full  sm:px-6 xl:mx-auto xl:w-[1280px]">
+    <div className="absolute inset-0 z-50 flex items-center justify-center bg-neutral-50">
+      <div className="w-full max-w-[760px] pt-24">
+        <div className=" w-full sm:px-6 xl:mx-auto xl:w-[1280px]">
           <img
             src={gallery[currentImage]?.url}
             className="h-full w-full object-contain sm:rounded-md"

@@ -1,9 +1,13 @@
 import { Outlet, Navigate } from 'react-router-dom';
-import { useAuthContext } from '../../context/authContext';
-
+import { useUserContext } from '../../context/userContext';
+import { Pending } from '../../components/Pending';
 import React from 'react';
 
 export const AuthRoot = () => {
-  const { data } = useAuthContext();
-  return data ? <Outlet /> : <Navigate to={'/'} />;
+  const { user, loading } = useUserContext();
+
+  if (loading) {
+    return <Pending>Setting up Profile Page</Pending>;
+  }
+  return user ? <Outlet /> : <Navigate to={'/'} />;
 };

@@ -32,7 +32,7 @@ export default function BrowseVenues() {
             aria-placeholder="Where"
           />
         </div>
-        <Button>Explore Venues</Button>
+        <Button fill={true}>Explore Venues</Button>
       </form>
     </div>
   );

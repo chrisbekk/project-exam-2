@@ -2,9 +2,9 @@ import React from 'react';
 import { BiError } from 'react-icons/bi';
 export const FormError = ({ message }) => {
   return (
-    <div className="bg-rose-300 p-1 flex gap-1 items-center mb-4 rounded-lg">
+    <div className="mb-4 mt-4 flex items-center gap-1 rounded-lg bg-rose-300 p-1">
       <BiError />
-      <p>{message}</p>
+      <p className="my-3">{message}</p>
     </div>
   );
 };

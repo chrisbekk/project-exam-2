@@ -1,36 +1,33 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
-const URL_STRING = 'https://v2.api.noroff.dev/auth/login';
+export default function useSignIn() {
+  const [signInData, setSignInData] = useState(null);
 
-export default function useSignIn(payload) {
-  const [data, setData] = useState(null);
-  const [error, setError] = useState(false);
-
-  const FETCH_OPTIONS = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(payload),
+  const signIn = async user => {
+    const OPTIONS = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(user),
+    };
+    try {
+      const response = await fetch(
+        'https://v2.api.noroff.dev/auth/login',
+        OPTIONS,
+      );
+      if (!response.ok) {
+        const errorData = await response.json();
+        const error = new Error('Failed to sign in');
+        error.data = errorData;
+        throw error;
+      }
+      const { data } = await response.json();
+      setSignInData(data);
+    } catch (error) {
+      throw error;
+    }
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(URL_STRING, FETCH_OPTIONS);
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData);
-        }
-        const userData = response.json();
-        setData(userData);
-      } catch (error) {
-        setError(true);
-        console.log(error);
-      }
-    };
-    fetchData();
-  }, []);
-
-  return { data, error };
+  return { signInData, signIn };
 }

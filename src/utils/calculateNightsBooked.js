@@ -1,5 +1,5 @@
 export default function calculateNightsBooked(checkInDate, checkOutDate) {
-  if (!checkInDate || !checkOutDate) return;
+  if (!checkInDate || !checkOutDate) return 0;
   const checkIn = new Date(checkInDate);
   const checkOut = new Date(checkOutDate);
 

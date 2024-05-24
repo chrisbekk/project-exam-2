@@ -18,6 +18,8 @@ export const RegistrationForm = () => {
 
   const [passwordInput, setPasswordInput] = useState('');
 
+  const [isManager, setIsManager] = useState(false);
+  console.log(isManager);
   // Declaring error state for user registration
   const [fetchError, setFetchError] = useState([]);
 
@@ -58,6 +60,7 @@ export const RegistrationForm = () => {
         name: userNameInput,
         email: emailInput,
         password: passwordInput,
+        venueManager: isManager,
       };
       registerUser(payload)
         .then(() => {
@@ -83,48 +86,61 @@ export const RegistrationForm = () => {
         <div className="relative mb-7">
           <input
             type="text"
-            className="w-full bg-neutral-100 border-b-[0.5px] border-neutral-500 placeholder-neutral-950 py-[18px] text-xs pl-8"
+            className="w-full border-b-[0.5px] border-neutral-500 bg-neutral-100 py-[18px] pl-8 text-xs placeholder-neutral-950"
             placeholder="Username"
             value={userNameInput.value}
             onChange={e => setUserNameInput(e.target.value)}
           />
-          <MdOutlinePerson className="absolute top-4 left-2 size-5" />
+          <MdOutlinePerson className="absolute left-2 top-4 size-5" />
         </div>
         <div className="relative mb-7">
           <input
             type="email"
-            className="w-full bg-neutral-100 border-b-[0.5px] border-neutral-500 placeholder-neutral-950 py-[18px] text-xs pl-8"
+            className="w-full border-b-[0.5px] border-neutral-500 bg-neutral-100 py-[18px] pl-8 text-xs placeholder-neutral-950"
             placeholder="Email"
             value={emailInput.value}
             onChange={e => setEmailInput(e.target.value)}
           />
-          <MdAlternateEmail className="absolute top-4 left-2 size-5" />
+          <MdAlternateEmail className="absolute left-2 top-4 size-5" />
         </div>
         <div className="relative mb-7">
           <input
             type="password"
-            className="w-full bg-neutral-100 border-b-[0.5px] border-neutral-500 placeholder-neutral-950 py-[18px] text-xs pl-8"
+            className="w-full border-b-[0.5px] border-neutral-500 bg-neutral-100 py-[18px] pl-8 text-xs placeholder-neutral-950"
             placeholder="Password"
             value={passwordInput.value}
             onChange={e => setPasswordInput(e.target.value)}
           />
-          <HiOutlineLockClosed className="absolute top-4 left-2 size-5" />
+          <HiOutlineLockClosed className="absolute left-2 top-4 size-5" />
+        </div>
+        <div className="mb-7 flex w-full justify-center">
+          <div className="flex items-center gap-3">
+            <label htmlFor="venueManager" className="">
+              Register as Venue Host
+            </label>
+            <input
+              type="checkbox"
+              value={isManager}
+              id="venueManager"
+              onChange={() => setIsManager(prev => !prev)}
+            />
+          </div>
         </div>
         <FormRequirements requirements={requirements} />
         {fetchError &&
           fetchError.map(error => <FormError message={error.message} />)}
-        <Button>Register User</Button>
+        <Button fill={true}>Register User</Button>
       </form>
       <Modal isOpen={isOpen} closeModal={() => setIsOpen(false)}>
         <div>
           <RiUserAddLine className="mx-auto size-10 " />
-          <h1 className="text-center text-lg font-semibold my-2">Success!</h1>
-          <p className="text-sm text-neutral-500 my-6">
+          <h1 className="my-2 text-center text-lg font-semibold">Success!</h1>
+          <p className="my-6 text-sm text-neutral-500">
             Your account has been successfully created. Please click on the link
             below to sign in and start exploring your next getaway. Happy
             travels!
           </p>
-          <Button handleClick={() => navigate('/signin')}>
+          <Button handleClick={() => navigate('/signin')} fill={true}>
             To Sign In Page
           </Button>
         </div>

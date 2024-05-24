@@ -1,21 +1,21 @@
 import { Link } from 'react-router-dom';
 
-import React from 'react';
-
-import { useAuthContext } from '../context/authContext';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useFetchVenues } from '../context/useFetchVenues';
 import { Hero } from '../components/hero';
 import { Section } from '../components/Section';
-
+import { useUserContext } from '../context/userContext';
 import { Banner } from '../components/banner';
 import { Button } from '../components/Button';
 import { CardCarousel } from '../components/CardCarousel';
 export const Home = () => {
-  const context = useAuthContext();
-  console.log(context);
   const navigate = useNavigate();
-  const { venues, error, pending } = useFetchVenues(100, 1);
+  const { user } = useUserContext();
+
+  console.log(user);
+
+  const { venues, error, pending } = useFetchVenues(100);
 
   const handleClick = () => {
     if (!context.data) return;
@@ -44,7 +44,9 @@ export const Home = () => {
               Start earning extra income and share the magic of your home with
               travelers worldwide!
             </p>
-            <Button handleClick={handleClick}>Get Started With Holidaze</Button>
+            <Button fill={true} handleClick={handleClick}>
+              Get Started With Holidaze
+            </Button>
           </div>
         </div>
       </Section>
