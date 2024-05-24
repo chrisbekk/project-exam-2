@@ -12,12 +12,12 @@ export default function NavigationMenu() {
     { name: 'Register User', path: '/register', signedInRoute: false },
     {
       name: 'Profile',
-      path: `/auth/profile/${user.data.name}`,
+      path: `/auth/profile/${user?.data.name}`,
       signedInRoute: true,
     },
     {
       name: 'Dashboard',
-      path: `/auth/dashboard/${user.data.name}`,
+      path: `/auth/dashboard/${user?.data.name}`,
       signedInRoute: true,
     },
     { name: 'Home', path: '/', signedInRoute: false },

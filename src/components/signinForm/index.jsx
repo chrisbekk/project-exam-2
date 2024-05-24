@@ -11,16 +11,18 @@ export const SignInForm = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-  const { fetchError, signIn } = useAuthContext();
+  const { fetchError, signIn, user } = useAuthContext();
 
   const handleSignIn = async e => {
     e.preventDefault();
     const userData = { email, password };
     try {
       await signIn(userData);
-      navigate('/auth/profile');
+
+      navigate(`/auth/profile/${user?.data.name}`);
     } catch (err) {
       setError(fetchError);
+      throw error;
     }
   };
 
