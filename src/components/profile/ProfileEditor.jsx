@@ -3,6 +3,7 @@ import { Button } from '../Button';
 import Error from './Error';
 import useUpdateProfile from '../../hooks/useUpdateProfile';
 import { useAuthContext } from '../../context/authContext';
+import { useNavigate } from 'react-router-dom';
 
 export default function ProfileEditor({
   bio,
@@ -19,7 +20,7 @@ export default function ProfileEditor({
   const { responseData, pending, responseError, updateProfile } =
     useUpdateProfile();
   const { user, apiKey, setUser } = useAuthContext();
-
+  const navigate = useNavigate();
   const handleChange = e => {
     const { name, value } = e.target;
 
@@ -41,11 +42,12 @@ export default function ProfileEditor({
       };
     });
   };
+
   const handleSubmit = e => {
     e.preventDefault();
     console.log(user.data.name);
     updateProfile(user.data.name, user.data.accessToken, apiKey.key, formData)
-      .then(() => console.log(responseData?.data.name))
+      .then(() => navigate(`/auth/profile/${responseData?.data.name}`))
       .catch(() => console.log(responseError));
   };
 
