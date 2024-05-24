@@ -3,6 +3,7 @@ import { Button } from '../Button';
 import Error from './Error';
 import useUpdateProfile from '../../hooks/useUpdateProfile';
 import { useAuthContext } from '../../context/authContext';
+
 export default function ProfileEditor({
   bio,
   banner,

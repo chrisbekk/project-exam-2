@@ -2,23 +2,28 @@ import React from 'react';
 import { Button } from '../../../Button';
 import { Error } from './Error';
 import { Pending } from '../../../Pending';
-import { useRegisterVenueManager } from '../../../../hooks/useRegisterVenueManager';
+
 import { useAuthContext } from '../../../../context/authContext';
-export const Register = () => {
-  const {
-    responseData,
-    pending,
-    responseError,
-    setResponseError,
-    registerVenueManager,
-  } = useRegisterVenueManager();
+export const Register = ({
+  pending,
+  error,
+  setError,
+  registerVenueManager,
+}) => {
   const { user, apiKey } = useAuthContext();
+
   const handleClick = () => {
     const payload = { venueManager: true };
-    setResponseError(true);
+    registerVenueManager(
+      user.data.name,
+      user.data.accessToken,
+      apiKey.key,
+      payload,
+    );
   };
-  if (responseError) return <Error setResponseError={setResponseError} />;
+  if (error) return <Error setResponseError={setResponseError} />;
   if (pending) return <Pending />;
+
   return (
     <div className="mx-auto w-full max-w-[720px] rounded-2xl bg-white p-6 shadow-xl md:flex md:p-8">
       <div className="w-full md:max-w-[320px]">

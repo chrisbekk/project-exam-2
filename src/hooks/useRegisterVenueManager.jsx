@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 
 export const useRegisterVenueManager = () => {
-  const [responseData, setResponseData] = useState(null);
+  const [data, setData] = useState(null);
   const [pending, setPending] = useState(false);
-  const [responseError, setResponseError] = useState(false);
+  const [error, setError] = useState(false);
 
   const registerVenueManager = async (
     userName,
@@ -23,25 +23,27 @@ export const useRegisterVenueManager = () => {
     };
     try {
       setPending(true);
-      setResponseError(false);
+      setError(false);
       const response = await fetch(url, OPTIONS);
       if (!response.ok) {
         const error = await response.json();
         throw new Error(JSON.stringify(error));
       }
       const data = await response.json();
-      setResponseData(data);
+      setData(data);
     } catch (error) {
       console.log(error);
-      setResponseError(true);
+      setError(true);
+    } finally {
+      setPending(false);
     }
   };
 
   return {
-    responseData,
+    data,
     pending,
-    responseError,
-    setResponseError,
+    error,
+    setError,
     registerVenueManager,
   };
 };

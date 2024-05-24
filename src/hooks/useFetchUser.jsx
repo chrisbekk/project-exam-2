@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 export default function useFetchUser() {
-  const [responseData, setResponseData] = useState(null);
+  const [userData, setUserData] = useState(null);
   const [pending, setPending] = useState(false);
   const [responseError, setResponseError] = useState(false);
 
@@ -24,7 +24,7 @@ export default function useFetchUser() {
         throw new Error(JSON.stringify(error));
       }
       const data = await response.json();
-      setResponseData(data);
+      setUserData(data);
     } catch (error) {
       console.log(error);
       setResponseError(true);
@@ -33,5 +33,5 @@ export default function useFetchUser() {
     }
   };
 
-  return { responseData, pending, responseError, fetchUser };
+  return { userData, pending, responseError, fetchUser };
 }
