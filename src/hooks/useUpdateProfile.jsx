@@ -31,7 +31,6 @@ export default function useUpdateProfile() {
     } catch (error) {
       console.log(error);
       setResponseError(error.message);
-      throw new Error('Failed again mæææn');
     } finally {
       setPending(false);
     }

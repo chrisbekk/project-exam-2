@@ -9,11 +9,12 @@ import EditProfile from './EditProfile';
 import { User } from './User';
 export default function ProfilePage() {
   const [toggleEditProfile, setToggleEditProfile] = useState(false);
+
   const {
     user: { data },
     apiKey,
   } = useAuthContext();
-
+  console.log(data);
   return (
     <>
       <Section ySpace={false} limWidth={true}>

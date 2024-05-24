@@ -18,7 +18,7 @@ export default function ProfileEditor({
   });
   const { responseData, pending, responseError, updateProfile } =
     useUpdateProfile();
-  const { user, apiKey } = useAuthContext();
+  const { user, apiKey, setUser } = useAuthContext();
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -43,8 +43,9 @@ export default function ProfileEditor({
   };
   const handleSubmit = e => {
     e.preventDefault();
-    updateProfile(name, user.data.accessToken, apiKey.key, formData)
-      .then(() => console.log(responseData))
+    console.log(user.data.name);
+    updateProfile(user.data.name, user.data.accessToken, apiKey.key, formData)
+      .then(() => console.log(responseData?.data.name))
       .catch(() => console.log(responseError));
   };
 
