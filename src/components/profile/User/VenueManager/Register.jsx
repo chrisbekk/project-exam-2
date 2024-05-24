@@ -1,28 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from '../../../Button';
 import { Error } from './Error';
-import { Pending } from '../../../Pending';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
+import { venueManager } from '../../../../api/venueManager';
+import { useUserContext } from '../../../../context/userContext';
 
-import { useAuthContext } from '../../../../context/authContext';
-export const Register = ({
-  pending,
-  error,
-  setError,
-  registerVenueManager,
-}) => {
-  const { user, apiKey } = useAuthContext();
-
+export const Register = ({}) => {
+  const { user, setUser, accessToken, apiKey } = useUserContext();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
   const handleClick = () => {
+    setLoading(true);
     const payload = { venueManager: true };
-    registerVenueManager(
-      user.data.name,
-      user.data.accessToken,
-      apiKey.key,
-      payload,
-    );
+    venueManager(user.name, accessToken, apiKey, payload)
+      .then(res => setUser(prev => ({ ...prev, venueManager: res })))
+      .catch(() => setError(true))
+      .finally(() => setLoading(false));
   };
-  if (error) return <Error setResponseError={setResponseError} />;
-  if (pending) return <Pending />;
+  if (error) return <Error setError={setError} />;
 
   return (
     <div className="mx-auto w-full max-w-[720px] rounded-2xl bg-white p-6 shadow-xl md:flex md:p-8">
@@ -40,8 +35,14 @@ export const Register = ({
         </p>
       </div>
       <div className="flex w-full justify-center md:items-center ">
-        <Button small={true} fill={true} handleClick={handleClick}>
-          Register As Venue Manager
+        <Button small={!loading} fill={true} handleClick={handleClick}>
+          {loading ? (
+            <div className="flex w-full items-center">
+              <AiOutlineLoading3Quarters className=" w-full animate-spin text-lg font-medium text-white" />
+            </div>
+          ) : (
+            'Register As Venue Manager'
+          )}
         </Button>
       </div>
     </div>

@@ -1,9 +1,9 @@
 import React from 'react';
 import { Button } from '../../../Button';
 import { BiMessageSquareError } from 'react-icons/bi';
-export const Error = ({ setResponseError }) => {
+export const Error = ({ setError }) => {
   const handleClick = () => {
-    setResponseError(false);
+    setError(false);
   };
   return (
     <div className="mx-auto w-full max-w-[450px] rounded-2xl bg-white p-6 shadow-xl md:p-8">

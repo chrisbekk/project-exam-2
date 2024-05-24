@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import { Button } from '../Button';
 import Error from './Error';
-import useUpdateProfile from '../../hooks/useUpdateProfile';
-import { useAuthContext } from '../../context/authContext';
-import { useNavigate } from 'react-router-dom';
+import { updateProfile } from '../../api/updateProfile';
+import { useUserContext } from '../../context/userContext';
 
 export default function ProfileEditor({
   bio,
@@ -12,15 +11,17 @@ export default function ProfileEditor({
   name,
   setToggleEditProfile,
 }) {
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const [formData, setFormData] = useState({
     bio: bio || '',
     avatar: { url: avatar.url || '', alt: avatar.alt || '' },
     banner: { url: banner.url || '', alt: banner.alt || '' },
   });
-  const { responseData, pending, responseError, updateProfile } =
-    useUpdateProfile();
-  const { user, apiKey, setUser } = useAuthContext();
-  const navigate = useNavigate();
+
+  const { user, apiKey, accessToken, setUser } = useUserContext();
+
   const handleChange = e => {
     const { name, value } = e.target;
 
@@ -45,11 +46,14 @@ export default function ProfileEditor({
 
   const handleSubmit = e => {
     e.preventDefault();
-    console.log(user.data.name);
-    updateProfile(user.data.name, user.data.accessToken, apiKey.key, formData)
-      .then(() => navigate(`/auth/profile/${responseData?.data.name}`))
-      .catch(() => console.log(responseError));
+    setLoading(true);
+    updateProfile(user.name, accessToken, apiKey, formData)
+      .then(res => setUser(res))
+      .catch(() => setError(true))
+      .finally(setLoading(false));
   };
+
+  if (loading) return <p>Loading...</p>;
 
   return (
     <div className="relative mx-3 my-3 sm:m-4 md:m-10">
@@ -129,7 +133,7 @@ export default function ProfileEditor({
           </button>
         </div>
       </form>
-      <Error responseError={responseError} />
+      {error && <Error setError={setError} />}
     </div>
   );
 }

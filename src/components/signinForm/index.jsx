@@ -2,29 +2,31 @@ import { MdAlternateEmail } from 'react-icons/md';
 import { HiOutlineLockClosed } from 'react-icons/hi';
 import { Button } from '../Button';
 import { FormError } from '../FormError';
-import { useState } from 'react';
-import { useAuthContext } from '../../context/authContext';
+import { useState, useEffect } from 'react';
+import { useUserContext } from '../../context/userContext';
 import { useNavigate } from 'react-router-dom';
+import { Pending } from '../Pending/index';
 
 export const SignInForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState(null);
   const navigate = useNavigate();
-  const { fetchError, signIn, user } = useAuthContext();
+  const { signIn, user, error, loading } = useUserContext();
 
   const handleSignIn = async e => {
     e.preventDefault();
-    const userData = { email, password };
-    try {
-      await signIn(userData);
-
-      navigate(`/auth/profile/${user?.data.name}`);
-    } catch (err) {
-      setError(fetchError);
-      throw error;
-    }
+    const formData = { email, password };
+    await signIn(formData);
   };
+
+  useEffect(() => {
+    // Redirect to profile if userData is already available
+    if (user) {
+      navigate('/auth/profile/');
+    }
+  }, [user]);
+
+  if (loading) return <Pending>Signing In</Pending>;
 
   return (
     <form className="mx-6 sm:mx-auto sm:max-w-[560px]" onSubmit={handleSignIn}>
@@ -48,20 +50,8 @@ export const SignInForm = () => {
         />
         <HiOutlineLockClosed className="absolute left-2 top-4 size-5" />
       </div>
-
-      {error && (
-        <div>
-          {error.errors ? (
-            error.errors.map((err, index) => (
-              <FormError key={index} message={err.message} />
-            ))
-          ) : (
-            <FormError message={error.message} />
-          )}
-        </div>
-      )}
-
       <Button fill={true}>Sign In</Button>
+      {error && error?.errors.map(e => <FormError message={e.message} />)}
     </form>
   );
 };

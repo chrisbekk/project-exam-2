@@ -18,6 +18,8 @@ export const RegistrationForm = () => {
 
   const [passwordInput, setPasswordInput] = useState('');
 
+  const [isManager, setIsManager] = useState(false);
+  console.log(isManager);
   // Declaring error state for user registration
   const [fetchError, setFetchError] = useState([]);
 
@@ -58,6 +60,7 @@ export const RegistrationForm = () => {
         name: userNameInput,
         email: emailInput,
         password: passwordInput,
+        venueManager: isManager,
       };
       registerUser(payload)
         .then(() => {
@@ -109,6 +112,19 @@ export const RegistrationForm = () => {
             onChange={e => setPasswordInput(e.target.value)}
           />
           <HiOutlineLockClosed className="absolute left-2 top-4 size-5" />
+        </div>
+        <div className="mb-7 flex w-full justify-center">
+          <div className="flex items-center gap-3">
+            <label htmlFor="venueManager" className="">
+              Register as Venue Host
+            </label>
+            <input
+              type="checkbox"
+              value={isManager}
+              id="venueManager"
+              onChange={() => setIsManager(prev => !prev)}
+            />
+          </div>
         </div>
         <FormRequirements requirements={requirements} />
         {fetchError &&

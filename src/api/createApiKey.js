@@ -1,5 +1,4 @@
-export default async function createApiKey(token) {
-  console.log(token);
+export const createApiKey = async token => {
   const name = { name: 'API_KEY' };
   const OPTIONS = {
     method: 'POST',
@@ -24,5 +23,6 @@ export default async function createApiKey(token) {
     return data;
   } catch (error) {
     console.log(error);
+    throw error;
   }
-}
+};

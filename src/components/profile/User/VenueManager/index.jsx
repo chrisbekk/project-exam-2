@@ -1,20 +1,17 @@
-import React, { useState } from 'react';
 import { Register } from './Register';
-
-export const VenueManager = ({
-  venueManager,
-  loading,
-  error,
-  registerVenueManager,
-}) => {
-  console.log(venueManager);
-  if (!venueManager)
-    return (
-      <Register
-        pending={loading}
-        error={error}
-        registerVenueManager={registerVenueManager}
-      />
-    );
-  return <div>VenueManager This is the page for a venue Manager</div>;
+import { Button } from '../../../Button';
+import { useNavigate } from 'react-router-dom';
+export const VenueManager = ({ venueManager }) => {
+  if (!venueManager) return <Register />;
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate('/auth/dashboard');
+  };
+  return (
+    <div className="mx-auto max-w-[560px]">
+      <Button fill={true} handleClick={handleClick}>
+        Manage Venues
+      </Button>
+    </div>
+  );
 };

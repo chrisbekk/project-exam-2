@@ -2,38 +2,35 @@ import { useEffect, useState } from 'react';
 import { Section } from '../../components/Section';
 import ProfileEditor from './ProfileEditor';
 import { AnimatePresence } from 'framer-motion';
-import { useAuthContext } from '../../context/authContext';
 
 import Banner from './Banner';
 import EditProfile from './EditProfile';
 import { User } from './User';
+import { useUserContext } from '../../context/userContext';
+
 export default function ProfilePage() {
   const [toggleEditProfile, setToggleEditProfile] = useState(false);
-
-  const {
-    user: { data },
-    apiKey,
-  } = useAuthContext();
-  console.log(data);
+  const { user } = useUserContext();
+  console.log(user);
   return (
     <>
       <Section ySpace={false} limWidth={true}>
         <Banner
-          banner={data?.banner}
-          avatar={data?.avatar}
-          username={data?.name}
+          banner={user?.banner}
+          avatar={user?.avatar}
+          username={user?.name}
           setToggleEditProfile={setToggleEditProfile}
         />
       </Section>
       <Section ySpace={false} limWidth={true}>
         <AnimatePresence>
           {toggleEditProfile && (
-            <EditProfile setToggleEditProfile={setToggleEditProfile}>
+            <EditProfile>
               <ProfileEditor
-                bio={data?.bio}
-                banner={data?.banner}
-                avatar={data?.avatar}
-                name={data?.name}
+                bio={user?.bio}
+                banner={user?.banner}
+                avatar={user?.avatar}
+                name={user?.name}
                 setToggleEditProfile={setToggleEditProfile}
               />
             </EditProfile>
@@ -42,7 +39,7 @@ export default function ProfilePage() {
       </Section>
       {!toggleEditProfile && (
         <Section limWidth={true}>
-          <User userData={data} apiKey={apiKey?.key} />
+          <User user={user} />
         </Section>
       )}
     </>

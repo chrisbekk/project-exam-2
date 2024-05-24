@@ -1,10 +1,10 @@
-export default async function signIn(user) {
+export const signInUser = async loginCredentials => {
   const options = {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(user),
+    body: JSON.stringify(loginCredentials),
   };
   try {
     const response = await fetch(
@@ -18,9 +18,9 @@ export default async function signIn(user) {
       throw error;
     }
     const json = await response.json();
-    console.log(json);
     return json.data;
   } catch (error) {
     console.warn(error.data);
+    throw error;
   }
-}
+};

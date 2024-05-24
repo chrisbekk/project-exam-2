@@ -46,15 +46,15 @@ export const router = createBrowserRouter([
         element: <AuthRoot />,
         children: [
           {
-            path: 'profile/:user',
+            path: 'profile/',
             element: <Profile />,
           },
           {
-            path: 'dashboard/:user',
+            path: 'dashboard/',
             element: <Dashboard />,
           },
           {
-            path: 'create-venue/:user',
+            path: 'create-venue/',
             element: <CreateVenue />,
           },
         ],

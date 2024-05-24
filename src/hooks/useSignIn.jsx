@@ -1,9 +1,8 @@
 import { useState } from 'react';
-import createApiKey from '../api/createApiKey';
+
 export default function useSignIn() {
-  const [user, setUser] = useState(null);
-  const [fetchError, setFetchError] = useState(null);
-  const [apiKey, setApiKey] = useState(null);
+  const [signInData, setSignInData] = useState(null);
+
   const signIn = async user => {
     const OPTIONS = {
       method: 'POST',
@@ -24,13 +23,11 @@ export default function useSignIn() {
         throw error;
       }
       const { data } = await response.json();
-
-      const apiKey = await createApiKey(data.accessToken);
-      setUser({ data });
-      setApiKey(apiKey);
+      setSignInData(data);
     } catch (error) {
-      setFetchError(error);
+      throw error;
     }
   };
-  return { user, setUser, fetchError, apiKey, setApiKey, signIn };
+
+  return { signInData, signIn };
 }

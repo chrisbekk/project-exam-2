@@ -1,6 +1,6 @@
 import { duration } from '@mui/material';
 import { motion } from 'framer-motion';
-export default function EditProfile({ children, setToggleEditProfile }) {
+export default function EditProfile({ children }) {
   const variants = {
     initial: { y: '-300%' },
     show: { y: '-30%', transition: { delay: 0.15 } },
@@ -14,7 +14,6 @@ export default function EditProfile({ children, setToggleEditProfile }) {
       exit="exit"
       className="z-50 h-full w-full rounded-2xl border border-neutral-950 bg-neutral-50 bg-opacity-80"
     >
-      {/* <button onClick={() => setToggleEditProfile(false)}>Close</button> */}
       {children}
     </motion.div>
   );

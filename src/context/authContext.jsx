@@ -4,24 +4,17 @@ import useSignIn from './../hooks/useSignIn';
 const authContext = createContext();
 
 export function AuthProvider({ children }) {
-  const { user, setUser, apiKey, setApiKey, fetchError, signIn } = useSignIn();
-  const signOut = () => {
-    setUser(null);
-    setApiKey(null);
-  };
-  const isSignedIn = user && apiKey;
-  const userContext = {
-    user,
-    setUser,
-    apiKey,
-    fetchError,
+  const { signInData, signIn } = useSignIn();
+
+  const signInContext = {
+    signInData,
     signIn,
-    signOut,
-    isSignedIn,
   };
 
   return (
-    <authContext.Provider value={userContext}>{children}</authContext.Provider>
+    <authContext.Provider value={signInContext}>
+      {children}
+    </authContext.Provider>
   );
 }
 

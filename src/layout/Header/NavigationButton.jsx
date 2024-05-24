@@ -2,10 +2,11 @@ import { useState } from 'react';
 import { IoMdMenu } from 'react-icons/io';
 import { LiaUserCircle } from 'react-icons/lia';
 import NavigationMenu from './NavigationMenu';
-import { useAuthContext } from '../../context/authContext';
+import { useUserContext } from '../../context/userContext';
 export default function NavigationButton() {
   const [toggleMenu, setToggleMenu] = useState(false);
-  const { user } = useAuthContext();
+  const { user } = useUserContext();
+
   const handleClick = () => {
     setToggleMenu(prevToggle => !prevToggle);
   };
@@ -14,8 +15,8 @@ export default function NavigationButton() {
   let userAvatar = (
     <div className="size-[30px] rounded-full">
       <img
-        src={user?.data.avatar.url}
-        alt={user?.data.avatar.alt}
+        src={user?.avatar.url}
+        alt={user?.avatar.alt}
         className="h-full w-full rounded-full"
       />
     </div>
