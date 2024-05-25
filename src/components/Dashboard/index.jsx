@@ -12,6 +12,7 @@ export const DashboardPage = () => {
   const [venues, setVenues] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  console.log(venues);
   useEffect(() => {
     setLoading(true);
     getVenuesByProfile(user.name, accessToken, apiKey)
@@ -50,9 +51,13 @@ export const DashboardPage = () => {
       </Section>
 
       <Section limWidth={false} ySpace={false}>
-        <CreateVenue />
+        <CreateVenue setVenues={setVenues} />
       </Section>
-      <Section>Venues</Section>
+      <Section>
+        {venues?.map((venue, index) => (
+          <p key={index}>{venue.name}</p>
+        ))}
+      </Section>
     </>
   );
 };

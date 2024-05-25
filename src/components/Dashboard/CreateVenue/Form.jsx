@@ -8,7 +8,16 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Input } from './Input';
 import { Button } from '../../Button';
 import { Meta } from './Meta';
-export const Form = ({ toggleForm, setToggleForm }) => {
+import { useUserContext } from '../../../context/userContext';
+import { createVenue } from '../../../api/createVenue';
+import { Error } from '../../Error';
+import { Link } from 'react-router-dom';
+export const Form = ({ toggleForm, setToggleForm, setVenues }) => {
+  const { accessToken, apiKey } = useUserContext();
+
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [toggleImages, setToggleImages] = useState(false);
   const [name, setName] = useState('');
 
   const [description, setDescription] = useState('');
@@ -28,8 +37,6 @@ export const Form = ({ toggleForm, setToggleForm }) => {
 
   const [image6, setImage6] = useState({ url: '', alt: '' });
 
-  const [toggleImages, setToggleImages] = useState(false);
-
   const [price, setPrice] = useState(0);
 
   const [maxGuests, setMaxGuests] = useState(0);
@@ -44,24 +51,48 @@ export const Form = ({ toggleForm, setToggleForm }) => {
   });
 
   const [location, setLocation] = useState({
-    address: null,
-    city: null,
-    zip: null,
-    country: null,
-    continent: null,
-    lat: '',
-    lng: '',
+    address: '',
+    city: '',
+    zip: '',
+    country: '',
+    continent: '',
+    lat: 0,
+    lng: 0,
   });
 
   const handleSubmit = e => {
     e.preventDefault();
-    console.log('Clicked');
+
     const images = [image1, image2, image3, image4, image5, image6];
     const filteredImages = images.filter(
       image => image.url !== '' && image.alt !== '',
     );
     setMedia(filteredImages);
-    console.log(media);
+    const payload = {
+      name,
+      description,
+      media,
+      price,
+      maxGuests,
+      rating,
+      meta,
+      location,
+    };
+    setLoading(true);
+    setError(false);
+    createVenue(accessToken, apiKey, payload)
+      .then(res => {
+        console.log('Response from createVenue:', res);
+        setVenues(prevVenues => [...prevVenues, res.data]);
+      })
+      .catch(error => {
+        console.error('Error during venue creation:', error);
+        setError(true);
+      })
+      .finally(() => {
+        setLoading(false);
+        setToggleForm(false);
+      });
   };
 
   const variants = {
@@ -75,6 +106,19 @@ export const Form = ({ toggleForm, setToggleForm }) => {
     show: { scaleY: '100%', originY: 0 },
     hide: { scaleY: '0%', originY: 0 },
   };
+
+  if (error)
+    return (
+      <Error>
+        <p className="mt-5">Failed register venue</p>
+        <p className="mt-2">Please try again later</p>
+        <Link to={'/auth/profile'} className="mt-2 bg-brand p-2 text-white">
+          Back to Profile Page
+        </Link>
+      </Error>
+    );
+
+  if (loading) return <p>Loading...</p>;
   return (
     <AnimatePresence>
       {toggleForm && (

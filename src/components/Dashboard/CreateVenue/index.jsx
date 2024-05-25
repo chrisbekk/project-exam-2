@@ -32,12 +32,11 @@ import { useUserContext } from '../../../context/userContext';
 //   }
 // }
 
-export const CreateVenue = () => {
+export const CreateVenue = ({ setVenues }) => {
   const [toggleForm, setToggleForm] = useState(false);
   const { user } = useUserContext();
   let hasVenues = user.venues.length !== 0;
 
-  console.log(hasVenues);
   return (
     <div>
       <div className="mx-auto max-w-80 xs:mx-0">
@@ -48,7 +47,11 @@ export const CreateVenue = () => {
           </div>
         </Button>
       </div>
-      <Form toggleForm={toggleForm} setToggleForm={setToggleForm} />
+      <Form
+        toggleForm={toggleForm}
+        setToggleForm={setToggleForm}
+        setVenues={setVenues}
+      />
     </div>
   );
 };
