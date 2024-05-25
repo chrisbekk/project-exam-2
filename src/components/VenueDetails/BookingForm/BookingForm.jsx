@@ -3,7 +3,7 @@ import getOptionsArray from '../../../utils/getOptionsArray';
 import getFormattedTodayDate from '../../../utils/getTodayDate';
 import { Button } from '../../Button';
 import BookingPrices from './BookingPrices';
-import { useAuthContext } from '../../../context/authContext';
+import { useUserContext } from '../../../context/userContext';
 import usePostBooking from '../../../hooks/usePostBooking';
 import { useState } from 'react';
 import { format } from 'date-fns';
@@ -23,7 +23,7 @@ export default function BookingForm({
   const options = getOptionsArray(maxGuests);
   const minFromDate = getFormattedTodayDate();
   const minToDate = getNextDay(fromDate);
-  const { isSignedIn } = useAuthContext();
+  const { user } = useUserContext();
 
   const selectGuests = e => {
     console.log(e.target.value);
@@ -86,8 +86,8 @@ export default function BookingForm({
           </select>
         </div>
       </div>
-      <Button fill={true} disabled={!isSignedIn} handleClick={handleBooking}>
-        {isSignedIn ? 'Make Reservation' : 'Sign In to Reserve'}
+      <Button fill={true} disabled={!user} handleClick={handleBooking}>
+        {user ? 'Make Reservation' : 'Sign In to Reserve'}
       </Button>
       <div>
         <BookingPrices totalPrice={totalPrice} nights={nights} price={price} />

@@ -11,10 +11,11 @@ import { Meta } from './Meta';
 import { useUserContext } from '../../../context/userContext';
 import { createVenue } from '../../../api/createVenue';
 import { Error } from '../../Error';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { Pending } from '../../Pending';
 export const Form = ({ toggleForm, setToggleForm, setVenues }) => {
   const { accessToken, apiKey } = useUserContext();
-
+  const navigate = useNavigate();
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [toggleImages, setToggleImages] = useState(false);
@@ -24,21 +25,13 @@ export const Form = ({ toggleForm, setToggleForm, setVenues }) => {
 
   // Media states
   const [media, setMedia] = useState([]);
-
   const [image1, setImage1] = useState({ url: '', alt: '' });
-
   const [image2, setImage2] = useState({ url: '', alt: '' });
-
   const [image3, setImage3] = useState({ url: '', alt: '' });
-
   const [image4, setImage4] = useState({ url: '', alt: '' });
-
   const [image5, setImage5] = useState({ url: '', alt: '' });
-
   const [image6, setImage6] = useState({ url: '', alt: '' });
-
   const [price, setPrice] = useState(0);
-
   const [maxGuests, setMaxGuests] = useState(0);
 
   const [rating, setRating] = useState(0);
@@ -83,7 +76,9 @@ export const Form = ({ toggleForm, setToggleForm, setVenues }) => {
     createVenue(accessToken, apiKey, payload)
       .then(res => {
         console.log('Response from createVenue:', res);
-        setVenues(prevVenues => [...prevVenues, res.data]);
+        //setVenues(prevVenues => [...prevVenues, res.data]);
+        setToggleForm(false);
+        navigate('/auth/profile');
       })
       .catch(error => {
         console.error('Error during venue creation:', error);
@@ -91,7 +86,6 @@ export const Form = ({ toggleForm, setToggleForm, setVenues }) => {
       })
       .finally(() => {
         setLoading(false);
-        setToggleForm(false);
       });
   };
 
@@ -118,7 +112,7 @@ export const Form = ({ toggleForm, setToggleForm, setVenues }) => {
       </Error>
     );
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Pending text={'Creating venue...'} />;
   return (
     <AnimatePresence>
       {toggleForm && (

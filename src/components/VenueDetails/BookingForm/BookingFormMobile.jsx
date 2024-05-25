@@ -4,7 +4,7 @@ import { Button } from '../../Button';
 import BookingInformation from './BookingInformation';
 
 import BookingPrices from './BookingPrices';
-import { useAuthContext } from '../../../context/authContext';
+import { useUserContext } from '../../../context/userContext';
 
 import { format } from 'date-fns';
 export default function BookingFormMobile({
@@ -22,7 +22,7 @@ export default function BookingFormMobile({
   setConfirmBooking,
 }) {
   const [toggleForm, setToggleForm] = useState(false);
-  const { isSignedIn } = useAuthContext();
+  const { user } = useUserContext();
 
   const formVariants = {
     initial: { y: '85%' },
@@ -86,10 +86,10 @@ export default function BookingFormMobile({
             <Button
               fill={true}
               small={true}
-              disabled={!isSignedIn}
+              disabled={!user}
               handleClick={handleBooking}
             >
-              {isSignedIn ? 'Reserve' : 'Sign In to Reserve'}
+              {user ? 'Reserve' : 'Sign In to Reserve'}
             </Button>
           </div>
 

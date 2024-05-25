@@ -7,6 +7,7 @@ export default function BrowseVenues() {
   const navigate = useNavigate();
   const handleSubmit = e => {
     e.preventDefault();
+    console.log('clicked');
     query = { destination: destinationRef.current.value };
     const queryString = new URLSearchParams(query).toString();
     navigate(`/venues?${queryString}`);
@@ -16,7 +17,7 @@ export default function BrowseVenues() {
       <h1>
         Search for venues at your preferred destination or explore all venues
       </h1>
-      <form onSubmit={handleSubmit}>
+      <form>
         <div className="relative mb-7">
           <label
             htmlFor="destination"
@@ -32,7 +33,9 @@ export default function BrowseVenues() {
             aria-placeholder="Where"
           />
         </div>
-        <Button fill={true}>Explore Venues</Button>
+        <Button fill={true} submit={true} handleClick={handleSubmit}>
+          Explore Venues
+        </Button>
       </form>
     </div>
   );
