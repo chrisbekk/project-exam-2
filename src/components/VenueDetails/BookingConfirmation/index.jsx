@@ -6,7 +6,7 @@ import { Button } from '../../Button';
 import { Success } from './Success';
 import { Error } from './Error';
 import usePostBooking from '../../../hooks/usePostBooking';
-import { useAuthContext } from '../../../context/authContext';
+import { useUserContext } from '../../../context/userContext';
 export const BookingConfirmation = ({
   venue,
   fromDate,
@@ -15,7 +15,7 @@ export const BookingConfirmation = ({
   setConfirmBooking,
   nights,
 }) => {
-  const { user, apiKey } = useAuthContext();
+  const { accessToken, apiKey } = useAuthContext();
   const { postBooking, responseData, pending, responseError } =
     usePostBooking();
 
@@ -27,7 +27,7 @@ export const BookingConfirmation = ({
       venueId: venue?.data.id,
     };
 
-    postBooking(user?.data.accessToken, apiKey?.key, bookingData);
+    postBooking(accessToken, apiKey, bookingData);
   };
   if (!responseError) return <Error />;
   if (responseData) return <Success />;

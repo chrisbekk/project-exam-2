@@ -50,7 +50,9 @@ export const SignInForm = () => {
         />
         <HiOutlineLockClosed className="absolute left-2 top-4 size-5" />
       </div>
-      <Button fill={true}>Sign In</Button>
+      <Button fill={true} submit={true}>
+        Sign In
+      </Button>
       {error && error?.errors.map(e => <FormError message={e.message} />)}
     </form>
   );

@@ -10,6 +10,7 @@ export const SearchForm = () => {
   const [isActive, setIsActive] = useState(''); // Define which Calendar component that should be shown
   // Search Form handler for form submission event
   const handleSubmit = e => {
+    console.log('clicked');
     e.preventDefault();
     // Get form data from search form & convert into regular JS object
     const formData = new FormData(e.target); //
@@ -81,7 +82,9 @@ export const SearchForm = () => {
             />
           </div>
         </div>
-        <Button fill={true}>Search</Button>
+        <Button fill={true} type={'button'}>
+          Search
+        </Button>
       </form>
     </div>
   );
