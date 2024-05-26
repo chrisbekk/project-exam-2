@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { MdLibraryAdd } from 'react-icons/md';
-import { Button } from '../../Button';
+import { Button } from '../../generics/Button';
 import { Form } from './Form';
 import { useUserContext } from '../../../context/userContext';
 // {

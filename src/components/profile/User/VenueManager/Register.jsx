@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button } from '../../../Button';
+import { Button } from '../../../generics/Button';
 import { Error } from './Error';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { venueManager } from '../../../../api/venueManager';

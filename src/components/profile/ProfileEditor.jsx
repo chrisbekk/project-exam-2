@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button } from '../Button';
+import { Button } from '../generics/Button';
 import Error from './Error';
 import { updateProfile } from '../../api/updateProfile';
 import { useUserContext } from '../../context/userContext';

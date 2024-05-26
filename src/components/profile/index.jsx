@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Section } from '../../components/Section';
+import { Section } from '../generics/Section';
 import ProfileEditor from './ProfileEditor';
 import { AnimatePresence } from 'framer-motion';
 

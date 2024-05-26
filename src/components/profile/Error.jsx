@@ -1,5 +1,5 @@
 import { MdErrorOutline } from 'react-icons/md';
-import { Button } from '../Button';
+import { Button } from '../generics/Button';
 export default function Error({ setError }) {
   return (
     <div className="absolute inset-0 flex items-center justify-center">

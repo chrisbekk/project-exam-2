@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { deleteVenue } from '../../../api/deleteVenue';
 import { useUserContext } from '../../../context/userContext';
-import { Button } from '../../Button';
-import { Error } from '../../Error';
-import { Pending } from '../../Pending';
+import { Button } from '../../generics/Button';
+import { Error } from '../../generics/Error';
+import { Pending } from '../../generics/Pending';
 import { useNavigate, Link } from 'react-router-dom';
 
 export const DeleteVenue = ({ venue, setVenues }) => {

@@ -6,13 +6,13 @@ import { MdOutlinePets } from 'react-icons/md';
 import { GiMeal } from 'react-icons/gi';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Input } from '../CreateVenue/Input';
-import { Button } from '../../Button';
+import { Button } from '../../generics/Button';
 import { Meta } from '../CreateVenue/Meta';
 import { useUserContext } from '../../../context/userContext';
 import { editVenue } from '../../../api/editVenue';
-import { Error } from '../../Error';
+import { Error } from '../../generics/Error';
 import { Link, useNavigate } from 'react-router-dom';
-import { Pending } from '../../Pending';
+import { Pending } from '../../generics/Pending';
 export const VenueEditor = ({ venue, setVenues, setEditToggle }) => {
   const { accessToken, apiKey } = useUserContext();
   const navigate = useNavigate();

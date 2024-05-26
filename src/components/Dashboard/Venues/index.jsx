@@ -1,6 +1,6 @@
 import React from 'react';
 import { Venue } from './Venue';
-import { Error } from '../../Error';
+import { Error } from '../../generics/Error';
 export const Venues = ({ venues, setVenues }) => {
   console.log(venues);
 
