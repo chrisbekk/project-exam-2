@@ -23,16 +23,12 @@ export const Venue = ({ venue, setVenues }) => {
   return (
     <div className="mb-2 rounded-xl border border-neutral-300 p-2 transition-all">
       <div
-        className="grid grid-cols-3 hover:cursor-pointer sm:grid-cols-5"
+        className="grid grid-cols-3 hover:cursor-pointer sm:grid-cols-4"
         onClick={() => setToggle(prev => !prev)}
       >
         <div>
           <p className="text-sm font-semibold">Name</p>
           <p>{venue?.name}</p>
-        </div>
-        <div className="flex flex-col items-center">
-          <p className="text-sm font-semibold">Bookings</p>
-          <p>{venueLength}</p>
         </div>
 
         <div className="flex flex-col items-center">

@@ -2,10 +2,12 @@ import { motion, AnimatePresence, useAnimationControls } from 'framer-motion';
 import { useState } from 'react';
 import { Button } from '../../generics/Button';
 import BookingInformation from './BookingInformation';
-
+import { useNavigate } from 'react-router-dom';
 import BookingPrices from './BookingPrices';
 import { useUserContext } from '../../../context/userContext';
-
+import usePostBooking from '../../../hooks/usePostBooking';
+import { Pending } from '../../generics/Pending';
+import { Error } from '../../generics/Error';
 import { format } from 'date-fns';
 export default function BookingFormMobile({
   price,
@@ -21,14 +23,23 @@ export default function BookingFormMobile({
   venueId,
 }) {
   const [toggleForm, setToggleForm] = useState(false);
-  const { user } = useUserContext();
-
+  const { user, accessToken, apiKey } = useUserContext();
   const formVariants = {
     initial: { y: '85%' },
     show: { y: '15%', transition: { type: 'ease', delay: 0.15 } },
     exit: { y: '85%', transition: { type: 'ease', delay: 0.2 } },
   };
   const controls = useAnimationControls();
+  const navigate = useNavigate();
+  const { responseData, pending, responseError, postBooking } =
+    usePostBooking();
+  let bookingData = {
+    dateFrom: null,
+    dateTo: null,
+    guests: null,
+    venueId: null,
+  };
+
   const handleClick = () => {
     if (!toggleForm) {
       controls.start('show');
@@ -39,20 +50,34 @@ export default function BookingFormMobile({
     }
   };
   const handleBooking = () => {
-    const bookingData = {
+    bookingData = {
       dateFrom: fromDate,
       dateTo: toDate,
-      guests: parseInt(guests),
+      guests: guests,
       venueId: venueId,
     };
+    console.log(bookingData);
     if (
-      bookingData.datefrom &&
+      bookingData.dateFrom &&
       bookingData.dateTo &&
       bookingData.guests &&
       bookingData.venueId
     ) {
+      postBooking(accessToken, apiKey, bookingData).then(() =>
+        navigate('/auth/profile/'),
+      );
     }
   };
+  if (pending) return <Pending text={'Booking Venue'} />;
+  if (responseError)
+    return (
+      <Error
+        text={'Failed to book venue'}
+        path={'/venue/'}
+        redirectTo={'Back to Venue'}
+      />
+    );
+
   return (
     <AnimatePresence>
       <motion.div

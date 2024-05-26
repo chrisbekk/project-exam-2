@@ -8,39 +8,29 @@ import { CreateVenue } from './CreateVenue';
 import { Link } from 'react-router-dom';
 import { Details } from './Details';
 import { Venues } from './Venues';
+import { useGetVenuesByProfile } from '../../hooks/useGetVenuesByProfile';
 export const DashboardPage = () => {
   const { user, accessToken, apiKey } = useUserContext();
-  const [venues, setVenues] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  console.log(user);
+  const { venues, setVenues, pending, responseError, getVenuesByProfile } =
+    useGetVenuesByProfile();
+
+  // const [loading, setLoading] = useState(false);
+  // const [error, setError] = useState(false);
 
   useEffect(() => {
-    setLoading(true);
-    getVenuesByProfile(user.name, accessToken, apiKey)
-      .then(res => {
-        setError(null);
-        setVenues(res);
-      })
-      .catch(() => {
-        setError(true);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    getVenuesByProfile(user.name, accessToken, apiKey);
   }, []);
 
-  if (loading) return <Pending text={'Loading data...'} />;
-  if (error)
+  if (pending) return <Pending text={'Loading data...'} />;
+  if (responseError)
     return (
-      <Error>
-        <p className="mt-5">Failed to load data</p>
-        <p className="mt-2">Please try again later</p>
-        <Link to={'/auth/profile'} className="mt-2 bg-brand p-2 text-white">
-          Back to Profile Page
-        </Link>
-      </Error>
+      <Error
+        text={'Failed to get venues'}
+        path={'/auth/profile'}
+        redirectTo={'Back to Profile Page'}
+      />
     );
-
   return (
     <>
       <Section limWidth={false} ySpace={false}>
@@ -55,12 +45,7 @@ export const DashboardPage = () => {
         <CreateVenue setVenues={setVenues} />
       </Section>
       <Section>
-        <Venues
-          venues={venues}
-          loading={loading}
-          error={error}
-          setVenues={setVenues}
-        />
+        <Venues venues={venues} setVenues={setVenues} />
       </Section>
     </>
   );

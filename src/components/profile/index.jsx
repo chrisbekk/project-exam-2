@@ -2,23 +2,42 @@ import { useEffect, useState } from 'react';
 import { Section } from '../generics/Section';
 import ProfileEditor from './ProfileEditor';
 import { AnimatePresence } from 'framer-motion';
-
+import { Pending } from '../generics/Pending';
+import { Error } from '../generics/Error';
 import Banner from './Banner';
 import EditProfile from './EditProfile';
 import { User } from './User';
 import { useUserContext } from '../../context/userContext';
+import { useFetchUser } from '../../hooks/useFetchUser';
 
 export default function ProfilePage() {
   const [toggleEditProfile, setToggleEditProfile] = useState(false);
-  const { user } = useUserContext();
-  console.log(user);
+  const { userData, pending, error, getUser } = useFetchUser();
+  const { user, accessToken, apiKey } = useUserContext();
+  console.log(user.name);
+  console.log('PROFILE PAGE MOUNTS');
+  useEffect(() => {
+    console.log('USE EFFECT RUNS');
+    getUser(user.name, accessToken, apiKey);
+  }, [user]);
+
+  if (pending) return <Pending text={'Loading user data'} />;
+  if (error)
+    return (
+      <Error
+        text={'Failed to load user data'}
+        path={'/'}
+        redirectTo={'Back to Home Page'}
+      />
+    );
+
   return (
     <>
       <Section ySpace={false} limWidth={true}>
         <Banner
-          banner={user?.banner}
-          avatar={user?.avatar}
-          username={user?.name}
+          banner={userData?.banner}
+          avatar={userData?.avatar}
+          username={userData?.name}
           setToggleEditProfile={setToggleEditProfile}
         />
       </Section>
@@ -27,21 +46,17 @@ export default function ProfilePage() {
           {toggleEditProfile && (
             <EditProfile>
               <ProfileEditor
-                bio={user?.bio}
-                banner={user?.banner}
-                avatar={user?.avatar}
-                name={user?.name}
+                bio={userData?.bio}
+                banner={userData?.banner}
+                avatar={userData?.avatar}
+                name={userData?.name}
                 setToggleEditProfile={setToggleEditProfile}
               />
             </EditProfile>
           )}
         </AnimatePresence>
       </Section>
-      {!toggleEditProfile && (
-        <Section limWidth={true}>
-          <User user={user} />
-        </Section>
-      )}
+      {!toggleEditProfile && <User user={userData} />}
     </>
   );
 }

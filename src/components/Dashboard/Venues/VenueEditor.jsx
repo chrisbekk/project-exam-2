@@ -76,8 +76,8 @@ export const VenueEditor = ({ venue, setVenues, setEditToggle }) => {
             return v;
           });
         });
+        setEditToggle(false);
         navigate('/auth/dashboard');
-        //setEditToggle(false);
       })
       .catch(error => {
         console.error('Error during venue edit:', error);

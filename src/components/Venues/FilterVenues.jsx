@@ -5,6 +5,7 @@ export default function FilterVenues({ setDestination }) {
   const destinationRef = useRef(null);
   const handleSubmit = e => {
     e.preventDefault();
+    console.log(destinationRef.current.value);
     setDestination(destinationRef.current.value);
     destinationRef.current.value = '';
   };

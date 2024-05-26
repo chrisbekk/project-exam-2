@@ -7,26 +7,25 @@ export default function Banner({
   username,
   setToggleEditProfile,
 }) {
-  let { url, alt } = banner || {};
-  const FALLBACK_BANNER = default_banner;
-  let profileUsername =
-    typeof username === 'string' && username.length !== 0 ? username : '';
+  // const FALLBACK_BANNER = default_banner;
+  // let profileUsername =
+  //   typeof username === 'string' && username.length !== 0 ? username : '';
 
-  if (typeof url !== 'string' && url.length === 0) {
-    url = FALLBACK_BANNER;
-    alt =
-      'A banner in the pink colors of the Holidaze brand with Holidaze written on it.';
-  }
+  // if (typeof banner?.url !== 'string' && banner?.url.length === 0) {
+  //   banner?.url = FALLBACK_BANNER;
+  //   banner?.alt =
+  //     'A banner in the pink colors of the Holidaze brand with Holidaze written on it.';
+  // }
   return (
     <div className="relative h-[175px] w-full rounded-xl">
       <img
-        src={url}
-        alt={alt}
+        src={banner?.url}
+        alt={banner?.alt}
         className="h-full w-full rounded-xl object-cover"
       />
       <div className="absolute bottom-4 left-3 flex items-center gap-4">
         <ProfileImage avatar={avatar} username={username} />
-        <p className="font-semibold">{profileUsername}</p>
+        <p className="font-semibold">{username}</p>
       </div>
       <div className="absolute bottom-4 right-3">
         <EditButton setToggleEditProfile={setToggleEditProfile} />
