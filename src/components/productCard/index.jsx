@@ -12,12 +12,14 @@ export const ProductCard = ({ venue }) => {
   return (
     <div
       onClick={handleClick}
-      className="h-[500px] w-full max-w-[304px]  flex-shrink-0 hover:cursor-pointer"
+      className="h-[500px] w-[280px]  flex-shrink-0 flex-grow-0 hover:cursor-pointer"
     >
       <ProductGallery media={media} />
-      <div className="h-[200px]  pt-4">
-        <div className="flex h-[25px] justify-between">
-          <p className="text-base font-semibold">{name}</p>
+      <div className="h-[200px] pt-4">
+        <div className="flex h-[25px] w-full justify-between">
+          <p className="w-full overflow-hidden text-base font-semibold">
+            {name}
+          </p>
           <div className="flex items-center gap-2">
             <HiStar />
 
