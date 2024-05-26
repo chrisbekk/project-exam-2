@@ -4,21 +4,17 @@ import { Gallery } from './Gallery';
 import { HiOutlineViewGrid } from 'react-icons/hi';
 
 export const Media = ({ mediaArray }) => {
-  const [isVisible, setIsVisible] = useState(false); // State for showing / hiding Gallery component
-  const [primaryImage, ...gallery] = mediaArray; // Destructure media array
-  const mediaArrayLength = gallery.length; // Define array length for gallery behaviour
-  const renderedGallery = gallery.slice(0, 4); // Get the first four elements of the gallery array for rendering image grid
+  const [isVisible, setIsVisible] = useState(false);
+  const [primaryImage, ...gallery] = mediaArray;
+  const mediaArrayLength = gallery.length;
+  const renderedGallery = gallery.slice(0, 4);
 
   useEffect(() => {
     if (isVisible) {
-      // Disable body scrolling when modal is open
       document.body.style.overflow = 'hidden';
     } else {
-      // Enable body scrolling when modal is closed
       document.body.style.overflow = 'auto';
     }
-
-    // Cleanup function
     return () => {
       document.body.style.overflow = 'auto';
     };

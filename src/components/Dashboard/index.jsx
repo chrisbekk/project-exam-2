@@ -11,12 +11,9 @@ import { Venues } from './Venues';
 import { useGetVenuesByProfile } from '../../hooks/useGetVenuesByProfile';
 export const DashboardPage = () => {
   const { user, accessToken, apiKey } = useUserContext();
-  console.log(user);
+
   const { venues, setVenues, pending, responseError, getVenuesByProfile } =
     useGetVenuesByProfile();
-
-  // const [loading, setLoading] = useState(false);
-  // const [error, setError] = useState(false);
 
   useEffect(() => {
     getVenuesByProfile(user.name, accessToken, apiKey);

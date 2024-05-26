@@ -14,10 +14,8 @@ export default function ProfilePage() {
   const [toggleEditProfile, setToggleEditProfile] = useState(false);
   const { userData, setUserData, pending, error, getUser } = useFetchUser();
   const { user, accessToken, apiKey } = useUserContext();
-  console.log(user.name);
-  console.log('PROFILE PAGE MOUNTS');
+
   useEffect(() => {
-    console.log('USE EFFECT RUNS');
     getUser(user.name, accessToken, apiKey);
   }, [user]);
 

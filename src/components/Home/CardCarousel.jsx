@@ -1,13 +1,14 @@
 import React from 'react';
 import { ProductCard } from '../generics/productCard';
 import { Pending } from '../generics/Pending';
+import { Error } from '../generics/Error';
 
 export const CardCarousel = ({ venues, error, pending }) => {
-  // Deal with error and pending states
-  if (error) return <p>Nope</p>;
+  if (error)
+    return (
+      <Error text={'Failed to fetch venue'} path={'/'} redirectTo={'Reload'} />
+    );
   if (pending) return <Pending text={'Fetching venues...'} />;
-
-  // The carousel displays the 12 highest rated venues
   let filteredVenues = venues?.data
     .sort((a, b) => b.rating - a.rating)
     .slice(0, 12);

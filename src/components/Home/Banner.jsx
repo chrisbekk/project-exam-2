@@ -21,6 +21,8 @@ const images = [
   { url: image9, alt: 'Modern family style house in the city' },
   { url: image10, alt: 'Minimalist and urban house.' },
 ];
+
+//
 export const Banner = () => {
   return (
     <div className="z-50 overflow-hidden from-neutral-100 via-transparent to-neutral-100  py-14">

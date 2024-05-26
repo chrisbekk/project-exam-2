@@ -11,7 +11,7 @@ import { Meta } from './Meta';
 import { useUserContext } from '../../../context/userContext';
 import { createVenue } from '../../../api/createVenue';
 import { Error } from '../../generics/Error';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Pending } from '../../generics/Pending';
 export const Form = ({ toggleForm, setToggleForm, setVenues }) => {
   const { accessToken, apiKey } = useUserContext();
@@ -19,12 +19,9 @@ export const Form = ({ toggleForm, setToggleForm, setVenues }) => {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [toggleImages, setToggleImages] = useState(false);
-
   const [name, setName] = useState('');
-
   const [description, setDescription] = useState('');
 
-  // Media states
   const [media, setMedia] = useState([]);
   const [image1, setImage1] = useState({ url: '', alt: '' });
   const [image2, setImage2] = useState({ url: '', alt: '' });
@@ -34,16 +31,13 @@ export const Form = ({ toggleForm, setToggleForm, setVenues }) => {
   const [image6, setImage6] = useState({ url: '', alt: '' });
   const [price, setPrice] = useState(1);
   const [maxGuests, setMaxGuests] = useState(1);
-
   const [rating, setRating] = useState(1);
-
   const [meta, setMeta] = useState({
     wifi: false,
     parking: false,
     breakfast: false,
     pets: false,
   });
-
   const [location, setLocation] = useState({
     address: '',
     city: '',
@@ -56,14 +50,15 @@ export const Form = ({ toggleForm, setToggleForm, setVenues }) => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    console.log(image1);
     const images = [image1, image2, image3, image4, image5, image6];
-    const filteredImages = images.filter(image => image.url !== '');
-    setMedia(filteredImages);
+    const filteredImages = images.filter(
+      image => image.url && image.url.trim() !== '',
+    );
+
     const payload = {
       name,
       description,
-      media,
+      media: filteredImages,
       price,
       maxGuests,
       rating,
@@ -71,19 +66,16 @@ export const Form = ({ toggleForm, setToggleForm, setVenues }) => {
       location,
     };
 
-    console.log(payload);
     setLoading(true);
     setError(false);
     createVenue(accessToken, apiKey, payload)
       .then(res => {
-        console.log('Response from createVenue:', res);
         setVenues(prevVenues => [...prevVenues, res.data]);
         setToggleForm(false);
         handleClose();
         navigate('/auth/dashboard');
       })
-      .catch(error => {
-        console.error('Error during venue creation:', error);
+      .catch(() => {
         setError(true);
       })
       .finally(() => {
@@ -172,7 +164,7 @@ export const Form = ({ toggleForm, setToggleForm, setVenues }) => {
                 onChange={e => setDescription(e.target.value)}
                 required={true}
               />
-              <div className=" rounded-lg border border-rose-400 p-1 xs:p-2">
+              <div className=" rounded-lg p-1 xs:p-2">
                 <div className="sm:flex sm:items-center sm:justify-between">
                   <div>
                     <h2 className="text-lg font-semibold">Images</h2>
@@ -338,7 +330,7 @@ export const Form = ({ toggleForm, setToggleForm, setVenues }) => {
                   </motion.div>
                 )}
               </div>
-              <div className="mt-3 border border-blue-300 xs:flex xs:gap-2">
+              <div className="mt-3  xs:flex xs:gap-2">
                 <Input
                   label={'Price per night'}
                   id={'price'}
@@ -360,7 +352,7 @@ export const Form = ({ toggleForm, setToggleForm, setVenues }) => {
                   required={true}
                 />
               </div>
-              <div className="mt-3 border border-green-500">
+              <div className="mt-3">
                 <Input
                   label={'Rating'}
                   id={'rating'}
@@ -415,7 +407,7 @@ export const Form = ({ toggleForm, setToggleForm, setVenues }) => {
                   </Meta>
                 </div>
               </div>
-              <div className="mt-3 border border-orange-600 p-2">
+              <div className="mt-3 p-2">
                 <h2 className="text-lg font-semibold">Location</h2>
                 <Input
                   label={'Address'}
@@ -446,7 +438,7 @@ export const Form = ({ toggleForm, setToggleForm, setVenues }) => {
                     }
                   />
                 </div>
-                <div className="border border-purple-400 sm:flex sm:gap-2">
+                <div className=" sm:flex sm:gap-2">
                   <Input
                     label={'Country'}
                     id={'country'}
@@ -470,7 +462,7 @@ export const Form = ({ toggleForm, setToggleForm, setVenues }) => {
                     }
                   />
                 </div>
-                <div className="border border-yellow-300 sm:flex sm:gap-2">
+                <div className=" sm:flex sm:gap-2">
                   <Input
                     label={'Latitude'}
                     id={'lat'}

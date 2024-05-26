@@ -10,31 +10,19 @@ import { Modal } from '../../generics/Modal';
 import { checkEmail, checkUserName } from '../../../utils/regEx';
 import registerUser from '../../../api/registerUser';
 import { useNavigate } from 'react-router-dom';
+//
 export const RegistrationForm = () => {
-  // Setting up states for input validation
   const [userNameInput, setUserNameInput] = useState('');
-
   const [emailInput, setEmailInput] = useState('');
-
   const [passwordInput, setPasswordInput] = useState('');
-
   const [isManager, setIsManager] = useState(false);
-  console.log(isManager);
-  // Declaring error state for user registration
   const [fetchError, setFetchError] = useState([]);
-
-  // State for modal element
   const [isOpen, setIsOpen] = useState(false);
-
   const navigate = useNavigate();
-
-  // Handle Input Validation
   const isUserNameValid =
     userNameInput.length > 0 && checkUserName(userNameInput);
   const isEmailValid = checkEmail(emailInput);
   const isPasswordValid = passwordInput.length >= 8;
-
-  //
 
   const requirements = [
     {
@@ -51,9 +39,7 @@ export const RegistrationForm = () => {
     },
   ];
 
-  // Handle user registration
   const handleRegistration = e => {
-    console.log('click');
     e.preventDefault();
     setFetchError(null);
     if (isUserNameValid && isEmailValid && isPasswordValid) {
@@ -69,13 +55,8 @@ export const RegistrationForm = () => {
           setIsOpen(true);
         })
         .catch(error => {
-          console.log(error.errors);
           setFetchError(error.errors);
         });
-    } else {
-      console.error(
-        'User registration failed due to invalid user credentials.',
-      );
     }
   };
   return (

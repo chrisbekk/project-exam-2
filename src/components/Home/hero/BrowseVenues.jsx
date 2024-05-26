@@ -7,7 +7,6 @@ export default function BrowseVenues() {
   const navigate = useNavigate();
   const handleSubmit = e => {
     e.preventDefault();
-    console.log('clicked');
     query = { destination: destinationRef.current.value };
     const queryString = new URLSearchParams(query).toString();
     navigate(`/venues?${queryString}`);

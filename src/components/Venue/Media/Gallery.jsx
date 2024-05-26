@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Button } from '../../generics/Button';
+//
 export const Gallery = ({ isVisible, setIsVisible, gallery }) => {
   const [currentImage, setCurrentImage] = useState(0);
   if (!isVisible) return;

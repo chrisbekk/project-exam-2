@@ -20,7 +20,6 @@ export const SignInForm = () => {
   };
 
   useEffect(() => {
-    // Redirect to profile if userData is already available
     if (user) {
       navigate('/');
     }

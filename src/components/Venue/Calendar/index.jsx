@@ -2,24 +2,18 @@ import { CgChevronLeftR, CgChevronRightR } from 'react-icons/cg';
 import {
   endOfMonth,
   format,
-  getDaysInMonth,
   startOfMonth,
   addMonths,
   subMonths,
   addDays,
-  endOfWeek,
-  startOfWeek,
-  isSameDay,
   isWithinInterval,
   parseISO,
-  isBefore,
 } from 'date-fns';
 import React, { useState } from 'react';
 import CalendarButton from './CalendarButton';
 
 const Calendar = ({ bookings, fromDate, toDate, setFromDate, setToDate }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
-  console.log(bookings);
   let startDay = startOfMonth(currentMonth);
   const endDay = endOfMonth(currentMonth);
   const days = [];
