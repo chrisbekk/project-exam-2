@@ -10,28 +10,38 @@ import image8 from '/08.webp';
 import image9 from '/09.webp';
 import image10 from '/10.webp';
 const images = [
-  image1,
-  image2,
-  image3,
-  image4,
-  image5,
-  image6,
-  image7,
-  image8,
-  image9,
-  image10,
+  { url: image1, alt: 'Beatiful house with a fireplace' },
+  { url: image2, alt: 'Minimalist house with pool' },
+  { url: image3, alt: 'A Ranch style house with green lawn' },
+  { url: image4, alt: 'A big house with an even bigger pool' },
+  { url: image5, alt: 'A large pool with the sunset in the background' },
+  { url: image6, alt: 'Modern villa in the desert.' },
+  { url: image7, alt: 'Beatiful beach house overlooking the ocean.' },
+  { url: image8, alt: 'Luxurios villa overlooking the sea' },
+  { url: image9, alt: 'Modern family style house in the city' },
+  { url: image10, alt: 'Minimalist and urban house.' },
 ];
 export const Banner = () => {
   return (
     <div className="z-50 overflow-hidden from-neutral-100 via-transparent to-neutral-100  py-14">
       <div className="mb-8 flex -translate-x-56 gap-2">
         {images.map((image, index) => (
-          <img src={image} key={index} className="h-[200px]" />
+          <img
+            src={image.url}
+            key={index}
+            className="h-[200px]"
+            alt={image.alt}
+          />
         ))}
       </div>
       <div className="flex -translate-x-[620px] gap-2">
         {images.map((image, index) => (
-          <img src={image} key={index} className="h-[200px]" />
+          <img
+            src={image.url}
+            key={index}
+            className="h-[200px]"
+            alt={image.alt}
+          />
         ))}
       </div>
     </div>

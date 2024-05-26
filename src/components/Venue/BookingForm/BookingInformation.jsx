@@ -2,6 +2,7 @@ import { format } from 'date-fns';
 export default function BookingInformation({ fromDate, toDate, guests }) {
   return (
     <div className="mx-auto max-w-[640px]">
+      <h1 className="text-lg font-semibold">Your Booking Information</h1>
       <div className="my-8 w-full rounded-lg border-[0.5px] border-neutral-400">
         <div className="flex w-full">
           <div className="flex h-16 w-full flex-col justify-between rounded-tl-lg border p-2">

@@ -26,7 +26,11 @@ export default function FilterVenues({ setDestination }) {
             ref={destinationRef}
             className="h-14 w-full rounded-l-xl rounded-r-full bg-white pb-4 pl-4 pt-5 shadow-md"
           />
-          <button className="absolute right-0 top-0 flex size-14 items-center justify-center rounded-full bg-brand shadow-lg drop-shadow-md transition-all hover:bg-rose-600">
+          <button
+            type="button"
+            aria-label="filter"
+            className="absolute right-0 top-0 flex size-14 items-center justify-center rounded-full bg-brand shadow-lg drop-shadow-md transition-all hover:bg-rose-600"
+          >
             <HiOutlineSearch className="text-2xl text-neutral-50" />
           </button>
         </div>

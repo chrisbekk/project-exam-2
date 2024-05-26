@@ -11,6 +11,8 @@ export const ProductCard = ({ venue }) => {
   };
   return (
     <div
+      role="button"
+      aria-label="Visit venue page"
       onClick={handleClick}
       className="h-[500px] w-[280px]  flex-shrink-0 flex-grow-0 hover:cursor-pointer"
     >

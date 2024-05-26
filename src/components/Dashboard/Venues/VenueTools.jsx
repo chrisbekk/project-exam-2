@@ -3,6 +3,7 @@ import { Button } from '../../generics/Button';
 import { motion, AnimatePresence } from 'framer-motion';
 import { VenueEditor } from './VenueEditor';
 import { DeleteVenue } from './DeleteVenue';
+import { Link } from 'react-router-dom';
 export const VenueTools = ({ venue, setVenues }) => {
   const [toggleEdit, setEditToggle] = useState(false);
   const [toggleDelete, setToggleDelete] = useState(false);
@@ -77,6 +78,15 @@ export const VenueTools = ({ venue, setVenues }) => {
           </motion.div>
         )}
       </AnimatePresence>
+      <div className="border-b border-neutral-200 py-4 sm:flex sm:items-center sm:justify-between">
+        <div>
+          <h2 className="text-xl">View Venue</h2>
+          <p className="">Take a look at your venue.</p>
+        </div>
+        <Link to={`/venue/${venue.id}`} className="underline">
+          Venue
+        </Link>
+      </div>
     </div>
   );
 };

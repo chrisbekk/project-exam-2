@@ -5,7 +5,7 @@ import { GoChevronRight } from 'react-icons/go';
 export const ProductGallery = ({ media }) => {
   const gallerySize = media.length;
   const [currentIndex, setCurrentIndex] = useState(0);
-
+  let defaultAltText = 'Image of the product.';
   const swipeLeft = e => {
     e.stopPropagation();
     if (currentIndex === 0) return;
@@ -40,7 +40,8 @@ export const ProductGallery = ({ media }) => {
           key={currentIndex}
           src={media[currentIndex]?.url}
           alt={
-            media[currentIndex]?.alt === 'string'
+            media[currentIndex]?.alt !== 'string' ||
+            media[currentIndex]?.alt !== ''
               ? 'Image of the venue'
               : media[currentIndex]?.alt
           }

@@ -34,5 +34,5 @@ export const useFetchUser = () => {
       setPending(false);
     }
   };
-  return { userData, pending, error, getUser };
+  return { userData, setUserData, pending, error, getUser };
 };

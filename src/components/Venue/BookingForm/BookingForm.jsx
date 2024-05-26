@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { format } from 'date-fns';
 import { Pending } from '../../generics/Pending';
 import { Error } from '../../generics/Error';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 export default function BookingForm({
   price,
   fromDate,
@@ -59,6 +59,7 @@ export default function BookingForm({
 
   return (
     <div className="hidden w-full  rounded-2xl border-[0.5px] border-neutral-200 bg-neutral-50 px-6 py-16 shadow-[-1px_1px_2px_0px_#0A0A0A25,-1px_-2px_4px_0px_#0A0A0A25] md:sticky md:bottom-auto md:top-32 md:h-[65vh] md:w-[45%] lg:block">
+      <h1 className="mb-3 text-lg font-semibold">Your Booking Information</h1>
       <p className="font-thin">
         <span className="text-xl font-semibold">${price}</span> per night
       </p>
@@ -82,9 +83,16 @@ export default function BookingForm({
           <p className="font-semibold">{guests}</p>
         </div>
       </div>
-      <Button fill={true} disabled={!user} handleClick={handleBooking}>
-        {user ? 'Make Reservation' : 'Sign In to Reserve'}
-      </Button>
+      {user ? (
+        <Button fill={true} handleClick={handleBooking}>
+          Make Reservation
+        </Button>
+      ) : (
+        <Button handleClick={() => navigate('/signin')}>
+          Sign In to Reserve
+        </Button>
+      )}
+
       <div>
         <BookingPrices totalPrice={totalPrice} nights={nights} price={price} />
       </div>

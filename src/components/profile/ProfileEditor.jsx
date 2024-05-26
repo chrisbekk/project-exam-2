@@ -12,17 +12,15 @@ export default function ProfileEditor({
   avatar,
   name,
   setToggleEditProfile,
+  setUserData,
 }) {
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
-
   const [formData, setFormData] = useState({
     bio: bio || '',
     avatar: { url: avatar.url || '', alt: avatar.alt || '' },
     banner: { url: banner.url || '', alt: banner.alt || '' },
   });
   const navigate = useNavigate();
-  const { user, apiKey, accessToken, setUser } = useUserContext();
+  const { user, apiKey, accessToken } = useUserContext();
   const { responseData, pending, responseError, updateUser } = useUpdateUser();
   const handleChange = e => {
     const { name, value } = e.target;
@@ -49,8 +47,9 @@ export default function ProfileEditor({
   const handleSubmit = e => {
     e.preventDefault();
     updateUser(user.name, accessToken, apiKey, formData).then(res => {
-      setUser(prev => ({
+      setUserData(prev => ({
         ...prev,
+        bio: res.bio,
         avatar: {
           ...prev.avatar,
           url: res.avatar.url,
@@ -60,8 +59,9 @@ export default function ProfileEditor({
           url: res.banner.url,
         },
       }));
+      setToggleEditProfile(false);
+      navigate('/auth/profile');
     });
-    setToggleEditProfile(false);
   };
   if (pending) return <Pending text={'Updating Profile...'} />;
   if (responseError)

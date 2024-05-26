@@ -84,7 +84,7 @@ export const RegistrationForm = () => {
         <div className="relative mb-7">
           <input
             type="text"
-            className="w-full border-b-[0.5px] border-neutral-500 bg-neutral-100 py-[18px] pl-8 text-xs placeholder-neutral-950"
+            className="w-full border-b-[0.5px] border-neutral-500 bg-neutral-100 py-[18px] pl-8 text-sm placeholder-neutral-950 md:text-base"
             placeholder="Username"
             value={userNameInput.value}
             onChange={e => setUserNameInput(e.target.value)}
@@ -94,7 +94,7 @@ export const RegistrationForm = () => {
         <div className="relative mb-7">
           <input
             type="email"
-            className="w-full border-b-[0.5px] border-neutral-500 bg-neutral-100 py-[18px] pl-8 text-xs placeholder-neutral-950"
+            className="w-full border-b-[0.5px] border-neutral-500 bg-neutral-100 py-[18px] pl-8 text-sm placeholder-neutral-950 md:text-base"
             placeholder="Email"
             value={emailInput.value}
             onChange={e => setEmailInput(e.target.value)}
@@ -104,7 +104,7 @@ export const RegistrationForm = () => {
         <div className="relative mb-7">
           <input
             type="password"
-            className="w-full border-b-[0.5px] border-neutral-500 bg-neutral-100 py-[18px] pl-8 text-xs placeholder-neutral-950"
+            className="w-full border-b-[0.5px] border-neutral-500 bg-neutral-100 py-[18px] pl-8 text-sm placeholder-neutral-950 md:text-base"
             placeholder="Password"
             value={passwordInput.value}
             onChange={e => setPasswordInput(e.target.value)}

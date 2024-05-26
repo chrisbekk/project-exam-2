@@ -33,7 +33,7 @@ export const SignInForm = () => {
       <div className="relative mb-7">
         <input
           type="email"
-          className="w-full border-b-[0.5px] border-neutral-500 bg-neutral-100 py-[18px] pl-8 text-xs placeholder-neutral-950"
+          className="w-full border-b-[0.5px] border-neutral-500 bg-neutral-100 py-[18px] pl-8 text-sm placeholder-neutral-950 md:text-base"
           placeholder="Email"
           value={email}
           onChange={e => setEmail(e.target.value)}
@@ -43,7 +43,7 @@ export const SignInForm = () => {
       <div className="relative mb-7">
         <input
           type="password"
-          className="w-full border-b-[0.5px] border-neutral-500 bg-neutral-100 py-[18px] pl-8 text-xs placeholder-neutral-950"
+          className="w-full border-b-[0.5px] border-neutral-500 bg-neutral-100 py-[18px] pl-8 text-sm placeholder-neutral-950 md:text-base"
           placeholder="Password"
           value={password}
           onChange={e => setPassword(e.target.value)}

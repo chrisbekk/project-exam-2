@@ -42,6 +42,7 @@ export default function NavigationButton() {
   return (
     <button
       onClick={handleClick}
+      role="button"
       className="relative h-12 w-24 rounded-3xl border-[0.5px] border-neutral-500 shadow-lg"
     >
       {buttonContent}

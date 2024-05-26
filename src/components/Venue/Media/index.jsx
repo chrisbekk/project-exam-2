@@ -38,7 +38,7 @@ export const Media = ({ mediaArray }) => {
           className="absolute bottom-5 right-3 flex items-center gap-2 rounded-md bg-neutral-50 bg-opacity-50 p-3 text-sm hover:bg-opacity-100 hover:transition-opacity md:bottom-5 md:right-4 lg:right-7"
         >
           <HiOutlineViewGrid />
-          {mediaArrayLength > 0 ? 'View All Pictures' : 'Fullscreen'}
+          Gallery
         </button>
       </div>
       {mediaArrayLength > 3 && (
