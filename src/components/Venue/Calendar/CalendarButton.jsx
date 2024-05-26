@@ -1,17 +1,8 @@
 import React from 'react';
-import {
-  isSameDay,
-  format,
-  addDays,
-  eachDayOfInterval,
-  isWithinInterval,
-  parseISO,
-  isBefore,
-} from 'date-fns';
+import { isSameDay, format, eachDayOfInterval, isBefore } from 'date-fns';
 
 const CalendarButton = ({
   day,
-  index,
   isDateInBooking,
   fromDate,
   toDate,

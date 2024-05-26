@@ -2,7 +2,6 @@ import React from 'react';
 import { Booking } from './Booking';
 
 export const Bookings = ({ bookings }) => {
-  console.log(bookings);
   return (
     <div className="mt-10 w-full">
       <div className="sm:p-1">

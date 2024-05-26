@@ -26,7 +26,6 @@ export default function BookingForm({
     guests: null,
     venueId: null,
   };
-  console.log(user);
   const handleBooking = () => {
     bookingData = {
       dateFrom: fromDate,
@@ -34,7 +33,6 @@ export default function BookingForm({
       guests: guests,
       venueId: venueId,
     };
-    console.log(bookingData);
     if (
       bookingData.dateFrom &&
       bookingData.dateTo &&

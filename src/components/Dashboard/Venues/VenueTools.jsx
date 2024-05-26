@@ -4,11 +4,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { VenueEditor } from './VenueEditor';
 import { DeleteVenue } from './DeleteVenue';
 import { Link } from 'react-router-dom';
+//
 export const VenueTools = ({ venue, setVenues }) => {
   const [toggleEdit, setEditToggle] = useState(false);
   const [toggleDelete, setToggleDelete] = useState(false);
 
-  console.log(venue);
   const variants = {
     initial: { scaleY: '0%' },
     show: {

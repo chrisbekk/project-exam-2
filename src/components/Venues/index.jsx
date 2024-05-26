@@ -2,7 +2,7 @@ import { Section } from '../generics/Section';
 import FilterVenues from './FilterVenues';
 import { useFetchVenues } from '../../context/useFetchVenues';
 import { VenuesContainer } from './VenuesContainer';
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import ResultsHeader from './ResultsHeader';
 import filterVenuesByDestination from '../../utils/filterVenues';
@@ -13,16 +13,12 @@ import { Error } from '../generics/Error';
 export const Venues = () => {
   const [fetchPage, setFetchPage] = useState(1);
   const { venues, error, pending } = useFetchVenues(50, fetchPage);
-
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const [destination, setDestination] = useState(
     queryParams.get('destination'),
   );
-
-  let filteredVenues = useMemo(() => {
-    return filterVenuesByDestination(venues?.data, destination);
-  }, [venues, destination, fetchPage]);
+  let filteredVenues = filterVenuesByDestination(venues?.data, destination);
 
   if (pending) return <Pending text={'Loading venues..'} />;
   if (error)

@@ -1,11 +1,8 @@
 import { HiPaperAirplane } from 'react-icons/hi';
 import NavigationButton from './NavigationButton';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export default function Header() {
-  const location = useLocation();
-  const currentURL = location.pathname;
-
   return (
     <header
       className={`fixed top-0 z-50 h-24 w-full bg-neutral-50 px-4 shadow-lg  sm:px-0`}

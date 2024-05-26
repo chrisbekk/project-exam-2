@@ -15,7 +15,6 @@ export const deleteVenue = async (venueId, accessToken, apiKey) => {
       console.log(errorData);
       throw new Error('Failed to delete venue');
     }
-    console.log(response);
   } catch (error) {
     console.log(error);
     throw error;

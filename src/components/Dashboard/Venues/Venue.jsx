@@ -19,7 +19,7 @@ export const Venue = ({ venue, setVenues }) => {
       transition: { type: 'ease', duration: 0.15 },
     },
   };
-  console.log(venue?.bookings);
+
   return (
     <div className="mb-2 rounded-xl border border-neutral-300 p-2 transition-all">
       <div

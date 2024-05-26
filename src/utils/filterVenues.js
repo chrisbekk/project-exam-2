@@ -1,8 +1,8 @@
-export default function filterVenuesByDestination(venuesData, name) {
+export default function filterVenuesByDestination(venuesData, destination) {
   let filteredVenues = venuesData;
-  if (name !== '') {
+  if (destination !== '') {
     filteredVenues = filteredVenues?.filter(
-      venue => venue.name.toLowerCase() === name.toLowerCase(),
+      venue => venue.location.city?.toLowerCase() === destination.toLowerCase(),
     );
   }
 

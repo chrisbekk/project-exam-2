@@ -3,6 +3,7 @@ import { IoMdMenu } from 'react-icons/io';
 import { LiaUserCircle } from 'react-icons/lia';
 import NavigationMenu from './NavigationMenu';
 import { useUserContext } from '../../context/userContext';
+//
 export default function NavigationButton() {
   const [toggleMenu, setToggleMenu] = useState(false);
   const { user } = useUserContext();

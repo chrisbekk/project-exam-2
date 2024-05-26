@@ -4,14 +4,13 @@ import { useUserContext } from '../../../context/userContext';
 import { Button } from '../../generics/Button';
 import { Error } from '../../generics/Error';
 import { Pending } from '../../generics/Pending';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export const DeleteVenue = ({ venue, setVenues }) => {
   const { accessToken, apiKey } = useUserContext();
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  console.log(venue.bookings);
   const hasBookings = venue.bookings.length > 0;
   const handleDelete = () => {
     setLoading(true);
@@ -30,13 +29,11 @@ export const DeleteVenue = ({ venue, setVenues }) => {
 
   if (error)
     return (
-      <Error>
-        <p className="mt-5">Failed to delete venue</p>
-        <p className="mt-2">Please try again later</p>
-        <Link to={'/auth/profile'} className="mt-2 bg-brand p-2 text-white">
-          Back to Profile Page
-        </Link>
-      </Error>
+      <Error
+        text={'Failed to delete venue'}
+        path={'/auth/dashboard'}
+        redirectTo={'Back to Dashboard'}
+      />
     );
 
   if (loading) return <Pending text={'Deleting venue...'} />;

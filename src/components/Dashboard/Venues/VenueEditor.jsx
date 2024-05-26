@@ -4,28 +4,26 @@ import { HiOutlineWifi } from 'react-icons/hi';
 import { LuParkingCircle } from 'react-icons/lu';
 import { MdOutlinePets } from 'react-icons/md';
 import { GiMeal } from 'react-icons/gi';
-import { AnimatePresence, motion } from 'framer-motion';
 import { Input } from '../CreateVenue/Input';
 import { Button } from '../../generics/Button';
 import { Meta } from '../CreateVenue/Meta';
 import { useUserContext } from '../../../context/userContext';
 import { editVenue } from '../../../api/editVenue';
 import { Error } from '../../generics/Error';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Pending } from '../../generics/Pending';
+import { motion } from 'framer-motion';
+
+//
 export const VenueEditor = ({ venue, setVenues, setEditToggle }) => {
   const { accessToken, apiKey } = useUserContext();
   const navigate = useNavigate();
-  console.log(venue.id);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [toggleImages, setToggleImages] = useState(false);
+
   const [name, setName] = useState(venue.name);
-
   const [description, setDescription] = useState(venue.description);
-
-  // Media states
-  const [media, setMedia] = useState(venue.media);
   const [image1, setImage1] = useState(venue.media[0] || { url: '', alt: '' });
   const [image2, setImage2] = useState(venue.media[1] || { url: '', alt: '' });
   const [image3, setImage3] = useState(venue.media[2] || { url: '', alt: '' });
@@ -34,20 +32,17 @@ export const VenueEditor = ({ venue, setVenues, setEditToggle }) => {
   const [image6, setImage6] = useState(venue.media[5] || { url: '', alt: '' });
   const [price, setPrice] = useState(venue.price);
   const [maxGuests, setMaxGuests] = useState(venue.maxGuests);
-
   const [rating, setRating] = useState(venue.rating);
-
   const [meta, setMeta] = useState(venue.meta);
-
   const [location, setLocation] = useState(venue.location);
 
   const handleSubmit = e => {
     e.preventDefault();
-
     const images = [image1, image2, image3, image4, image5, image6];
     const filteredImages = images.filter(
-      image => image.url !== '' && image.alt !== '',
+      image => image.url && image.url.trim() !== '',
     );
+
     const payload = {
       name,
       description,
@@ -58,19 +53,18 @@ export const VenueEditor = ({ venue, setVenues, setEditToggle }) => {
       meta,
       location,
     };
+
     setLoading(true);
     setError(false);
     editVenue(venue.id, accessToken, apiKey, payload)
       .then(res => {
-        console.log('Response from editVenue:', res);
         setVenues(prevVenues => {
           return prevVenues.map(v => {
             if (v.id === venue.id) {
-              // Merge existing venue data with the updated data
               return {
                 ...v,
                 ...res.data,
-                bookings: v.bookings, // Keep the existing bookings array
+                bookings: v.bookings,
               };
             }
             return v;
@@ -96,18 +90,16 @@ export const VenueEditor = ({ venue, setVenues, setEditToggle }) => {
 
   if (error)
     return (
-      <Error>
-        <p className="mt-5">Failed to update venue</p>
-        <p className="mt-2">Please try again later</p>
-        <Link to={'/auth/profile'} className="mt-2 bg-brand p-2 text-white">
-          Back to Profile Page
-        </Link>
-      </Error>
+      <Error
+        text={'Failed to Edit Venue'}
+        path={'/auth/profile'}
+        redirectTo={'Back to Profile Page'}
+      />
     );
 
   if (loading) return <Pending text={'Editing venue...'} />;
   return (
-    <div className="mt-4 rounded-md border-2 border-rose-400 p-3">
+    <div className="mt-4 rounded-md p-3">
       <div>
         <h1 className="text-xl font-semibold">New Venue</h1>
       </div>
@@ -127,7 +119,7 @@ export const VenueEditor = ({ venue, setVenues, setEditToggle }) => {
             onChange={e => setDescription(e.target.value)}
             required={true}
           />
-          <div className=" rounded-lg border border-rose-400 p-1 xs:p-2">
+          <div className=" rounded-lg  p-1 xs:p-2">
             <div className="sm:flex sm:items-center sm:justify-between">
               <div>
                 <h2 className="text-lg font-semibold">Images</h2>
@@ -295,7 +287,7 @@ export const VenueEditor = ({ venue, setVenues, setEditToggle }) => {
               </motion.div>
             )}
           </div>
-          <div className="mt-3 border border-blue-300 xs:flex xs:gap-2">
+          <div className="mt-3 xs:flex xs:gap-2">
             <Input
               label={'Price per night'}
               id={'price'}
@@ -314,7 +306,7 @@ export const VenueEditor = ({ venue, setVenues, setEditToggle }) => {
               required={true}
             />
           </div>
-          <div className="mt-3 border border-green-500">
+          <div className="mt-3">
             <Input
               label={'Rating'}
               id={'rating'}
@@ -369,7 +361,7 @@ export const VenueEditor = ({ venue, setVenues, setEditToggle }) => {
               </Meta>
             </div>
           </div>
-          <div className="mt-3 border border-orange-600 p-2">
+          <div className="mt-3 p-2">
             <h2 className="text-lg font-semibold">Location</h2>
             <Input
               label={'Address'}
@@ -382,7 +374,7 @@ export const VenueEditor = ({ venue, setVenues, setEditToggle }) => {
                 }))
               }
             />
-            <div className="mt-5 border-green-700 sm:flex sm:gap-2">
+            <div className="mt-5  sm:flex sm:gap-2">
               <Input
                 label={'City'}
                 id={'city'}
@@ -400,7 +392,7 @@ export const VenueEditor = ({ venue, setVenues, setEditToggle }) => {
                 }
               />
             </div>
-            <div className="border border-purple-400 sm:flex sm:gap-2">
+            <div className=" sm:flex sm:gap-2">
               <Input
                 label={'Country'}
                 id={'country'}
@@ -424,7 +416,7 @@ export const VenueEditor = ({ venue, setVenues, setEditToggle }) => {
                 }
               />
             </div>
-            <div className="border border-yellow-300 sm:flex sm:gap-2">
+            <div className=" sm:flex sm:gap-2">
               <Input
                 label={'Latitude'}
                 id={'lat'}
@@ -453,7 +445,7 @@ export const VenueEditor = ({ venue, setVenues, setEditToggle }) => {
             <Button fill={true} submit={true}>
               Confirm
             </Button>
-            <Button>Cancel</Button>
+            <Button handleClick={() => setEditToggle(false)}>Cancel</Button>
           </div>
         </form>
       </div>

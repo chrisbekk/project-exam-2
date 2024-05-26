@@ -19,10 +19,11 @@ export const createVenue = async (accessToken, apiKey, payload) => {
       console.error('Error response:', responseData);
       throw new Error('Failed to create venue');
     }
-
+    console.log(responseData);
     return responseData;
   } catch (error) {
     console.error('Fetch error:', error);
     throw error;
   }
 };
+//fffff

@@ -5,14 +5,13 @@ export default function FilterVenues({ setDestination }) {
   const destinationRef = useRef(null);
   const handleSubmit = e => {
     e.preventDefault();
-    console.log(destinationRef.current.value);
     setDestination(destinationRef.current.value);
     destinationRef.current.value = '';
   };
 
   return (
     <div className=" max-w-[764px] rounded-md sm:rounded-3xl sm:bg-white sm:p-10 sm:shadow-lg md:mx-auto">
-      <form onSubmit={handleSubmit}>
+      <form>
         <div className="relative">
           <label
             htmlFor="destination"
@@ -29,6 +28,7 @@ export default function FilterVenues({ setDestination }) {
           <button
             type="button"
             aria-label="filter"
+            onClick={handleSubmit}
             className="absolute right-0 top-0 flex size-14 items-center justify-center rounded-full bg-brand shadow-lg drop-shadow-md transition-all hover:bg-rose-600"
           >
             <HiOutlineSearch className="text-2xl text-neutral-50" />

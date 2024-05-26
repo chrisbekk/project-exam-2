@@ -3,8 +3,8 @@ import { HiStar } from 'react-icons/hi';
 import { ProductGallery } from './ProductGallery';
 import { useNavigate } from 'react-router-dom';
 export const ProductCard = ({ venue }) => {
-  const { description, id, media, name, price, rating } = venue; // Destructuring venue object
-  const navigate = useNavigate(); // Declare navigate
+  const { description, id, media, name, price, rating } = venue;
+  const navigate = useNavigate();
 
   const handleClick = () => {
     navigate(`/venue/${id}`);

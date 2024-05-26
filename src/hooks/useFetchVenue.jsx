@@ -8,7 +8,6 @@ export const useFetchVenue = id => {
   useEffect(() => {
     const fetchVenue = async id => {
       try {
-        console.log('Fetching data...');
         setPending(true);
         const response = await fetch(
           `https://v2.api.noroff.dev/holidaze/venues/${id}?_owner=true&_bookings=true`,
