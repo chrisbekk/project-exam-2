@@ -49,14 +49,14 @@ const Calendar = ({ bookings, fromDate, toDate, setFromDate, setToDate }) => {
   return (
     <div>
       <div className="mb-4 flex w-full justify-center gap-10">
-        <button onClick={prevMonth}>
+        <button aria-label="Previous Month" onClick={prevMonth}>
           <CgChevronLeftR className="size-8 " />
         </button>
         <div className="flex flex-col items-center justify-center">
           <h1>{format(currentMonth, 'yyyy')}</h1>
           <h2>{format(currentMonth, 'MMM')}</h2>
         </div>
-        <button onClick={nextMonth}>
+        <button aria-label="Next Month" onClick={nextMonth}>
           <CgChevronRightR className="size-8" />
         </button>
       </div>

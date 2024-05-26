@@ -39,7 +39,7 @@ const CalendarButton = ({
   if (isBooked) {
     buttonClassNames += ' bg-rose-100'; // Example color for booked dates
   } else if (isToday) {
-    buttonClassNames += ' border border-black bg-blue-100';
+    buttonClassNames += ' border border-black';
   } else if (!isToday && isBefore(day, today)) {
     buttonClassNames += ' bg-neutral-200'; // Example color for past dates
   } else if (isFromDate) {
@@ -108,8 +108,8 @@ const CalendarButton = ({
         <p
           className={
             format(day, 'EEE') === 'Sun'
-              ? 'text-sm text-red-500'
-              : 'text-sm text-neutral-400'
+              ? 'text-sm text-red-700'
+              : 'text-sm text-neutral-900'
           }
         >
           {format(day, 'EEE')}

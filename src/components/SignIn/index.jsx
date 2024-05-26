@@ -9,7 +9,7 @@ export const SignIn = () => {
         <SignInForm />
         <Link to={'/register'} className="mt-8 block text-center text-xs">
           Not got a Holidaze account?{' '}
-          <span className="font-semibold">Click here to register.</span>
+          <span className="font-semibold">Click here for register page.</span>
         </Link>
       </div>
     </div>

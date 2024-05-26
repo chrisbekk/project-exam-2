@@ -13,7 +13,7 @@ export const FormRequirements = ({ requirements }) => {
             <MdErrorOutline className="shrink-0" />
           )}
           <p
-            className={`text-xs md:text-sm ${req.isValid ? 'text-neutral-950' : 'text-neutral-400'}`}
+            className={`text-xs md:text-sm ${req.isValid ? 'font-semibold text-neutral-950' : 'text-neutral-800'}`}
           >
             {req.text}
           </p>

@@ -31,6 +31,7 @@ export const Media = ({ mediaArray }) => {
       <div className="h-full w-full ">
         <img
           src={primaryImage?.url}
+          alt={primaryImage?.alt}
           className="h-full w-full object-cover sm:rounded-lg"
         />
         <button

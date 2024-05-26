@@ -84,6 +84,7 @@ export const RegistrationForm = () => {
         <div className="relative mb-7">
           <input
             type="text"
+            aria-label="Username"
             className="w-full border-b-[0.5px] border-neutral-500 bg-neutral-100 py-[18px] pl-8 text-sm placeholder-neutral-950 md:text-base"
             placeholder="Username"
             value={userNameInput.value}
@@ -94,6 +95,7 @@ export const RegistrationForm = () => {
         <div className="relative mb-7">
           <input
             type="email"
+            aria-label="Email"
             className="w-full border-b-[0.5px] border-neutral-500 bg-neutral-100 py-[18px] pl-8 text-sm placeholder-neutral-950 md:text-base"
             placeholder="Email"
             value={emailInput.value}
@@ -104,6 +106,7 @@ export const RegistrationForm = () => {
         <div className="relative mb-7">
           <input
             type="password"
+            aria-label="Password"
             className="w-full border-b-[0.5px] border-neutral-500 bg-neutral-100 py-[18px] pl-8 text-sm placeholder-neutral-950 md:text-base"
             placeholder="Password"
             value={passwordInput.value}
