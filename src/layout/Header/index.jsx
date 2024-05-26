@@ -21,7 +21,7 @@ export default function Header() {
           </h1>
         </Link>
         <nav className="flex items-center gap-8">
-          <Link to={'/'} className="text-sm font-bold text-neutral-500">
+          <Link to={'/signin'} className="text-sm font-bold text-neutral-500">
             Holidaze your home
           </Link>
           <NavigationButton />

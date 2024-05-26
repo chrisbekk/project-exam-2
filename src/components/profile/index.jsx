@@ -12,7 +12,7 @@ import { useFetchUser } from '../../hooks/useFetchUser';
 
 export default function ProfilePage() {
   const [toggleEditProfile, setToggleEditProfile] = useState(false);
-  const { userData, pending, error, getUser } = useFetchUser();
+  const { userData, setUserData, pending, error, getUser } = useFetchUser();
   const { user, accessToken, apiKey } = useUserContext();
   console.log(user.name);
   console.log('PROFILE PAGE MOUNTS');
@@ -51,6 +51,7 @@ export default function ProfilePage() {
                 avatar={userData?.avatar}
                 name={userData?.name}
                 setToggleEditProfile={setToggleEditProfile}
+                setUserData={setUserData}
               />
             </EditProfile>
           )}

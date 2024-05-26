@@ -10,7 +10,7 @@ export default {
         primary: ['Plus Jakarta Sans', 'sans-serif'],
       },
       colors: {
-        brand: '#FF385C',
+        brand: '#a60419',
       },
       keyframes: {
         bannerLeft: {

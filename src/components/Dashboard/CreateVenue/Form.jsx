@@ -19,6 +19,7 @@ export const Form = ({ toggleForm, setToggleForm, setVenues }) => {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [toggleImages, setToggleImages] = useState(false);
+
   const [name, setName] = useState('');
 
   const [description, setDescription] = useState('');
@@ -31,10 +32,10 @@ export const Form = ({ toggleForm, setToggleForm, setVenues }) => {
   const [image4, setImage4] = useState({ url: '', alt: '' });
   const [image5, setImage5] = useState({ url: '', alt: '' });
   const [image6, setImage6] = useState({ url: '', alt: '' });
-  const [price, setPrice] = useState(0);
-  const [maxGuests, setMaxGuests] = useState(0);
+  const [price, setPrice] = useState(1);
+  const [maxGuests, setMaxGuests] = useState(1);
 
-  const [rating, setRating] = useState(0);
+  const [rating, setRating] = useState(1);
 
   const [meta, setMeta] = useState({
     wifi: false,
@@ -71,6 +72,8 @@ export const Form = ({ toggleForm, setToggleForm, setVenues }) => {
       meta,
       location,
     };
+
+    console.log(payload);
     setLoading(true);
     setError(false);
     createVenue(accessToken, apiKey, payload)
@@ -87,6 +90,37 @@ export const Form = ({ toggleForm, setToggleForm, setVenues }) => {
       .finally(() => {
         setLoading(false);
       });
+    handleClose();
+  };
+
+  const handleClose = () => {
+    setName('');
+    setDescription('');
+    setImage1({ url: '', alt: '' });
+    setImage2({ url: '', alt: '' });
+    setImage3({ url: '', alt: '' });
+    setImage4({ url: '', alt: '' });
+    setImage5({ url: '', alt: '' });
+    setImage6({ url: '', alt: '' });
+    setPrice(1);
+    setMaxGuests(1);
+    setRating(1);
+    setMeta({
+      wifi: false,
+      parking: false,
+      breakfast: false,
+      pets: false,
+    });
+    setLocation({
+      address: '',
+      city: '',
+      zip: '',
+      country: '',
+      continent: '',
+      lat: 0,
+      lng: 0,
+    });
+    setToggleForm(false);
   };
 
   const variants = {
@@ -103,13 +137,11 @@ export const Form = ({ toggleForm, setToggleForm, setVenues }) => {
 
   if (error)
     return (
-      <Error>
-        <p className="mt-5">Failed register venue</p>
-        <p className="mt-2">Please try again later</p>
-        <Link to={'/auth/profile'} className="mt-2 bg-brand p-2 text-white">
-          Back to Profile Page
-        </Link>
-      </Error>
+      <Error
+        text={'Failed to create venue'}
+        path={'/auth/profile'}
+        redirectTo={'Back to Dashboard'}
+      />
     );
 
   if (loading) return <Pending text={'Creating venue...'} />;
@@ -146,9 +178,13 @@ export const Form = ({ toggleForm, setToggleForm, setVenues }) => {
                 <div className="sm:flex sm:items-center sm:justify-between">
                   <div>
                     <h2 className="text-lg font-semibold">Images</h2>
-                    <p className="text-xs text-neutral-500">
+                    <p className="text-sm text-neutral-500">
                       Adding images increases the chance of getting your venue
                       booked.
+                    </p>
+                    <p className="my-2 text-xs font-semibold text-red-600">
+                      Both URL and alt text must be available before posting
+                      venue
                     </p>
                   </div>
                   <div className="w-full max-w-[340px]">
@@ -194,7 +230,6 @@ export const Form = ({ toggleForm, setToggleForm, setVenues }) => {
                         onChange={e =>
                           setImage1(prev => ({ ...prev, alt: e.target.value }))
                         }
-                        isImage={true}
                       />
                     </div>
                     <div className="mt-2 rounded-md border border-neutral-300 p-1">
@@ -216,7 +251,6 @@ export const Form = ({ toggleForm, setToggleForm, setVenues }) => {
                         onChange={e =>
                           setImage2(prev => ({ ...prev, alt: e.target.value }))
                         }
-                        isImage={true}
                       />
                     </div>
                     <div className="mt-2 rounded-md border border-neutral-300 p-1">
@@ -238,7 +272,6 @@ export const Form = ({ toggleForm, setToggleForm, setVenues }) => {
                         onChange={e =>
                           setImage3(prev => ({ ...prev, alt: e.target.value }))
                         }
-                        isImage={true}
                       />
                     </div>
                     <div className="mt-2 rounded-md border border-neutral-300 p-1">
@@ -260,7 +293,6 @@ export const Form = ({ toggleForm, setToggleForm, setVenues }) => {
                         onChange={e =>
                           setImage4(prev => ({ ...prev, alt: e.target.value }))
                         }
-                        isImage={true}
                       />
                     </div>
                     <div className="mt-2 rounded-md border border-neutral-300 p-1">
@@ -282,7 +314,6 @@ export const Form = ({ toggleForm, setToggleForm, setVenues }) => {
                         onChange={e =>
                           setImage5(prev => ({ ...prev, alt: e.target.value }))
                         }
-                        isImage={true}
                       />
                     </div>
                     <div className="mt-2 rounded-md border border-neutral-300 p-1">
@@ -304,7 +335,6 @@ export const Form = ({ toggleForm, setToggleForm, setVenues }) => {
                         onChange={e =>
                           setImage6(prev => ({ ...prev, alt: e.target.value }))
                         }
-                        isImage={true}
                       />
                     </div>
                   </motion.div>
@@ -314,6 +344,9 @@ export const Form = ({ toggleForm, setToggleForm, setVenues }) => {
                 <Input
                   label={'Price per night'}
                   id={'price'}
+                  type="number"
+                  min="1"
+                  max="10000"
                   value={price}
                   onChange={e => setPrice(Number(e.target.value))}
                   required={true}
@@ -322,7 +355,7 @@ export const Form = ({ toggleForm, setToggleForm, setVenues }) => {
                   label={'Max Guests'}
                   id={'maxGuests'}
                   type="number"
-                  min="0"
+                  min="1"
                   max="999"
                   value={maxGuests}
                   onChange={e => setMaxGuests(Number(e.target.value))}
@@ -334,7 +367,7 @@ export const Form = ({ toggleForm, setToggleForm, setVenues }) => {
                   label={'Rating'}
                   id={'rating'}
                   type="number"
-                  min="0"
+                  min="1"
                   max="5"
                   value={rating}
                   onChange={e => setRating(Number(e.target.value))}
@@ -468,7 +501,7 @@ export const Form = ({ toggleForm, setToggleForm, setVenues }) => {
                 <Button fill={true} submit={true}>
                   Add Venue
                 </Button>
-                <Button>Cancel</Button>
+                <Button handleClick={handleClose}>Cancel</Button>
               </div>
             </form>
           </div>

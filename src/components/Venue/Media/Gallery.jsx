@@ -6,12 +6,12 @@ export const Gallery = ({ isVisible, setIsVisible, gallery }) => {
   if (!isVisible) return;
   console.log(isVisible);
   return createPortal(
-    <div className="absolute inset-0 z-50 flex  justify-center bg-neutral-50">
-      <div className="mt-10 h-full max-h-[1024px] w-full max-w-[1024]">
-        <div className="h-full w-full">
+    <div className="absolute inset-0 z-50 flex items-center justify-center bg-neutral-50">
+      <div className="mt-10 h-full max-h-[768px] w-full max-w-[768px]">
+        <div className="max-h-[560px] w-full">
           <img
             src={gallery[currentImage]?.url}
-            className="aspect-square h-full w-full object-contain sm:rounded-md"
+            className="aspect-video h-full w-full object-cover sm:rounded-md"
           />
         </div>
         <div className=" mx-auto grid max-w-[420px] grid-cols-6  gap-1  pt-10">

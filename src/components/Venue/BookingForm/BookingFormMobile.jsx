@@ -106,14 +106,15 @@ export default function BookingFormMobile({
                     : `${guests} guests`}
               </p>
             </button>
-            <Button
-              fill={true}
-              small={true}
-              disabled={!user}
-              handleClick={handleBooking}
-            >
-              {user ? 'Reserve' : 'Sign In to Reserve'}
-            </Button>
+            {user ? (
+              <Button fill={true} small={true} handleClick={handleBooking}>
+                Reserve
+              </Button>
+            ) : (
+              <Button small={true} handleClick={() => navigate('/signin')}>
+                Sign in to Reserve
+              </Button>
+            )}
           </div>
 
           <BookingPrices
