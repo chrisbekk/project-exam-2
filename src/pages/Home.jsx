@@ -12,14 +12,8 @@ import { CardCarousel } from '../components/CardCarousel';
 export const Home = () => {
   const navigate = useNavigate();
   const { user } = useUserContext();
-
-  console.log(user);
-
   const { venues, error, pending } = useFetchVenues(100);
-
   const handleClick = () => {
-    console.log('clicked');
-    console.log(user);
     if (!user) {
       navigate('/signin');
     } else {

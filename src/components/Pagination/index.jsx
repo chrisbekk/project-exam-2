@@ -1,5 +1,4 @@
 export default function Pagination({ meta, setFetchPage }) {
-  console.log(meta);
   const prevPage = () => {
     setFetchPage(prev => prev - 1);
     window.scrollTo(0, 0);
