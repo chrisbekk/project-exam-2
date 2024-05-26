@@ -62,7 +62,7 @@ export default function BookingFormMobile({
         initial="initial"
         animate={controls}
         exit={controls}
-        className="fixed bottom-0 left-0 h-[720px] w-full md:hidden"
+        className="fixed bottom-0 left-0 h-[720px] w-full lg:hidden"
       >
         <motion.div className="relative h-full  border  border-t-[0.5px] bg-neutral-50 shadow-[rgba(17,_17,_26,_0.1)_0px_0px_16px]">
           <div className="flex justify-between px-4 pt-6">

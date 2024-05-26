@@ -6,35 +6,35 @@ import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { Media } from '../components/VenueDetails/Media';
 import { Pending } from '../components/Pending';
+import { Error } from '../components/Error';
 import { VenueDetails } from '../components/VenueDetails';
 import BookingForm from '../components/VenueDetails/BookingForm/BookingForm';
 import calculateNightsBooked from '../utils/calculateNightsBooked';
-import Calendar from '../components/Calendar';
 import DateManager from '../components/VenueDetails/DateManager';
 import { BookingConfirmation } from '../components/VenueDetails/BookingConfirmation';
+import { Guests } from '../components/VenueDetails/Guests';
 export const Venue = () => {
   const { venueId } = useParams();
-
   const { venue, error, pending } = useFetchVenue(venueId);
   const [confirmBooking, setConfirmBooking] = useState(false);
-  // State for controlling calendar
   const [fromDate, setFromDate] = useState('');
   const [toDate, setToDate] = useState('');
-
-  // States for booking information
   const [nights, setNights] = useState(0); // Total nights booked
   const [guests, setGuests] = useState(0);
-  console.log(confirmBooking);
 
-  // Calculate total nights booked
   useEffect(() => {
     setNights(calculateNightsBooked(fromDate, toDate));
   }, [fromDate, toDate]);
 
-  // Derived state for total price
   let totalPrice = nights * venue?.data.price; //
-  const bookedDates = ['2024-05-20', '2024-05-21', '2024-05-22'];
-  if (error) return <p>Error in fetching venues</p>;
+  if (error)
+    return (
+      <Error
+        text={'Failed to fetch venue information'}
+        path={'/'}
+        redirectTo={'Back to Home page'}
+      />
+    );
   if (pending || !venue) return <Pending text={'Fetching venues...'} />;
   if (confirmBooking)
     return (
@@ -57,7 +57,7 @@ export const Venue = () => {
         <Media mediaArray={venue?.data.media} />
       </Section>
       <Section>
-        <div className="relative min-h-[100vh] md:flex md:gap-4">
+        <div className="relative min-h-[100vh] md:gap-4 lg:flex">
           <div className=" md:w-[100%]">
             <VenueDetails
               data={venue?.data}
@@ -75,6 +75,11 @@ export const Venue = () => {
               toDate={toDate}
               setFromDate={setFromDate}
               setToDate={setToDate}
+            />
+            <Guests
+              maxGuests={venue?.data.maxGuests}
+              guests={guests}
+              setGuests={setGuests}
             />
           </div>
 

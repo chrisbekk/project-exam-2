@@ -1,6 +1,3 @@
-import getNextDay from '../../../utils/getNextDay';
-import getOptionsArray from '../../../utils/getOptionsArray';
-import getFormattedTodayDate from '../../../utils/getTodayDate';
 import { Button } from '../../Button';
 import BookingPrices from './BookingPrices';
 import { useUserContext } from '../../../context/userContext';
@@ -11,30 +8,21 @@ export default function BookingForm({
   price,
   fromDate,
   toDate,
-  maxGuests,
   totalPrice,
   nights,
-  setGuests,
   guests,
   venueId,
   setConfirmBooking,
 }) {
-  const [isDisabled, setIsDisabled] = useState(true);
-  const options = getOptionsArray(maxGuests);
-  const minFromDate = getFormattedTodayDate();
-  const minToDate = getNextDay(fromDate);
-  const { user } = useUserContext();
+  // const [isDisabled, setIsDisabled] = useState(true);
 
-  const selectGuests = e => {
-    console.log(e.target.value);
-    setGuests(e.target.value);
-  };
+  const { user } = useUserContext();
 
   const handleBooking = () => {
     const bookingData = {
       dateFrom: fromDate,
       dateTo: toDate,
-      guests: parseInt(guests),
+      guests: guests,
       venueId: venueId,
     };
     console.log(bookingData);
@@ -48,42 +36,28 @@ export default function BookingForm({
     }
   };
   return (
-    <div className="hidden w-full  rounded-2xl border-[0.5px] border-neutral-200 bg-neutral-50 px-6 py-16 shadow-[-1px_1px_2px_0px_#0A0A0A25,-1px_-2px_4px_0px_#0A0A0A25] md:sticky md:bottom-auto md:top-32 md:block md:h-[65vh] md:w-[45%]">
+    <div className="hidden w-full  rounded-2xl border-[0.5px] border-neutral-200 bg-neutral-50 px-6 py-16 shadow-[-1px_1px_2px_0px_#0A0A0A25,-1px_-2px_4px_0px_#0A0A0A25] md:sticky md:bottom-auto md:top-32 md:h-[65vh] md:w-[45%] lg:block">
       <p className="font-thin">
         <span className="text-xl font-semibold">${price}</span> per night
       </p>
       <div className="my-8 w-full rounded-lg border-[0.5px] border-neutral-400">
         <div className="flex w-full">
-          <div className="relative h-16 w-full rounded-tl-lg border p-1">
-            <p className="absolute text-sm font-semibold">Check In</p>
-            <p className="absolute bottom-1 text-sm font-semibold">
+          <div className="flex h-16 w-full flex-col justify-between rounded-tl-lg border p-2">
+            <p className="text-sm font-semibold">Check In</p>
+            <p className=" font-semibold">
               {fromDate && format(fromDate, 'MMM dd')}
             </p>
           </div>
-          <div className="relative h-16 w-full rounded-tr-lg border p-1">
-            <p className="absolute text-sm font-semibold">Check Out</p>
-            <p className="absolute bottom-1 text-sm font-semibold">
+          <div className="flex h-16 w-full flex-col justify-between rounded-tr-lg border p-2">
+            <p className="text-sm font-semibold">Check Out</p>
+            <p className="font-semibold">
               {toDate && format(toDate, 'MMM dd')}
             </p>
           </div>
         </div>
-        <div className="relative h-16 w-full">
-          <label
-            htmlFor="addGuests"
-            className="absolute p-1 text-sm font-semibold"
-          >
-            Guests
-          </label>
-          <select
-            className="h-full w-full rounded-b-lg bg-neutral-50 p-1"
-            onChange={selectGuests}
-          >
-            {options.map((option, index) => (
-              <option key={index} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
+        <div className="flex h-16 w-full flex-col justify-between p-2">
+          <p className="text-sm font-semibold">Guests</p>
+          <p className="font-semibold">{guests}</p>
         </div>
       </div>
       <Button fill={true} disabled={!user} handleClick={handleBooking}>

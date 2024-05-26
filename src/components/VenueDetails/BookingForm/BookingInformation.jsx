@@ -1,64 +1,27 @@
-import { useState } from 'react';
-import getFormattedTodayDate from '../../../utils/getTodayDate';
-import getNextDay from '../../../utils/getNextDay';
-import getOptionsArray from '../../../utils/getOptionsArray';
 import { format } from 'date-fns';
-export default function BookingInformation({
-  fromDate,
-  setFromDate,
-  toDate,
-  setToDate,
-  maxGuests,
-  setGuests,
-}) {
-  const [isDisabled, setIsDisabled] = useState(true);
-  const minFromDate = getFormattedTodayDate();
-  const minToDate = getNextDay(fromDate);
-  const options = getOptionsArray(maxGuests);
-
-  const handleChange = e => {
-    setFromDate(e.target.value);
-    setIsDisabled(false);
-  };
-  const selectGuests = e => {
-    console.log(typeof e.target.value);
-    setGuests(e.target.value);
-  };
-
+export default function BookingInformation({ fromDate, toDate, guests }) {
   return (
     <div className="mx-auto max-w-[640px]">
-      <form className="p-4 sm:rounded-lg sm:border-[0.5px] sm:border-neutral-300">
-        <div className="  xs:flex xs:gap-5">
-          <div className="flex-auto">
+      <div className="my-8 w-full rounded-lg border-[0.5px] border-neutral-400">
+        <div className="flex w-full">
+          <div className="flex h-16 w-full flex-col justify-between rounded-tl-lg border p-2">
             <p className="text-sm font-semibold">Check In</p>
-            <p className="h-14 w-full border-[0.5px] bg-neutral-50 p-3">
+            <p className=" font-semibold">
               {fromDate && format(fromDate, 'MMM dd')}
             </p>
           </div>
-          <div className="flex-auto">
-            <p className="text-sm font-semibold">Check In</p>
-            <p className="h-14 w-full border-[0.5px] bg-neutral-50 p-3">
+          <div className="flex h-16 w-full flex-col justify-between rounded-tr-lg border p-2">
+            <p className="text-sm font-semibold">Check Out</p>
+            <p className="font-semibold">
               {toDate && format(toDate, 'MMM dd')}
             </p>
           </div>
         </div>
-        <div className="">
-          <label htmlFor="guests" className="text-sm font-semibold">
-            Add Guests
-          </label>
-          <select
-            id="guests"
-            onChange={selectGuests}
-            className="h-14 w-full border-[0.5px]"
-          >
-            {options.map((option, index) => (
-              <option key={index} value={option} className="bg-neutral-50">
-                {option}
-              </option>
-            ))}
-          </select>
+        <div className="flex h-16 w-full flex-col justify-between p-2">
+          <p className="text-sm font-semibold">Guests</p>
+          <p className="font-semibold">{guests}</p>
         </div>
-      </form>
+      </div>
     </div>
   );
 }
