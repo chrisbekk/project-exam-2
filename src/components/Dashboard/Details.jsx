@@ -10,7 +10,6 @@ export const Details = ({ venues }) => {
         <p>{user.name}</p>
 
         <p>Total venues: {venues?.length}</p>
-        <p>Total bookings: TEST</p>
       </div>
     </div>
   );

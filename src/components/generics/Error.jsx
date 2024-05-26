@@ -7,6 +7,7 @@ export const Error = ({ text, path, redirectTo }) => {
   const navigate = useNavigate();
   const handleClick = () => {
     navigate(path);
+    console.log('click');
   };
   return (
     <div className="flex h-[50vh] w-full items-center justify-center">

@@ -4,6 +4,9 @@ import { useUserContext } from '../../../context/userContext';
 import usePostBooking from '../../../hooks/usePostBooking';
 import { useState } from 'react';
 import { format } from 'date-fns';
+import { Pending } from '../../generics/Pending';
+import { Error } from '../../generics/Error';
+import { useNavigate } from 'react-router-dom';
 export default function BookingForm({
   price,
   fromDate,
@@ -13,12 +16,19 @@ export default function BookingForm({
   guests,
   venueId,
 }) {
-  // const [isDisabled, setIsDisabled] = useState(true);
-
-  const { user } = useUserContext();
-
+  const { user, accessToken, apiKey } = useUserContext();
+  const navigate = useNavigate();
+  const { responseData, pending, responseError, postBooking } =
+    usePostBooking();
+  let bookingData = {
+    dateFrom: null,
+    dateTo: null,
+    guests: null,
+    venueId: null,
+  };
+  console.log(user);
   const handleBooking = () => {
-    const bookingData = {
+    bookingData = {
       dateFrom: fromDate,
       dateTo: toDate,
       guests: guests,
@@ -31,8 +41,22 @@ export default function BookingForm({
       bookingData.guests &&
       bookingData.venueId
     ) {
+      postBooking(accessToken, apiKey, bookingData).then(() =>
+        navigate('/auth/profile/'),
+      );
     }
   };
+
+  if (pending) return <Pending text={'Booking Venue'} />;
+  if (responseError)
+    return (
+      <Error
+        text={'Failed to book venue'}
+        path={'/venue/'}
+        redirectTo={'Back to Venue'}
+      />
+    );
+
   return (
     <div className="hidden w-full  rounded-2xl border-[0.5px] border-neutral-200 bg-neutral-50 px-6 py-16 shadow-[-1px_1px_2px_0px_#0A0A0A25,-1px_-2px_4px_0px_#0A0A0A25] md:sticky md:bottom-auto md:top-32 md:h-[65vh] md:w-[45%] lg:block">
       <p className="font-thin">

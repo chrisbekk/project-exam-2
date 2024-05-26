@@ -76,9 +76,9 @@ export const Form = ({ toggleForm, setToggleForm, setVenues }) => {
     createVenue(accessToken, apiKey, payload)
       .then(res => {
         console.log('Response from createVenue:', res);
-        //setVenues(prevVenues => [...prevVenues, res.data]);
+        setVenues(prevVenues => [...prevVenues, res.data]);
         setToggleForm(false);
-        navigate('/auth/profile');
+        navigate('/auth/dashboard');
       })
       .catch(error => {
         console.error('Error during venue creation:', error);

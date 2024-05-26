@@ -53,6 +53,7 @@ export const RegistrationForm = () => {
 
   // Handle user registration
   const handleRegistration = e => {
+    console.log('click');
     e.preventDefault();
     setFetchError(null);
     if (isUserNameValid && isEmailValid && isPasswordValid) {
@@ -79,10 +80,7 @@ export const RegistrationForm = () => {
   };
   return (
     <>
-      <form
-        className="mx-6 sm:mx-auto sm:max-w-[560px]"
-        onSubmit={handleRegistration}
-      >
+      <form className="mx-6 sm:mx-auto sm:max-w-[560px]">
         <div className="relative mb-7">
           <input
             type="text"
@@ -129,7 +127,9 @@ export const RegistrationForm = () => {
         <FormRequirements requirements={requirements} />
         {fetchError &&
           fetchError.map(error => <FormError message={error.message} />)}
-        <Button fill={true}>Register User</Button>
+        <Button fill={true} type="button" handleClick={handleRegistration}>
+          Register User
+        </Button>
       </form>
       <Modal isOpen={isOpen} closeModal={() => setIsOpen(false)}>
         <div>

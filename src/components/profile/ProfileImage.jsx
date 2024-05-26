@@ -1,5 +1,4 @@
 export default function ProfileImage({ avatar, username }) {
-  const { url, alt } = avatar;
   let defaultProfileImage;
   let profileImageElement;
   let flexContainer = false;
@@ -9,11 +8,11 @@ export default function ProfileImage({ avatar, username }) {
     defaultProfileImage = 'H';
   }
 
-  if (typeof url === 'string' && url.length !== 0) {
+  if (typeof avatar?.url === 'string' && avatar?.url.length !== 0) {
     profileImageElement = (
       <img
-        src={url}
-        alt={alt}
+        src={avatar?.url}
+        alt={avatar?.alt}
         className="h-full w-full rounded-full object-cover"
       />
     );

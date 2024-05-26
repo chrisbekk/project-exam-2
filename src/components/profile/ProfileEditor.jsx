@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { Button } from '../generics/Button';
-import Error from './Error';
+import { Pending } from '../generics/Pending';
+import { Error } from '../generics/Error';
 import { updateProfile } from '../../api/updateProfile';
 import { useUserContext } from '../../context/userContext';
-
+import { useUpdateUser } from '../../hooks/useUpdateUser';
+import { useNavigate } from 'react-router-dom';
 export default function ProfileEditor({
   bio,
   banner,
@@ -19,9 +21,9 @@ export default function ProfileEditor({
     avatar: { url: avatar.url || '', alt: avatar.alt || '' },
     banner: { url: banner.url || '', alt: banner.alt || '' },
   });
-
+  const navigate = useNavigate();
   const { user, apiKey, accessToken, setUser } = useUserContext();
-
+  const { responseData, pending, responseError, updateUser } = useUpdateUser();
   const handleChange = e => {
     const { name, value } = e.target;
 
@@ -46,14 +48,30 @@ export default function ProfileEditor({
 
   const handleSubmit = e => {
     e.preventDefault();
-    setLoading(true);
-    updateProfile(user.name, accessToken, apiKey, formData)
-      .then(res => setUser(res))
-      .catch(() => setError(true))
-      .finally(setLoading(false));
+    updateUser(user.name, accessToken, apiKey, formData).then(res => {
+      setUser(prev => ({
+        ...prev,
+        avatar: {
+          ...prev.avatar,
+          url: res.avatar.url,
+        },
+        banner: {
+          ...prev.banner,
+          url: res.banner.url,
+        },
+      }));
+    });
+    setToggleEditProfile(false);
   };
-
-  if (loading) return <p>Loading...</p>;
+  if (pending) return <Pending text={'Updating Profile...'} />;
+  if (responseError)
+    return (
+      <Error
+        text={'Failed to update Profile'}
+        path={'/auth/profile'}
+        redirectTo={'Back to Profile Page'}
+      />
+    );
 
   return (
     <div className="relative mx-3 my-3 sm:m-4 md:m-10">
@@ -133,7 +151,6 @@ export default function ProfileEditor({
           </button>
         </div>
       </form>
-      {error && <Error setError={setError} />}
     </div>
   );
 }

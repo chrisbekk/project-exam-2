@@ -14,6 +14,7 @@ import { AuthRoot } from '../pages/auth';
 import { Profile } from '../pages/auth/Profile';
 import { Dashboard } from '../pages/auth/Dashboard';
 import { CreateVenue } from '../pages/auth/CreateVenue';
+import { EditUserPage } from '../pages/auth/EditUserPage';
 
 export const router = createBrowserRouter([
   {
@@ -48,6 +49,10 @@ export const router = createBrowserRouter([
           {
             path: 'profile/',
             element: <Profile />,
+          },
+          {
+            path: 'profile/edit',
+            element: <EditUserPage />,
           },
           {
             path: 'dashboard/',

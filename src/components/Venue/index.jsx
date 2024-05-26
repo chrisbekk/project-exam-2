@@ -37,17 +37,6 @@ export const Venue = () => {
       />
     );
   if (pending || !venue) return <Pending text={'Fetching venues...'} />;
-  // if (confirmBooking)
-  //   return (
-  //     <BookingConfirmation
-  //       venue={venue}
-  //       fromDate={fromDate}
-  //       toDate={toDate}
-  //       guests={guests}
-  //       setConfirmBooking={setConfirmBooking}
-  //       nights={nights}
-  //     />
-  //   );
 
   return (
     <div className="max-w-[1024px] md:mx-auto">
