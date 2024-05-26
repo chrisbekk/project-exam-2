@@ -56,11 +56,11 @@ export const CardCarousel = ({ venues, error, pending }) => {
           </div>
         </div>
       </div>
-      <div className="w-full overflow-hidden">
+      <div className="w-full overflow-hidden border border-red-500">
         <div
           className="grid place-items-center gap-12 sm:grid-cols-2 lg:grid-cols-3 xl:flex xl:gap-4"
           style={{
-            transform: `translateX(-${currentPage * 101.3}%)`,
+            transform: `translateX(-${currentPage * 100}%)`,
             transition: 'transform 0.3s ease-in-out',
           }}
         >

@@ -18,8 +18,13 @@ export const Home = () => {
   const { venues, error, pending } = useFetchVenues(100);
 
   const handleClick = () => {
-    if (!context.data) return;
-    navigate('/auth/dashboard');
+    console.log('clicked');
+    console.log(user);
+    if (!user) {
+      navigate('/signin');
+    } else {
+      navigate('/auth/profile');
+    }
   };
 
   return (
@@ -34,13 +39,13 @@ export const Home = () => {
         </h1>
         <div className="relative">
           <Banner />
-          <div className="absolute top-[50%] w-full translate-y-[-50%] transform bg-white px-8 py-4 sm:left-[50%] sm:max-w-[570px]  sm:translate-x-[-50%] sm:rounded-xl sm:px-20 sm:py-10 sm:shadow-xl">
-            <p className="mb-4 text-sm  leading-4 tracking-wide sm:text-base">
+          <div className="absolute top-[50%] w-full translate-y-[-50%] transform bg-white px-8 py-8 sm:left-[50%] sm:max-w-[570px]  sm:translate-x-[-50%] sm:rounded-xl sm:px-20 sm:py-10 sm:shadow-xl">
+            <p className="mb-4 text-sm font-semibold  leading-4 tracking-wide sm:text-base">
               Join Holidaze and unlock the potential of your property! Whether
               it's a cozy cabin nestled in the mountains or a seaside retreat,
               we connect you with guests eager to experience your unique space.
             </p>
-            <p className="mb-10 text-sm leading-4 tracking-wide sm:text-base">
+            <p className="mb-10 text-sm font-semibold leading-4 tracking-wide sm:text-base">
               Start earning extra income and share the magic of your home with
               travelers worldwide!
             </p>
