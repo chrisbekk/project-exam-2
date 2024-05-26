@@ -1,8 +1,10 @@
 import { HiPaperAirplane } from 'react-icons/hi';
 import NavigationButton from './NavigationButton';
 import { Link } from 'react-router-dom';
+import { useUserContext } from '../../context/userContext';
 
 export default function Header() {
+  const { user } = useUserContext();
   return (
     <header
       className={`fixed top-0 z-50 h-24 w-full bg-neutral-50 px-4 shadow-lg  sm:px-0`}
@@ -18,7 +20,10 @@ export default function Header() {
           </h1>
         </Link>
         <nav className="flex items-center gap-8">
-          <Link to={'/signin'} className="text-sm font-bold text-neutral-500">
+          <Link
+            to={user ? '/auth/dashboard' : '/signin'}
+            className="text-sm font-bold text-neutral-500"
+          >
             Holidaze your home
           </Link>
           <NavigationButton />
