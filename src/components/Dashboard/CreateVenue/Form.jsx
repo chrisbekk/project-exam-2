@@ -56,11 +56,9 @@ export const Form = ({ toggleForm, setToggleForm, setVenues }) => {
 
   const handleSubmit = e => {
     e.preventDefault();
-
+    console.log(image1);
     const images = [image1, image2, image3, image4, image5, image6];
-    const filteredImages = images.filter(
-      image => image.url !== '' && image.alt !== '',
-    );
+    const filteredImages = images.filter(image => image.url !== '');
     setMedia(filteredImages);
     const payload = {
       name,
@@ -81,6 +79,7 @@ export const Form = ({ toggleForm, setToggleForm, setVenues }) => {
         console.log('Response from createVenue:', res);
         setVenues(prevVenues => [...prevVenues, res.data]);
         setToggleForm(false);
+        handleClose();
         navigate('/auth/dashboard');
       })
       .catch(error => {
@@ -90,7 +89,6 @@ export const Form = ({ toggleForm, setToggleForm, setVenues }) => {
       .finally(() => {
         setLoading(false);
       });
-    handleClose();
   };
 
   const handleClose = () => {

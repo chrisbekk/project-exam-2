@@ -6,6 +6,7 @@ export const Host = ({ owner }) => {
       <div className="size-20 rounded-full border">
         <img
           src={owner.avatar.url}
+          alt={owner.avatar.alt}
           className="h-full w-full rounded-full object-cover"
         />
       </div>

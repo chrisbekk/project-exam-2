@@ -6,7 +6,7 @@ export const Bookings = ({ bookings }) => {
   return (
     <div className="pt-3">
       <h1
-        className={`${bookingsLength === 0 ? 'text-center text-lg text-neutral-400' : 'text-xl font-semibold'} mb-3  `}
+        className={`${bookingsLength === 0 ? 'text-center text-lg text-neutral-700' : 'text-xl font-semibold'} mb-3  `}
       >
         {bookingsLength > 1
           ? `${bookings?.length} bookings:`

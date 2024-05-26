@@ -11,6 +11,7 @@ export const Gallery = ({ isVisible, setIsVisible, gallery }) => {
         <div className="max-h-[560px] w-full">
           <img
             src={gallery[currentImage]?.url}
+            alt={gallery[currentImage]?.alt}
             className="aspect-video h-full w-full object-cover sm:rounded-md"
           />
         </div>
@@ -25,6 +26,7 @@ export const Gallery = ({ isVisible, setIsVisible, gallery }) => {
               >
                 <img
                   src={image?.url}
+                  alt={image?.alt}
                   className="aspect-square rounded-md object-cover"
                 />
               </div>
