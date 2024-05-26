@@ -4,10 +4,9 @@ export const useFetchVenues = (limit = 100, page = 1) => {
   const [venues, setVenues] = useState(null);
   const [error, setError] = useState(false);
   const [pending, setPending] = useState(false);
-  console.log(limit, page);
+
   useEffect(() => {
     const fetchVenues = async () => {
-      console.log(limit, page);
       try {
         setPending(true);
         const response = await fetch(

@@ -1,6 +1,6 @@
 import { Outlet, Navigate } from 'react-router-dom';
 import { useUserContext } from '../../context/userContext';
-import { Pending } from '../../components/Pending';
+import { Pending } from '../../components/generics/Pending';
 import React from 'react';
 
 export const AuthRoot = () => {

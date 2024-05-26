@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useUserContext } from '../../context/userContext';
 import { getVenuesByProfile } from '../../api/getVenuesByProfile';
-import { Section } from '../Section';
-import { Pending } from '../Pending';
-import { Error } from '../Error';
+import { Section } from '../generics/Section';
+import { Pending } from '../generics/Pending';
+import { Error } from '../generics/Error';
 import { CreateVenue } from './CreateVenue';
 import { Link } from 'react-router-dom';
 import { Details } from './Details';

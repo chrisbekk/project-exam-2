@@ -2,11 +2,11 @@ import { createBrowserRouter } from 'react-router-dom';
 
 // Import page components
 import { Layout } from '../layout/';
-import { Home } from '../pages/Home';
-import { Venues } from '../pages/Venues';
-import { Venue } from '../pages/Venue';
-import { SignIn } from '../pages/SignIn';
-import { Register } from '../pages/Register';
+import { HomePage } from '../pages/HomePage';
+import { VenuesPage } from '../pages/VenuesPage';
+import { VenuePage } from '../pages/VenuePage';
+import { SignInPage } from '../pages/SignInPage';
+import { RegisterPage } from '../pages/RegisterPage';
 import { Error } from '../pages/Error';
 
 // Protected Routes
@@ -23,23 +23,23 @@ export const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <Home />,
+        element: <HomePage />,
       },
       {
         path: '/signin',
-        element: <SignIn />,
+        element: <SignInPage />,
       },
       {
         path: '/register',
-        element: <Register />,
+        element: <RegisterPage />,
       },
       {
         path: '/venues',
-        element: <Venues />,
+        element: <VenuesPage />,
       },
       {
         path: '/venue/:venueId',
-        element: <Venue />,
+        element: <VenuePage />,
       },
       {
         path: '/auth',

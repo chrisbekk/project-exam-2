@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from '../../../Button';
+import { Button } from '../../../generics/Button';
 import { BiMessageSquareError } from 'react-icons/bi';
 export const Error = ({ setError }) => {
   const handleClick = () => {

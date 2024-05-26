@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button } from '../../Button';
+import { Button } from '../../generics/Button';
 import { motion, AnimatePresence } from 'framer-motion';
 import { VenueEditor } from './VenueEditor';
 import { DeleteVenue } from './DeleteVenue';
