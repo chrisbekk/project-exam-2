@@ -1,12 +1,49 @@
-# Project Exam 2
+# Holidaze
 
-This is a exam project in frontend development. The task was to create a venue booking site where users could rent holday homes, or post their own houses for renting.
+![image](https://github.com/chrisbekk/media/blob/main/holidaze.png)
 
-## Project Description
+Final exam project in Frontend Development at Noroff.
 
-The site allows user to register a user and sign in. Furthermore, the signed in users can book venues, or if they are registered as venue managers, post their houses for renting.
+## Description
 
-The project was written in React. Additionally, TailwindCSS was used for CSS. Framer motion was used for some animations, while React Router was used for routing.
+Holidaze is a holiday booking platform for which a modern front-end was developed using React and Tailwind CSS. The application features two distinct interfaces: a customer-facing side for booking holidays and an admin-facing side for managing venues and bookings. This project demonstrates the ability to plan, design, and develop a comprehensive front-end application for both customers and administrators, utilizing React and Tailwind CSS to deliver a polished and functional product.
+
+In order to use all functions, register a user with the @stud.noroff.no domain. 
+
+- CRUD functionality
+- Connecting to API for authentication / authorization and fetching data
+- User side of application & an admin side of application
+
+## Built With
 
 
-Download repo and run npm i to run the project locally. 
+- React JS
+- React Router DOM
+- TailwindCSS
+- Framer Motion
+- Vite
+
+
+## Getting Started
+
+### Installing
+
+1. Clone the repo:
+
+```bash
+git clone https://github.com/chrisbekk/project-exam-2
+```
+
+2. Install the dependencies:
+
+```
+npm install
+```
+
+### Running
+
+To run the app, run the following commands:
+
+```bash
+npm run dev
+```
