@@ -4,6 +4,9 @@
 
 Final exam project in Frontend Development at Noroff.
 
+#### Deployed Link
+https://fanciful-puffpuff-67985c.netlify.app
+
 ## Description
 
 Holidaze is a holiday booking platform for which a modern front-end was developed using React and Tailwind CSS. The application features two distinct interfaces: a customer-facing side for booking holidays and an admin-facing side for managing venues and bookings. This project demonstrates the ability to plan, design, and develop a comprehensive front-end application for both customers and administrators, utilizing React and Tailwind CSS to deliver a polished and functional product.
